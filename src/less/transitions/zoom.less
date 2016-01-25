@@ -1,0 +1,15 @@
+
+.zoom-enter{
+  opacity: 0.01;
+  transform: scale3d(0.01, 0.01, 0.01);
+  &.zoom-enter-active{
+    opacity: 1;
+  }
+}
+.zoom-leave{
+  opacity: 1;
+  &.zoom-leave-active{
+    transform: scale3d(0.01, 0.01, 0.01);
+    opacity: 0.01;
+  }
+}

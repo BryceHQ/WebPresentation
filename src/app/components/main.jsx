@@ -1,5 +1,3 @@
-/** In this file, we create a React component which incorporates components provided by material-ui */
-
 import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Dialog from 'material-ui/lib/dialog';
@@ -7,75 +5,54 @@ import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import LightRawTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
 import Colors from 'material-ui/lib/styles/colors';
 import FlatButton from 'material-ui/lib/flat-button';
+const AppBar = require('material-ui/lib/app-bar');
 
-const containerStyle = {
-  textAlign: 'center',
-  paddingTop: 200,
-};
+// Our custom react component
+import Leftbar from './leftbar.jsx';
+import SlideGroup from './slideGroup.jsx';
+
+// flux
+import Store from '../stores/store.js';
+import Actions from '../actions/actions.js';
+
 
 const Main = React.createClass({
-
-  childContextTypes: {
-    muiTheme: React.PropTypes.object,
-  },
-
   getInitialState() {
-    return {
-      muiTheme: ThemeManager.getMuiTheme(LightRawTheme),
-      open: false,
-    };
+    return Store.getData();
   },
 
-  getChildContext() {
-    return {
-      muiTheme: this.state.muiTheme,
-    };
+
+  componentDidMount() {
+    Store.addChangeListener(this._onChange);
+  },
+  componentWillUnmount() {
+    Store.removeChangeListener(this._onChange);
   },
 
-  componentWillMount() {
-    let newMuiTheme = ThemeManager.modifyRawThemePalette(this.state.muiTheme, {
-      accent1Color: Colors.deepOrange500,
-    });
-
-    this.setState({muiTheme: newMuiTheme});
-  },
-
-  _handleRequestClose() {
-    this.setState({
-      open: false,
-    });
-  },
-
-  _handleTouchTap() {
-    this.setState({
-      open: true,
-    });
+  handleToggle() {
+    Actions.toggleLeftNav();
   },
 
   render() {
-    const standardActions = (
-      <FlatButton
-        label="Okey"
-        secondary={true}
-        onTouchTap={this._handleRequestClose}
-      />
-    );
 
+    let containerStyle = {
+      width: '100%',
+      height: '100%',
+      position: 'absolute',
+    };
     return (
-      <div style={containerStyle}>
-        <Dialog
-          open={this.state.open}
-          title="Super Secret Password"
-          actions={standardActions}
-          onRequestClose={this._handleRequestClose}
-        >
-          1-2-3-4-5
-        </Dialog>
-        <h1>material-ui</h1>
-        <h2>example project</h2>
-        <RaisedButton label="Super Secret Password" primary={true} onTouchTap={this._handleTouchTap} />
+      <div style = {containerStyle}>
+        <AppBar title = "Title"
+           onLeftIconButtonTouchTap = {this.handleToggle}
+           />
+        <SlideGroup data = {this.state.slideGroup} index = {this.state.current}/>
+        <Leftbar open = {this.state.open} data = {this.state.slideGroup}/>
       </div>
     );
+  },
+
+  _onChange() {
+    this.setState(Store.getData());
   },
 });
 

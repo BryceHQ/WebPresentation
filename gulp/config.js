@@ -17,6 +17,11 @@ module.exports = {
     src: src + "/www/**",
     dest: dest
   },
+  less: {
+    entry: src + "/less/entry.less",
+    src: src + "/less/**",
+    dest: dest
+  },
   browserify: {
     // Enable source maps
     debug: true,
@@ -26,7 +31,6 @@ module.exports = {
       entries: src + '/app/app.jsx',
       dest: dest,
       outputName: 'app.js'
-    }],
-    extensions: ['.jsx'],
+    }]
   }
 };

@@ -1,0 +1,18 @@
+.slide-enter{
+  .transition(all .25s);
+  opacity: 0.01;
+  margin-left: 128px;
+  &.slide-enter-active{
+    margin-left: 0;
+    opacity: 1;
+  }
+}
+.slide-leave{
+  .transition(all .25s);
+  margin-left: 0;
+  opacity: 1;
+  &.slide-leave-active{
+    margin-left: -128px;
+    opacity: 0.01;
+  }
+}
