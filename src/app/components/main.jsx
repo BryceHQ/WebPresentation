@@ -1,14 +1,9 @@
 import React from 'react';
-import RaisedButton from 'material-ui/lib/raised-button';
-import Dialog from 'material-ui/lib/dialog';
-import ThemeManager from 'material-ui/lib/styles/theme-manager';
-import LightRawTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
-import Colors from 'material-ui/lib/styles/colors';
-import FlatButton from 'material-ui/lib/flat-button';
-const AppBar = require('material-ui/lib/app-bar');
 
 // Our custom react component
-import Leftbar from './leftbar.jsx';
+import AppBar from './appbar.jsx';
+
+import Sidebar from './sidebar.jsx';
 import SlideGroup from './slideGroup.jsx';
 
 // flux
@@ -29,12 +24,8 @@ const Main = React.createClass({
     Store.removeChangeListener(this._onChange);
   },
 
-  handleToggle() {
-    Actions.toggleLeftNav();
-  },
-
   render() {
-
+    let {slideGroup, current, mode, open} = this.state;
     let containerStyle = {
       width: '100%',
       height: '100%',
@@ -42,14 +33,16 @@ const Main = React.createClass({
     };
     return (
       <div style = {containerStyle}>
-        <AppBar title = "Title"
-           onLeftIconButtonTouchTap = {this.handleToggle}
-           />
-        <SlideGroup data = {this.state.slideGroup} index = {this.state.current}/>
-        <Leftbar open = {this.state.open} data = {this.state.slideGroup}/>
+        <AppBar mode = {mode}/>
+        <SlideGroup data = {slideGroup} index = {current} mode = {mode}/>
+        <Sidebar open = {open} data = {slideGroup} openRight={true}/>
       </div>
     );
   },
+
+  // _handleToggle() {
+  //   Actions.toggleLeftNav();
+  // },
 
   _onChange() {
     this.setState(Store.getData());

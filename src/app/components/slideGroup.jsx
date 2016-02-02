@@ -1,36 +1,50 @@
 import React from 'react';
 
 import Slide from './slide.jsx';
+import Markdown from './markdown.jsx';
 
 import Actions from '../actions/actions.js';
 
+import Store from '../stores/store.js';
+
+
 const SlideGroup = React.createClass({
-  componentDidMount: function() {
-    document.addEventListener("keyup", this._handleKeyUp);
+  componentDidMount() {
+    window.addEventListener("keyup", this._handleKeyUp);
   },
 
-  componentWillUnmount: function() {
-    document.removeEventListener('keyup', this._handleKeyUp);
+  componentWillUnmount() {
+    window.removeEventListener('keyup', this._handleKeyUp);
   },
 
   render() {
-    let index = this.props.index || 0;
-    let slide = this.props.data[index];
-    let {transition, style} = slide;
+    let {index, mode, data} = this.props;
+    index = index || 0;
+    let slide = data[index];
+    let {transition, style, content} = slide;
 
     return (
       <div className = "slideGroup">
         <Slide transition = {transition}>
-          <div key = {index} className = "slideItem" style = {style}>{transition}</div>
+          <div key = {index} className = "slideItem" style = {style}>
+            <Markdown mode = {mode} content = {content} index = {index}/>
+          </div>
         </Slide>
       </div>
     );
   },
 
+  updateCode (newCode) {
+		this.setState({
+			code: newCode
+		});
+	},
 
 
-  _handleKeyUp(event) {
-    var keyCode = event.keyCode;
+  _handleKeyUp(e) {
+    var data = Store.getData();
+    if(data.mode !== 'presentation')return;
+    var keyCode = e.keyCode;
     if (keyCode === 9 || keyCode === 79 || (
         keyCode >= 32 &&
         keyCode <= 34) || (keyCode >= 37 &&
@@ -53,7 +67,7 @@ const SlideGroup = React.createClass({
           break;
       }
 
-      event.preventDefault();
+      e.preventDefault();
     }
   },
 });
