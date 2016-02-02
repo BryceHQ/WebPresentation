@@ -21,12 +21,12 @@ const SlideGroup = React.createClass({
     let {index, mode, data} = this.props;
     index = index || 0;
     let slide = data[index];
-    let {transition, style, content} = slide;
+    let {transition, style, content, key} = slide;
 
     return (
-      <div className = "slideGroup">
+      <div className = "slideGroup" style = {this.props.style}>
         <Slide transition = {transition}>
-          <div key = {index} className = "slideItem" style = {style}>
+          <div key = {key} className = "slideItem" style = {style}>
             <Markdown mode = {mode} content = {content} index = {index}/>
           </div>
         </Slide>
@@ -43,9 +43,9 @@ const SlideGroup = React.createClass({
 
   _handleKeyUp(e) {
     var data = Store.getData();
-    if(data.mode !== 'presentation')return;
+    if(data.mode === 'markdown')return;
     var keyCode = e.keyCode;
-    if (keyCode === 9 || keyCode === 79 || (
+    if (keyCode === 9 || keyCode === 79 || keyCode === 27 ||(
         keyCode >= 32 &&
         keyCode <= 34) || (keyCode >= 37 &&
         keyCode <= 40)) {
@@ -64,6 +64,8 @@ const SlideGroup = React.createClass({
           break;
         case 79:
           // overView();
+        case 27: //esc
+          Actions.toggleFullscreen();
           break;
       }
 

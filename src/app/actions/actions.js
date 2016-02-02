@@ -23,11 +23,34 @@ const Action = {
     });
   },
 
+  //fullscreen
+  toggleFullscreen() {
+    Dispatcher.dispatch({
+      actionType: Constants.TOGGLE_FULLSCREEN,
+    });
+  },
+
   //overview
   reinsert(from, to) {
     Dispatcher.dispatch({
       actionType: Constants.REINSERT,
       data: {from: from, to: to},
+    });
+  },
+  selectSlide(index) {
+    Dispatcher.dispatch({
+      actionType: Constants.SELECT_SLIDE,
+      data: index,
+    });
+  },
+  addSlide() {
+    Dispatcher.dispatch({
+      actionType: Constants.ADD_SLIDE,
+    });
+  },
+  removeSlide() {
+    Dispatcher.dispatch({
+      actionType: Constants.REMOVE_SLIDE,
     });
   },
 

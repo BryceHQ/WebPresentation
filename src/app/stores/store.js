@@ -7,9 +7,12 @@ import Constants from '../constants/constants.js';
 import _ from 'lodash';
 
 const CHANGE_EVENT = 'change';
+const MODE = Constants.MODE;
+
+let _lastMode = MODE.PRESENTATION;
 let _data = {
   open: false,
-  mode: 'presentation',// markdown, presentation
+  mode: MODE.PRESENTATION,// markdown, presentation
   slideGroup: [{
     transition: 'slide',
     content: '# 1',
@@ -42,14 +45,21 @@ let _data = {
   current: 0
 };
 
-const changeMode = (mode) => {
+//helper
+function guid() {
+  return (+new Date() * 1e6 + Math.floor(Math.random() * 1e6)).toString(36);
+}
+
+function changeMode(mode) {
+  _lastMode = _data.mode;
   _data.mode = mode;
-};
+}
 
-const contentChange = (content, index) => {
+function contentChange(content, index) {
   _data.slideGroup[index].content = content;
-};
+}
 
+//nav
 function toggleLeftNav(open) {
   if(open === null || typeof open === 'undefined'){
     return _data.open = !_data.open;
@@ -63,12 +73,41 @@ function openLeftNav() {
   _data.open = true;
 }
 
+//fullscreen
+function toggleFullscreen() {
+  if(_data.mode === MODE.FULLSCREEN){
+    _data.mode = _lastMode;
+    _lastMode = MODE.FULLSCREEN;
+  }
+  else{
+    _lastMode = _data.mode;
+    _data.mode = MODE.FULLSCREEN;
+  }
+}
 
+//overview
 function reinsert({from, to}) {
   let arr = _data.slideGroup;
   const val = arr[from];
   arr.splice(from, 1);
   arr.splice(to, 0, val);
+  _data.current = to;
+}
+function selectSlide(index){
+  _data.current = index;
+}
+function addSlide(index){
+  _data.slideGroup.splice(++_data.current, 0, {
+    transition: 'slide',
+    content: '# 请输入标题',
+    key: guid(),
+  });
+}
+function removeSlide(index){
+  _data.slideGroup.splice(_data.current, 1);
+  if(_data.current > 0){
+    _data.current--;
+  }
 }
 
 //slide
@@ -127,8 +166,27 @@ Dispatcher.register((action) => {
       closeLeftNav(action.data);
       Store.emitChange();
       break;
+
+    case Constants.TOGGLE_FULLSCREEN:
+      toggleFullscreen();
+      Store.emitChange();
+      break;
+
+    //overview
     case Constants.REINSERT:
       reinsert(action.data);
+      Store.emitChange();
+      break;
+    case Constants.SELECT_SLIDE:
+      selectSlide(action.data);
+      Store.emitChange();
+      break;
+    case Constants.ADD_SLIDE:
+      addSlide();
+      Store.emitChange();
+      break;
+    case Constants.REMOVE_SLIDE:
+      removeSlide();
       Store.emitChange();
       break;
 

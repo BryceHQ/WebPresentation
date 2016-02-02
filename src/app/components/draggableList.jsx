@@ -2,6 +2,9 @@ import React from 'react';
 import {Motion, spring} from 'react-motion';
 import _ from 'lodash';
 
+import InkBar from 'material-ui/lib/ink-bar';
+import Colors from 'material-ui/lib/styles/colors';
+
 import Markdown from './markdown.jsx';
 
 import Actions from '../actions/actions.js';
@@ -42,17 +45,17 @@ const DraggableList = React.createClass({
   },
 
   componentDidMount() {
-    window.addEventListener('touchmove', this.handleTouchMove);
-    window.addEventListener("touchend", this.handleMouseUp);
-    window.addEventListener('mousemove', this.handleMouseMove);
-    window.addEventListener("mouseup", this.handleMouseUp);
+    window.addEventListener('touchmove', this._handleTouchMove);
+    window.addEventListener("touchend", this._handleMouseUp);
+    window.addEventListener('mousemove', this._handleMouseMove);
+    window.addEventListener("mouseup", this._handleMouseUp);
   },
 
   componentWillUnmount() {
-    window.removeEventListener('touchmove', this.handleTouchMove);
-    window.removeEventListener("touchend", this.handleMouseUp);
-    window.removeEventListener('mousemove', this.handleMouseMove);
-    window.removeEventListener("mouseup", this.handleMouseUp);
+    window.removeEventListener('touchmove', this._handleTouchMove);
+    window.removeEventListener("touchend", this._handleMouseUp);
+    window.removeEventListener('mousemove', this._handleMouseMove);
+    window.removeEventListener("mouseup", this._handleMouseUp);
   },
 
   componentWillReceiveProps(nextProps) {
@@ -62,15 +65,71 @@ const DraggableList = React.createClass({
     }
   },
 
-  handleTouchStart(key, pressLocation, e) {
-    this.handleMouseDown(key, pressLocation, e.touches[0]);
+  render() {
+    const {data, current} = this.props;
+    const {mouse, isPressed, lastPressed, order} = this.state;
+
+    return (
+      <div className="draggable-list" ref = "container">
+        {_.range(data.length).map(i => {
+          const index = order.indexOf(i);
+          let currentItem = data[i];
+          const style = (lastPressed === i && isPressed) ?
+            {
+                scale: spring(1.05, springConfig),
+                shadow: spring(16, springConfig),
+                y: mouse,
+              }
+            : {
+                scale: spring(1, springConfig),
+                shadow: spring(1, springConfig),
+                y: spring( index * itemHeight, springConfig),
+              };
+          const inkbar = current === i ?
+            (
+              <InkBar left = "0" width = {`${itemWidth}px`} color = {Colors.blue500}
+                style = {{
+                  height: '5px',
+                  position: 'absolute',
+                }}
+              />
+            )
+            : null;
+          return (
+            <Motion style={style} key={currentItem.key}>
+              {({scale, shadow, y}) =>
+                <div
+                  onMouseDown={this._handleMouseDown.bind(null, i, y)}
+                  onTouchStart={this._handleTouchStart.bind(null, i, y)}
+                  className="draggable-list-item"
+                  style={{
+                    boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`,
+                    transform: `translate3d(0, ${y}px, 0) scale(${scale})`,
+                    WebkitTransform: `translate3d(0, ${y}px, 0) scale(${scale})`,
+                    zIndex: i === lastPressed ? 99 : i,
+                  }}>
+                  <Markdown mode = "overview" content = {currentItem.content}
+                  />
+                  {inkbar}
+                </div>
+              }
+            </Motion>
+          );
+        })}
+      </div>
+    );
   },
 
-  handleTouchMove(e) {
-    this.handleMouseMove(e.touches[0]);
+  _handleTouchStart(key, pressLocation, e) {
+    this._handleMouseDown(key, pressLocation, e.touches[0]);
   },
 
-  handleMouseDown(pos, pressY, {pageY}) {
+  _handleTouchMove(e) {
+    e.preventDefault();
+    this._handleMove(e.touches[0]);
+  },
+
+  _handleMouseDown(pos, pressY, {pageY}) {
     this.setState({
       delta: pageY - pressY,
       mouse: pressY,
@@ -81,11 +140,13 @@ const DraggableList = React.createClass({
     this._to = this._from;
   },
 
-  handleMouseMove(e) {
+  _handleMouseMove(e) {
     if(!this.state.isPressed) return;
     e.preventDefault();
+    this._handleMove(e);
+  },
 
-    const {pageY} = e;
+  _handleMove({pageY}) {
     const {delta, order, lastPressed} = this.state;
     const mouse = pageY - delta;
     const row = clamp(Math.round(mouse / itemHeight), 0, this.props.data.length - 1);
@@ -94,7 +155,7 @@ const DraggableList = React.createClass({
     this._to = row;
   },
 
-  handleMouseUp() {
+  _handleMouseUp() {
     if(this.state.isPressed === true){
       this.setState({isPressed: false, delta: 0});
       if(this._from !== this._to){
@@ -104,54 +165,11 @@ const DraggableList = React.createClass({
           me._from = me._to = 0;
         }, 300);
       }
+      else {
+        Actions.selectSlide(this._from);
+      }
     }
   },
-
-  render() {
-    const {data} = this.props;
-    const {mouse, isPressed, lastPressed, order} = this.state;
-
-    return (
-      <div className="draggable-list" ref = "container">
-        {_.range(data.length).map(i => {
-          const index = order.indexOf(i);
-          let current = data[i];
-          const style = lastPressed === i && isPressed ?
-            {
-                scale: spring(1.1, springConfig),
-                shadow: spring(16, springConfig),
-                y: mouse,
-              }
-            : {
-                scale: spring(1, springConfig),
-                shadow: spring(1, springConfig),
-                y: spring( index * itemHeight, springConfig),
-              };
-          return (
-            <Motion style={style} key={current.key}>
-              {({scale, shadow, y}) =>
-                <div
-                  onMouseDown={this.handleMouseDown.bind(null, i, y)}
-                  onTouchStart={this.handleTouchStart.bind(null, i, y)}
-                  className="draggable-list-item"
-                  style={{
-                    boxShadow: `rgba(0, 0, 0, 0.2) 0px ${shadow}px ${2 * shadow}px 0px`,
-                    transform: `translate3d(0, ${y}px, 0) scale(${scale})`,
-                    WebkitTransform: `translate3d(0, ${y}px, 0) scale(${scale})`,
-                    zIndex: i === lastPressed ? 99 : i,
-                  }}>
-                  <Markdown mode = "overview" content = {current.content}
-              
-                  />
-                </div>
-              }
-            </Motion>
-          );
-        })}
-      </div>
-    );
-  },
-
 });
 
 export default DraggableList;

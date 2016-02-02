@@ -1,7 +1,7 @@
-/* globals Pen, micromarkdown */
 import React from 'react';
 
 import Actions from '../actions/actions.js';
+import Constants from '../constants/constants.js';
 
 import _ from 'lodash';
 import marked from 'marked';
@@ -13,7 +13,7 @@ const Markdown = React.createClass({
   render() {
     let {content, mode, style} = this.props;
 
-    if(mode === 'markdown'){
+    if(mode === Constants.MODE.MARKDOWN){
       return (
         <Editor value={this.props.content} onChange={this._updateContent} />
       );
@@ -33,13 +33,6 @@ const Markdown = React.createClass({
     Actions.contentChange(newContent, this.props.index);
 	},
 
-  // _debounceContentChange: _.debounce(Actions.contentChange),
-
-  // _handleKeyUp(e) {
-  //   if(e.keyCode === 111){
-  //     Actions.exitEditMode();
-  //   }
-  // }
 });
 
 export default Markdown;

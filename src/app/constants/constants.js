@@ -4,10 +4,22 @@ const constants = {
   TOGGLE_LEFT_NAV: 'TOGGLE_LEFT_NAV',
   CLOSE_LEFT_NAV: 'CLOSE_LEFT_NAV',
   OPEN_LEFT_NAV: 'OPEN_LEFT_NAV',
+  //fullscreen
+  TOGGLE_FULLSCREEN: 'TOGGLE_FULLSCREEN',
+  //overview
   REINSERT: 'REINSERT',
+  SELECT_SLIDE: 'SELECT_SLIDE',
+  ADD_SLIDE: 'ADD_SLIDE',
+  REMOVE_SLIDE: 'REMOVE_SLIDE',
   SLIDE: {
     NEXT: 'SLIDE.NEXT',
     PRE: 'SLIDE.PRE',
+  },
+
+  MODE: {
+    MARKDOWN: 'markdown',
+    PRESENTATION: 'presentation',
+    FULLSCREEN: 'fullscreen',
   },
 };
 export default constants;

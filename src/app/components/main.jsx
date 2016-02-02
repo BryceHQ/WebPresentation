@@ -31,11 +31,22 @@ const Main = React.createClass({
       height: '100%',
       position: 'absolute',
     };
+    if(mode === 'fullscreen'){
+      return (
+        <div style = {containerStyle}>
+          <SlideGroup data = {slideGroup} index = {current} mode = {mode}
+            style = {{
+              top: '0px',
+            }}
+          />
+        </div>
+      );
+    }
     return (
       <div style = {containerStyle}>
         <AppBar mode = {mode}/>
         <SlideGroup data = {slideGroup} index = {current} mode = {mode}/>
-        <Sidebar open = {open} data = {slideGroup} openRight={true}/>
+        <Sidebar open = {open} data = {slideGroup} openRight = {true} current = {current}/>
       </div>
     );
   },

@@ -8,9 +8,11 @@ import IconButton from 'material-ui/lib/icon-button';
 //icon
 import IconActionCode from 'material-ui/lib/svg-icons/action/code';
 import IconChevronLeft from 'material-ui/lib/svg-icons/navigation/chevron-left';
+import IconFullscreen from 'material-ui/lib/svg-icons/navigation/fullscreen';
 
 // flux
 import Actions from '../actions/actions.js';
+import Constants from '../constants/constants.js';
 
 
 const MyAppBar = React.createClass({
@@ -20,13 +22,18 @@ const MyAppBar = React.createClass({
     return (
       <AppBar title = {lang.name}
         iconElementLeft = {
-          <IconButton tooltip = {lang.button.markdown} onTouchTap = {this._changeMode}>
-            <IconActionCode color={Colors.white}/>
-          </IconButton>
+          <div>
+            <IconButton tooltip = {lang.button.fullscreen} onTouchTap = {this._handleFullscreen}>
+              <IconFullscreen color={Colors.white}/>
+            </IconButton>
+            <IconButton tooltip = {lang.button.markdown} onTouchTap = {this._changeMode}>
+              <IconActionCode color={Colors.white}/>
+            </IconButton>
+          </div>
         }
         iconElementRight = {
-          <IconButton onTouchTap = {this._handleToggle}>
-            <IconChevronLeft/>
+          <IconButton tooltip = {lang.button.expand} onTouchTap = {this._handleToggle}>
+            <IconChevronLeft color={Colors.white}/>
           </IconButton>
         }
         style = {{zIndex:500}}>
@@ -35,11 +42,15 @@ const MyAppBar = React.createClass({
   },
 
   _changeMode() {
-    Actions.changeMode(this.props.mode === 'markdown' ? 'presentation' : 'markdown');
+    Actions.changeMode(this.props.mode === Constants.MODE.MARKDOWN ? Constants.MODE.PRESENTATION : Constants.MODE.MARKDOWN);
   },
 
   _handleToggle() {
     Actions.toggleLeftNav();
+  },
+
+  _handleFullscreen() {
+    Actions.toggleFullscreen();
   },
 
 });
