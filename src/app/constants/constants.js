@@ -1,4 +1,8 @@
 const constants = {
+  SAVE: 'SAVE',
+  SIGN_IN: 'SIGN_IN',
+  SIGN_UP: 'SIGN_UP',
+
   CHANGE_MODE: 'CHANGE_MODE',
   CONTENT_CHANGE: 'CONTENT_CHANGE',
   TOGGLE_LEFT_NAV: 'TOGGLE_LEFT_NAV',
@@ -15,6 +19,10 @@ const constants = {
     NEXT: 'SLIDE.NEXT',
     PRE: 'SLIDE.PRE',
   },
+
+  //messages
+  CLEAR_MESSAGE: 'CLEAR_MESSAGE',
+
 
   MODE: {
     MARKDOWN: 'markdown',

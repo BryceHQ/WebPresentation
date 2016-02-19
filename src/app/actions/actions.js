@@ -2,6 +2,21 @@ import Dispatcher from '../dispatcher/dispatcher.js';
 import Constants from '../constants/constants.js';
 
 const Action = {
+  //save
+  save(){
+    Dispatcher.dispatch({
+      actionType: Constants.SAVE,
+    });
+  },
+  //sign
+  signIn(data) {
+    if(!data) return;
+    Dispatcher.dispatch({
+      actionType: Constants.SIGN_IN,
+      data: data,
+    });
+  },
+
   changeMode(mode) {
     Dispatcher.dispatch({
       actionType: Constants.CHANGE_MODE,
@@ -66,6 +81,13 @@ const Action = {
         actionType: Constants.SLIDE.PRE
       });
     },
+  },
+
+  //message
+  clearMessage() {
+    Dispatcher.dispatch({
+      actionType: Constants.CLEAR_MESSAGE
+    });
   },
 };
 

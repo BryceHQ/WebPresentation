@@ -8,6 +8,9 @@ const lang = {
     add: '添加（在当前页之后）',
     remove: '删除（当前页）',
     fullscreen: '全屏',
+    help: '查看帮助',
+    signin: '登录',
+    menu: '菜单',
   },
 };
 

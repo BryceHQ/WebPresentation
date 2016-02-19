@@ -1,18 +1,24 @@
 import Dispatcher from '../dispatcher/dispatcher.js';
-import {
-  EventEmitter
-}
-from 'events';
+import { EventEmitter } from 'events';
 import Constants from '../constants/constants.js';
 import _ from 'lodash';
+
+import ajax from '../ajax.js';
+
+import helper from '../helper.js';
 
 const CHANGE_EVENT = 'change';
 const MODE = Constants.MODE;
 
 let _lastMode = MODE.PRESENTATION;
+let _user = {
+  name: window._config && window._config.userName || '',
+
+};
 let _data = {
   open: false,
   mode: MODE.PRESENTATION,// markdown, presentation
+  current: 0,
   slideGroup: [{
     transition: 'slide',
     content: '# 1',
@@ -42,12 +48,39 @@ let _data = {
     content: '# 7',
     key: 7,
   }],
-  current: 0
 };
+
+// if(window._config && _user.name){
+//   ajax.post(
+//     window._config.get,
+//     {user: _user.name},
+//     function(data){
+//       if(!data) return;
+//       _data = data;
+//     }
+//   );
+// }
 
 //helper
 function guid() {
   return (+new Date() * 1e6 + Math.floor(Math.random() * 1e6)).toString(36);
+}
+
+function save(){
+  if(window._config){
+    ajax.post(
+      window._config.save,
+      {raw: JSON.stringify(_data)},
+      function(data){
+        if(!data) return;
+        _data.bottomMessage = '保存成功';
+      }
+    );
+  }
+}
+
+function signIn(data) {
+  _.assign(_user, data);
 }
 
 function changeMode(mode) {
@@ -121,6 +154,10 @@ const slide = {
   }
 };
 
+function clearMessage(){
+  delete _data.bottomMessage;
+}
+
 const Store = _.assign({}, EventEmitter.prototype, {
   setData(data) {
     _data = data;
@@ -128,6 +165,10 @@ const Store = _.assign({}, EventEmitter.prototype, {
   },
   getData() {
     return _data;
+  },
+
+  getUser() {
+    return _user;
   },
 
   emitChange() {
@@ -145,6 +186,15 @@ const Store = _.assign({}, EventEmitter.prototype, {
 // Register callback to handle all updates
 Dispatcher.register((action) => {
   switch (action.actionType) {
+    case Constants.SAVE:
+      save();
+      break;
+
+    case Constants.SIGN_IN:
+      signIn(action.data);
+      Store.emitChange();
+      break;
+
     case Constants.CHANGE_MODE:
       changeMode(action.data);
       Store.emitChange();
@@ -202,6 +252,11 @@ Dispatcher.register((action) => {
         slide.pre();
         Store.emitChange();
       }
+      break;
+
+    case Constants.CLEAR_MESSAGE:
+      clearMessage();
+      Store.emitChange();
       break;
     default:
       break;

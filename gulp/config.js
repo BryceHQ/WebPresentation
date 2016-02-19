@@ -32,5 +32,16 @@ module.exports = {
       dest: dest,
       outputName: 'app.js'
     }]
-  }
+  },
+  move: {
+    watch: src + "/www/index.html", 
+    scripts: {
+      src: dest + "/*.js",
+      dest: 'D:/job/2016/presentation/presentation/Scripts'
+    },
+    css: {
+      src: dest + "/*.css",
+      dest: 'D:/job/2016/presentation/presentation/Content'
+    },
+  },
 };

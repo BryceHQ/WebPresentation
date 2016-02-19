@@ -7,6 +7,8 @@ import Actions from '../actions/actions.js';
 
 import Store from '../stores/store.js';
 
+import Constants from '../constants/constants.js';
+
 
 const SlideGroup = React.createClass({
   componentDidMount() {
@@ -43,12 +45,19 @@ const SlideGroup = React.createClass({
 
   _handleKeyUp(e) {
     var data = Store.getData();
-    if(data.mode === 'markdown')return;
     var keyCode = e.keyCode;
-    if (keyCode === 9 || keyCode === 79 || keyCode === 27 ||(
-        keyCode >= 32 &&
-        keyCode <= 34) || (keyCode >= 37 &&
-        keyCode <= 40)) {
+    if(data.mode === Constants.MODE.MARKDOWN){
+      if(keyCode === 27){
+        //esc退出markdown编辑模式
+        Actions.changeMode(Constants.MODE.PRESENTATION);
+      }
+      return;
+    }
+    if (keyCode === 9 || keyCode === 79 || keyCode === 27 ||
+        ( keyCode >= 32 && keyCode <= 34) ||
+        (keyCode >= 37 && keyCode <= 40) ||
+        keyCode === 83
+      ) {
       switch (keyCode) {
         case 33: // pg up
         case 37: // left
@@ -66,6 +75,11 @@ const SlideGroup = React.createClass({
           // overView();
         case 27: //esc
           Actions.toggleFullscreen();
+          break;
+        case 83:
+          Actions.save();
+          if(e.ctrlkey){
+          }
           break;
       }
 
