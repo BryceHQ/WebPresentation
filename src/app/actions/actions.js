@@ -31,9 +31,16 @@ const Action = {
     });
   },
 
-  toggleLeftNav(data) {
+  toggleLeft(data) {
     Dispatcher.dispatch({
-      actionType: Constants.TOGGLE_LEFT_NAV,
+      actionType: Constants.TOGGLE_LEFT,
+      data: data,
+    });
+  },
+
+  toggleRight(data) {
+    Dispatcher.dispatch({
+      actionType: Constants.TOGGLE_RIGHT,
       data: data,
     });
   },

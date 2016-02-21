@@ -3,7 +3,8 @@ import React from 'react';
 // Our custom react component
 import AppBar from './appbar.jsx';
 
-import Sidebar from './sidebar.jsx';
+import Right from './right.jsx';
+import Left from './left.jsx';
 import SlideGroup from './slideGroup.jsx';
 import Snackbar from 'material-ui/lib/snackbar';
 
@@ -17,7 +18,6 @@ const Main = React.createClass({
     return Store.getData();
   },
 
-
   componentDidMount() {
     Store.addChangeListener(this._onChange);
   },
@@ -26,7 +26,7 @@ const Main = React.createClass({
   },
 
   render() {
-    let {slideGroup, current, mode, open, bottomMessage} = this.state;
+    let {slideGroup, current, mode, leftOpen, rightOpen, bottomMessage} = this.state;
     let user = Store.getUser();
     let containerStyle = {
       width: '100%',
@@ -61,7 +61,8 @@ const Main = React.createClass({
       return (
         <div style = {containerStyle}>
           <AppBar mode = {mode} user = {user} simple = {simple}/>
-          {this.props.children}
+          <Left open = {leftOpen}/>
+          {children}
           {snackbar}
         </div>
       );
@@ -71,7 +72,8 @@ const Main = React.createClass({
       <div style = {containerStyle}>
         <AppBar mode = {mode} user = {user} simple = {simple}/>
         <SlideGroup data = {slideGroup} index = {current} mode = {mode}/>
-        <Sidebar open = {open} data = {slideGroup} openRight = {true} current = {current}/>
+        <Right open = {rightOpen} data = {slideGroup} current = {current}/>
+        <Left open = {leftOpen}/>
         {snackbar}
       </div>
     );

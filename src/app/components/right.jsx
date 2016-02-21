@@ -5,29 +5,29 @@ import LeftNav from 'material-ui/lib/left-nav';
 
 import Actions from '../actions/actions.js';
 
-import SideBarTitle from './sidebarTitle.jsx';
+import RightTitle from './rightTitle.jsx';
 import DraggableList from './draggableList.jsx';
 
-const SideBar = React.createClass({
+const Right = React.createClass({
   getDefaultProps() {
     return {open: false};
   },
 
   render() {
-    let {open, openRight, data, current} = this.props;
+    let {open, data, current} = this.props;
     return (
       <LeftNav
         style = {{overflow: 'hidden'}}
         width = {350}
         open = {open}
-        openRight = {openRight}
-        onRequestChange = {open => Actions.toggleLeftNav({open})}
+        openRight = {true}
+        onRequestChange = {open => Actions.toggleRight(open.open)}
       >
-        <SideBarTitle />
+        <RightTitle />
         <DraggableList data = {data} current = {current}/>
       </LeftNav>
     );
   },
 });
 
-export default SideBar;
+export default Right;

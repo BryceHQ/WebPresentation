@@ -16,7 +16,8 @@ let _user = {
 
 };
 let _data = {
-  open: false,
+  rightOpen: false,
+  leftOpen: false,
   mode: MODE.PRESENTATION,// markdown, presentation
   current: 0,
   slideGroup: [{
@@ -92,18 +93,19 @@ function contentChange(content, index) {
   _data.slideGroup[index].content = content;
 }
 
-//nav
-function toggleLeftNav(open) {
+//sidebar
+function toggleRight(open) {
   if(open === null || typeof open === 'undefined'){
-    return _data.open = !_data.open;
+    return _data.rightOpen = !_data.rightOpen;
   }
-  _data.open = !!open;
+  _data.rightOpen = !!open;
 }
-function closeLeftNav() {
-  _data.open = false;
-}
-function openLeftNav() {
-  _data.open = true;
+
+function toggleLeft(open) {
+  if(open === null || typeof open === 'undefined'){
+    return _data.leftOpen = !_data.leftOpen;
+  }
+  _data.leftOpen = !!open;
 }
 
 //fullscreen
@@ -204,16 +206,12 @@ Dispatcher.register((action) => {
       contentChange(content, index);
       Store.emitChange();
       break;
-    case Constants.TOGGLE_LEFT_NAV:
-      toggleLeftNav(action.data);
+    case Constants.TOGGLE_LEFT:
+      toggleLeft(action.data);
       Store.emitChange();
       break;
-    case Constants.OPEN_LEFT_NAV:
-      openLeftNav(action.data);
-      Store.emitChange();
-      break;
-    case Constants.CLOSE_LEFT_NAV:
-      closeLeftNav(action.data);
+    case Constants.TOGGLE_RIGHT:
+      toggleRight(action.data);
       Store.emitChange();
       break;
 

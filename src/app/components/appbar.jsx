@@ -27,7 +27,7 @@ const MyAppBar = React.createClass({
     let {user, simple} = this.props;
     let elemLeft = simple ? (
       <div>
-        <IconButton tooltip = {lang.button.menu} >
+        <IconButton tooltip = {lang.button.menu} onTouchTap = {this._handleToggleLeft}>
           <IconNavigationMenu color={Colors.white}/>
         </IconButton>
         <IconButton tooltip = {user.name || lang.button.signin}
@@ -40,7 +40,7 @@ const MyAppBar = React.createClass({
       </div>
     ) : (
       <div>
-        <IconButton>
+        <IconButton tooltip = {lang.button.menu} onTouchTap = {this._handleToggleLeft} >
           <IconNavigationMenu color={Colors.white}/>
         </IconButton>
         <IconButton tooltip = {user.name || lang.button.login}
@@ -60,7 +60,7 @@ const MyAppBar = React.createClass({
     );
     let elemRgiht = simple ?
       null : (
-        <IconButton tooltip = {lang.button.expand} onTouchTap = {this._handleToggle}>
+        <IconButton tooltip = {lang.button.expand} onTouchTap = {this._handleToggleRight}>
           <IconChevronLeft color={Colors.white}/>
         </IconButton>
       );
@@ -80,8 +80,12 @@ const MyAppBar = React.createClass({
     Actions.changeMode(this.props.mode === Constants.MODE.MARKDOWN ? Constants.MODE.PRESENTATION : Constants.MODE.MARKDOWN);
   },
 
-  _handleToggle() {
-    Actions.toggleLeftNav();
+  _handleToggleLeft() {
+    console.log('left');
+    Actions.toggleLeft();
+  },
+  _handleToggleRight() {
+    Actions.toggleRight();
   },
 
   _handleFullscreen() {

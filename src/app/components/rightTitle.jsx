@@ -12,12 +12,15 @@ import lang from '../lang/zh-cn.js';
 
 import Actions from '../actions/actions.js';
 
-const SideBarTitle = React.createClass({
+/****************
+* RightTitle Component
+****************/
+const RightTitle = React.createClass({
   render() {
     return (
       <AppBar title = {lang.sidebar}
         iconElementLeft = {
-          <IconButton tooltip = {lang.button.collapse} onTouchTap = {this._handleToggle}>
+          <IconButton tooltip = {lang.button.collapse} onTouchTap = {this._handleToggleRight}>
             <IconChevronRight/>
           </IconButton>
         }
@@ -43,9 +46,9 @@ const SideBarTitle = React.createClass({
     Actions.removeSlide();
   },
 
-  _handleToggle() {
-    Actions.toggleLeftNav();
+  _handleToggleRight() {
+    Actions.toggleRight();
   },
 });
 
-export default SideBarTitle;
+export default RightTitle;

@@ -1,6 +1,12 @@
 const lang = {
   name: 'Web Presentation',
   sidebar: '浏览',
+  menu: {
+    "new": '新建',
+    open: '打开',
+    saveAs: '另存为',
+    history: '历史版本',
+  },
   button: {
     markdown: '使用markdown编辑',
     expand: '展开',
