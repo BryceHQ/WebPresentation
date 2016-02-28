@@ -39,6 +39,9 @@ const MySelectableList = React.createClass({
     this.setState({
       selectedIndex: index,
     });
+    if(this.props.onSelectedChange){
+      this.props.onSelectedChange(index);
+    }
   },
 
   render() {
@@ -50,10 +53,6 @@ const MySelectableList = React.createClass({
         {children}
       </SelectableList>
     );
-  },
-
-  _handleItemTouchTap() {
-
   },
 });
 

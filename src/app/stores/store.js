@@ -22,63 +22,28 @@ let _data = {
   current: 0,
   slideGroup: [{
     transition: 'slide',
-    content: '# 1',
+    content: '# 快捷键 \n - Esc: 全屏切换 \n - Space/右/下: 下一页 \n - 左/上: 上一页',
     key: 1,
   }, {
     transition: 'zoom',
-    content: '# 2',
+    content: '# 幻灯片编辑 \n - 目前仅支持使用markdown进行编辑 \n - 左侧展开后，可以添加，删除某页幻灯片，拖拽可以改变幻灯片的顺序。',
     key: 2,
-  },{
+  }, {
     transition: 'slide',
-    content: '# 3',
+    content: '### Inspired by impress.js',
     key: 3,
   },{
     transition: 'zoom',
-    content: '# 4',
+    content: '### powered by React and Meterial UI',
     key: 4,
-  },{
-    transition: 'zoom',
-    content: '# 5',
-    key: 5,
-  },{
-    transition: 'zoom',
-    content: '# 6',
-    key: 6,
-  },{
-    transition: 'zoom',
-    content: '# 7',
-    key: 7,
   }],
 };
-
-// if(window._config && _user.name){
-//   ajax.post(
-//     window._config.get,
-//     {user: _user.name},
-//     function(data){
-//       if(!data) return;
-//       _data = data;
-//     }
-//   );
-// }
 
 //helper
 function guid() {
   return (+new Date() * 1e6 + Math.floor(Math.random() * 1e6)).toString(36);
 }
 
-function save(){
-  if(window._config){
-    ajax.post(
-      window._config.save,
-      {raw: JSON.stringify(_data)},
-      function(data){
-        if(!data) return;
-        _data.bottomMessage = '保存成功';
-      }
-    );
-  }
-}
 
 function signIn(data) {
   _.assign(_user, data);
@@ -91,6 +56,7 @@ function changeMode(mode) {
 
 function contentChange(content, index) {
   _data.slideGroup[index].content = content;
+  autoSave();
 }
 
 //sidebar
@@ -157,7 +123,7 @@ const slide = {
 };
 
 function clearMessage(){
-  delete _data.bottomMessage;
+  _data.bottomMessage = null;
 }
 
 const Store = _.assign({}, EventEmitter.prototype, {
@@ -204,7 +170,7 @@ Dispatcher.register((action) => {
     case Constants.CONTENT_CHANGE:
       var {content, index} = action.data;
       contentChange(content, index);
-      Store.emitChange();
+      // Store.emitChange();
       break;
     case Constants.TOGGLE_LEFT:
       toggleLeft(action.data);
@@ -223,6 +189,7 @@ Dispatcher.register((action) => {
     //overview
     case Constants.REINSERT:
       reinsert(action.data);
+      autoSave();
       Store.emitChange();
       break;
     case Constants.SELECT_SLIDE:
@@ -231,10 +198,12 @@ Dispatcher.register((action) => {
       break;
     case Constants.ADD_SLIDE:
       addSlide();
+      autoSave();
       Store.emitChange();
       break;
     case Constants.REMOVE_SLIDE:
       removeSlide();
+      autoSave();
       Store.emitChange();
       break;
 
@@ -260,5 +229,36 @@ Dispatcher.register((action) => {
       break;
   }
 });
+
+function save(){
+  if(window._config){
+    ajax.post(
+      window._config.save,
+      {raw: JSON.stringify(_data), id: 1},
+      function(data){
+        if(!data) return;
+        if(data.success){
+          _data.bottomMessage = '保存成功';
+        }else{
+          _data.bottomMessage = data.Message;
+        }
+        Store.emitChange();
+      }
+    );
+  }
+}
+var autoSave = _.debounce(save, 3000);
+
+if(window._config && _user.name){
+  ajax.get(
+    window._config.get,
+    {id: 1},
+    function(data){
+      if(!data || !data.Raw) return;
+      _data = JSON.parse(data.Raw);
+      Store.emitChange();
+    }
+  );
+}
 
 export default Store;

@@ -33,14 +33,14 @@ const Main = React.createClass({
       height: '100%',
       position: 'absolute',
     };
-    let snackbar = bottomMessage ? (
+    let snackbar = (
       <Snackbar
-        open={true}
-        message = {bottomMessage}
+        open={!!bottomMessage}
+        message = {bottomMessage || ''}
         autoHideDuration={2000}
         onRequestClose={() => Actions.clearMessage()}
       />
-    ) : null;
+    );
 
     if(mode === 'fullscreen'){
       return (

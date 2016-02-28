@@ -62,7 +62,9 @@ const SignIn = React.createClass({
           }}
           onCheck = {this._handleChange.bind(this, 'rememberMe')}
         /><br/>
-        <FlatButton label="Sign In" secondary={true} onTouchTap = {this._handleSignIn}/>
+        <FlatButton label="Sign In" secondary={true} onTouchTap = {this._handleSignIn}
+          disabled = {!(userName && password)}
+        />
         <FlatButton label="Sign Up" secondary={true} onTouchTap = {() => browserHistory.push('/auth/signup')}/>
       </div>
     );

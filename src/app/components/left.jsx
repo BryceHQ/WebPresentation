@@ -9,6 +9,8 @@ import Divider from 'material-ui/lib/divider';
 
 import Actions from '../actions/actions.js';
 
+import StoreMenu from '../stores/storeMenu.js';
+
 import SelectableList from './selectableList.jsx';
 import HistoryRecords from './historyRecords.jsx';
 
@@ -18,15 +20,27 @@ const Left = React.createClass({
     return {open: false};
   },
 
+  getInitialState() {
+    return StoreMenu.getData();
+  },
+
+  componentDidMount() {
+    StoreMenu.addChangeListener(this._onChange);
+  },
+  componentWillUnmount() {
+    StoreMenu.removeChangeListener(this._onChange);
+  },
+
   render() {
     const listStyle = {
       position: 'absolute',
       height: '100%',
       width: '100px',
     };
-    let {open, openRight, data, current} = this.props;
+    let {open, openRight} = this.props;
+    let {items, current, history} = this.state;
 
-    let body = null;
+    let body = current === 4 ? <HistoryRecords data = {history}/> : null;
 
     return (
       <LeftNav
@@ -44,7 +58,7 @@ const Left = React.createClass({
           <Avatar src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAABmJLR0QA/wD/AP+gvaeTAAAA7UlEQVR4nO3asQ3CQBAAwX9kiVqogP5DV0AtRFDEBCfDTm6/vbrodfv5un/WoPPx3vL89PffJg//BQVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUR7+j7t6ppAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQES7eWv5ft70fqCe3wSiAqICogKiAqICogKiAqICogKiAqICogKiAqICouPf9wP1/5tAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQHToC66+39d94LACogKiAqICogKiAqICogKiAqICogKiAqICogKiL2SGHPJ+jTmVAAAAAElFTkSuQmCC" />
         </div>
         <Divider/>
-        <SelectableList
+        <SelectableList onSelectedChange = {this._handleMenuSelect}
           style={listStyle}
         >
           <ListItem value={1} primaryText={lang.menu.new} />
@@ -57,14 +71,21 @@ const Left = React.createClass({
           style={{
             position: 'absolute',
             left: '100px',
-            top: '65px',
-
+            top: '63px',
           }}
         >
           {body}
         </div>
       </LeftNav>
     );
+  },
+
+  _handleMenuSelect(index) {
+    Actions.menuSelect(index);
+  },
+
+  _onChange() {
+    this.setState(StoreMenu.getData());
   },
 });
 

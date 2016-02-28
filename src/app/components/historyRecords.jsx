@@ -3,23 +3,34 @@ import Avatar from 'material-ui/lib/avatar';
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
-import FlatButton from 'material-ui/lib/flat-button';
 
 const HistoryRecords = React.createClass({
   render() {
+    var {data} = this.props;
+    var children = [];
+    data.forEach(function(item, i){
+      children.push(
+        <ListItem key = {i} innerDivStyle = {{
+          padding: '5px',
+        }}
+          primaryText={
+            <div>
+              <span className = "text-name">{item.name}</span>
+              <span className = "text-info">
+                {item.value}
+                <a>click</a>
+              </span>
+            </div>
+          }
+        />
+      );
+    });
     return (
-      <List>
-        <ListItem
-          primaryText="Grace Ng"
-          secondaryText={<a>还原</a>}
-          secondaryTextLines = {2}
-        />
-
-        <ListItem
-          primaryText="Grace Ng"
-          secondaryText={<FlatButton label="还原" secondary={true}/>}
-          secondaryTextLines = {2}
-        />
+      <List style = {{
+        width: '400px',
+        padding: '0px 20px',
+      }}>
+        {children}
       </List>
     );
   },

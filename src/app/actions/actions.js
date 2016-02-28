@@ -96,6 +96,15 @@ const Action = {
       actionType: Constants.CLEAR_MESSAGE
     });
   },
+
+
+  //---------------menu------------------
+  menuSelect(index) {
+    Dispatcher.dispatch({
+      actionType: Constants.MENU_SELECT,
+      data: index
+    });
+  },
 };
 
 export default Action;

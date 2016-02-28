@@ -4,6 +4,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Icons = require('./icons');
 
+import _ from 'lodash';
+
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/markdown/markdown');
 require('codemirror/addon/edit/continuelist');
@@ -36,7 +38,7 @@ var MarkdownEditor = React.createClass({
 	},
 
 	getOptions () {
-		return Object.assign({
+		return _.assign({
 			mode: 'markdown',
 			lineNumbers: false,
 			indentWithTabs: true,
@@ -129,7 +131,7 @@ var MarkdownEditor = React.createClass({
 			<div className="MDEditor">
 				{this.renderToolbar()}
 				<div className={editorClassName}>
-					<textarea ref="codemirror" name={this.props.path} defaultValue={this.props.value} autoComplete="off" />
+					<textarea ref="codemirror" className="markdown-textarea" name={this.props.path} defaultValue={this.props.value} autoComplete="off" />
 				</div>
 			</div>
 		);

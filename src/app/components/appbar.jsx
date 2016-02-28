@@ -25,42 +25,46 @@ const MyAppBar = React.createClass({
 
   render() {
     let {user, simple} = this.props;
+    let buttonStyle = {
+      width: '36px',
+      height: '36px',
+      padding: '0px',
+      margin: '0px 3px'
+    };
     let elemLeft = simple ? (
       <div>
-        <IconButton tooltip = {lang.button.menu} onTouchTap = {this._handleToggleLeft}>
+        <IconButton tooltip={lang.button.menu} onTouchTap={this._handleToggleLeft} style={buttonStyle}>
           <IconNavigationMenu color={Colors.white}/>
         </IconButton>
-        <IconButton tooltip = {user.name || lang.button.signin}
+        <IconButton tooltip = {user.name || lang.button.signin} style={buttonStyle}
           onTouchTap = {() => browserHistory.push('/auth/signin')}>
           <IconActionAccount color={Colors.white}/>
-        </IconButton>
-        <IconButton tooltip = {lang.button.help} onTouchTap = {() => browserHistory.push('/help')}>
-          <IconActionHelp color={Colors.white}/>
         </IconButton>
       </div>
     ) : (
       <div>
-        <IconButton tooltip = {lang.button.menu} onTouchTap = {this._handleToggleLeft} >
+        <IconButton tooltip = {lang.button.menu} style={buttonStyle}
+          onTouchTap = {this._handleToggleLeft} >
           <IconNavigationMenu color={Colors.white}/>
         </IconButton>
-        <IconButton tooltip = {user.name || lang.button.login}
+        <IconButton tooltip = {user.name || lang.button.login} style={buttonStyle}
           onTouchTap = {() => browserHistory.push('/auth/signin')}>
           <IconActionAccount color={Colors.white}/>
         </IconButton>
-        <IconButton tooltip = {lang.button.fullscreen} onTouchTap = {this._handleFullscreen}>
+        <IconButton tooltip = {lang.button.fullscreen} style={buttonStyle}
+          onTouchTap = {this._handleFullscreen}>
           <IconFullscreen color={Colors.white}/>
         </IconButton>
-        <IconButton tooltip = {lang.button.markdown} onTouchTap = {this._changeMode}>
+        <IconButton tooltip = {lang.button.markdown} style={buttonStyle}
+          onTouchTap = {this._changeMode}>
           <IconEditor color={Colors.white}/>
-        </IconButton>
-        <IconButton tooltip = {lang.button.help} onTouchTap = {() => browserHistory.push('/help')}>
-          <IconActionHelp color={Colors.white}/>
         </IconButton>
       </div>
     );
     let elemRgiht = simple ?
       null : (
-        <IconButton tooltip = {lang.button.expand} onTouchTap = {this._handleToggleRight}>
+        <IconButton tooltip = {lang.button.expand} style={buttonStyle}
+          onTouchTap = {this._handleToggleRight}>
           <IconChevronLeft color={Colors.white}/>
         </IconButton>
       );
@@ -70,7 +74,8 @@ const MyAppBar = React.createClass({
         onTitleTouchTap = {() => browserHistory.push('/')}
         iconElementLeft = {elemLeft}
         iconElementRight = {elemRgiht}
-        style = {{zIndex:500}}
+        style = {{zIndex:500, height: '50px', minHeight: '50px'}}
+        titleStyle = {{lineHeight: '50px'}}
       >
       </AppBar>
     );
@@ -81,7 +86,6 @@ const MyAppBar = React.createClass({
   },
 
   _handleToggleLeft() {
-    console.log('left');
     Actions.toggleLeft();
   },
   _handleToggleRight() {
@@ -92,5 +96,9 @@ const MyAppBar = React.createClass({
     Actions.toggleFullscreen();
   },
 });
+// <IconButton tooltip = {lang.button.help} style={buttonStyle}
+//   onTouchTap = {() => browserHistory.push('/help')}>
+//   <IconActionHelp color={Colors.white}/>
+// </IconButton>
 
 export default MyAppBar;

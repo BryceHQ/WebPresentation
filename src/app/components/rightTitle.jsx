@@ -17,19 +17,30 @@ import Actions from '../actions/actions.js';
 ****************/
 const RightTitle = React.createClass({
   render() {
+    let buttonStyle = {
+      width: '36px',
+      height: '36px',
+      padding: '0px',
+      margin: '0px 3px'
+    };
     return (
       <AppBar title = {lang.sidebar}
+        style = {{height: '50px', minHeight: '50px'}}
+        titleStyle = {{lineHeight: '50px'}}
         iconElementLeft = {
-          <IconButton tooltip = {lang.button.collapse} onTouchTap = {this._handleToggleRight}>
+          <IconButton tooltip = {lang.button.collapse} style = {buttonStyle}
+            onTouchTap = {this._handleToggleRight}>
             <IconChevronRight/>
           </IconButton>
         }
         iconElementRight = {
           <div>
-            <IconButton tooltip = {lang.button.add} onTouchTap = {this._handleAdd}>
+            <IconButton tooltip = {lang.button.add} style = {buttonStyle}
+              onTouchTap = {this._handleAdd}>
               <IconAdd color={Colors.white}/>
             </IconButton>
-            <IconButton tooltip = {lang.button.remove} onTouchTap = {this._handleRemove}>
+            <IconButton tooltip = {lang.button.remove} style = {buttonStyle}
+              onTouchTap = {this._handleRemove}>
               <IconRemove color={Colors.white}/>
             </IconButton>
           </div>
