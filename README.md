@@ -1,4 +1,4 @@
-# [Web Presentation](http://justsomedemo.applinzi.com/static/presentation/index.html)
+# [Web Presentation](http://brycehq.github.io/impress/)
 
 Currently under development;
 

@@ -5,6 +5,7 @@ const constants = {
 
   CHANGE_MODE: 'CHANGE_MODE',
   CONTENT_CHANGE: 'CONTENT_CHANGE',
+  TITLE_CHANGE: 'TITLE_CHANGE',
   TOGGLE_LEFT: 'TOGGLE_LEFT',
   TOGGLE_RIGHT: 'TOGGLE_RIGHT',
   //fullscreen
@@ -27,10 +28,11 @@ const constants = {
     MARKDOWN: 'markdown',
     PRESENTATION: 'presentation',
     FULLSCREEN: 'fullscreen',
+    EDITING: 'editing',
   },
 
 
-  APPBAR_HEIGHT: '50px',
+  APPBAR_HEIGHT: '40px',
   INFO_WIDTH: '300px',
 };
 export default constants;

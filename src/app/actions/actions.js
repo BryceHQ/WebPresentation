@@ -17,10 +17,10 @@ const Action = {
     });
   },
 
-  changeMode(mode) {
+  changeMode(mode, withoutEmit) {
     Dispatcher.dispatch({
       actionType: Constants.CHANGE_MODE,
-      data: mode,
+      data: {mode: mode, withoutEmit},
     });
   },
 
@@ -28,6 +28,13 @@ const Action = {
     Dispatcher.dispatch({
       actionType: Constants.CONTENT_CHANGE,
       data: {content: content, index: index},
+    });
+  },
+
+  titleChange(title) {
+    Dispatcher.dispatch({
+      actionType: Constants.TITLE_CHANGE,
+      data: title || '',
     });
   },
 

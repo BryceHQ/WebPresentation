@@ -12,7 +12,7 @@ const MODE = Constants.MODE;
 
 let _lastMode = MODE.PRESENTATION;
 let _user = {
-  name: window._config && window._config.userName || '',
+  name: window._config && window._config.userName || 'a',
 
 };
 let _data = {
@@ -20,6 +20,7 @@ let _data = {
   leftOpen: false,
   mode: MODE.PRESENTATION,// markdown, presentation
   current: 0,
+  title: '未命名',
   slideGroup: [{
     transition: 'slide',
     content: '# 快捷键 \n - Esc: 全屏切换 \n - Space/右/下: 下一页 \n - 左/上: 上一页',
@@ -57,6 +58,11 @@ function changeMode(mode) {
 function contentChange(content, index) {
   _data.slideGroup[index].content = content;
   autoSave();
+}
+
+function titleChange(title) {
+  _data.title = title;
+  save({name: title});
 }
 
 //sidebar
@@ -164,12 +170,18 @@ Dispatcher.register((action) => {
       break;
 
     case Constants.CHANGE_MODE:
-      changeMode(action.data);
-      Store.emitChange();
+      changeMode(action.data.mode);
+      if(action.data.withoutEmit !== true){
+        Store.emitChange();
+      }
       break;
     case Constants.CONTENT_CHANGE:
       var {content, index} = action.data;
       contentChange(content, index);
+      // Store.emitChange();
+      break;
+    case Constants.TITLE_CHANGE:
+      titleChange(action.data);
       // Store.emitChange();
       break;
     case Constants.TOGGLE_LEFT:
@@ -230,11 +242,13 @@ Dispatcher.register((action) => {
   }
 });
 
-function save(){
+//更新presetation中任意属性的值
+function save(data){
+  data = data || {raw: JSON.stringify(_data.slideGroup), id: 1};
   if(window._config){
     ajax.post(
       window._config.save,
-      {raw: JSON.stringify(_data), id: 1},
+      data,
       function(data){
         if(!data) return;
         if(data.success){
@@ -247,7 +261,10 @@ function save(){
     );
   }
 }
+
+//只更新presetation.raw
 var autoSave = _.debounce(save, 3000);
+
 
 if(window._config && _user.name){
   ajax.get(
@@ -255,7 +272,7 @@ if(window._config && _user.name){
     {id: 1},
     function(data){
       if(!data || !data.Raw) return;
-      _data = JSON.parse(data.Raw);
+      _.assign(_data, {raw: JSON.parse(data.Raw), title: data.Name});
       Store.emitChange();
     }
   );

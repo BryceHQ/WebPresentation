@@ -11,35 +11,46 @@ import IconRemove from 'material-ui/lib/svg-icons/content/remove';
 import lang from '../lang/zh-cn.js';
 
 import Actions from '../actions/actions.js';
+import Constants from '../constants/constants.js';
 
 /****************
 * RightTitle Component
 ****************/
+const styles = {
+  root: {
+    height: Constants.APPBAR_HEIGHT,
+    minHeight: Constants.APPBAR_HEIGHT,
+    backgroundColor: Colors.blueGrey600,
+  },
+  btn: {
+    width: 'inherit',
+    height: 'inherit',
+    padding: '0px',
+    margin: '0px 3px'
+  },
+  titleStyle: {
+    lineHeight: Constants.APPBAR_HEIGHT,
+  },
+};
 const RightTitle = React.createClass({
   render() {
-    let buttonStyle = {
-      width: '36px',
-      height: '36px',
-      padding: '0px',
-      margin: '0px 3px'
-    };
     return (
       <AppBar title = {lang.sidebar}
-        style = {{height: '50px', minHeight: '50px'}}
-        titleStyle = {{lineHeight: '50px'}}
+        style = {styles.root}
+        titleStyle = {styles.titleStyle}
         iconElementLeft = {
-          <IconButton tooltip = {lang.button.collapse} style = {buttonStyle}
+          <IconButton tooltip = {lang.button.collapse} style = {styles.btn}
             onTouchTap = {this._handleToggleRight}>
             <IconChevronRight/>
           </IconButton>
         }
         iconElementRight = {
           <div>
-            <IconButton tooltip = {lang.button.add} style = {buttonStyle}
+            <IconButton tooltip = {lang.button.add} style = {styles.btn}
               onTouchTap = {this._handleAdd}>
               <IconAdd color={Colors.white}/>
             </IconButton>
-            <IconButton tooltip = {lang.button.remove} style = {buttonStyle}
+            <IconButton tooltip = {lang.button.remove} style = {styles.btn}
               onTouchTap = {this._handleRemove}>
               <IconRemove color={Colors.white}/>
             </IconButton>

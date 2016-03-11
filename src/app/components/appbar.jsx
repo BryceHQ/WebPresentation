@@ -4,6 +4,7 @@ import lang from '../lang/zh-cn.js';
 import Colors from 'material-ui/lib/styles/colors';
 import AppBar from 'material-ui/lib/app-bar';
 import IconButton from 'material-ui/lib/icon-button';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 //icon
 import IconEditor from 'material-ui/lib/svg-icons/editor/mode-edit';
@@ -20,62 +21,107 @@ import history from '../history.js';
 import Actions from '../actions/actions.js';
 import Constants from '../constants/constants.js';
 
+//common
+import EditableText from '../components/common/editableText.jsx';
 
+const styles = {
+  root: {
+    zIndex:500,
+    height: Constants.APPBAR_HEIGHT,
+    minHeight: '40px',
+    paddingLeft: '0px',
+    backgroundColor: Colors.blueGrey600,
+  },
+  titleStyle: {
+    lineHeight: 'inherit',
+    overflow: 'inherit',
+  },
+  btn: {
+    width: 'inherit',
+    height: 'inherit',
+    padding: '0px',
+    margin: '0px 3px'
+  },
+  labelStyle: {
+    fontSize: 'inherit',
+    textTransform: 'inherit',
+    padding: '0px 20px',
+  },
+  iconStyleRight: {
+    marginRight: '0px',
+  },
+};
 const MyAppBar = React.createClass({
 
   render() {
-    let {user, simple} = this.props;
-    let buttonStyle = {
-      width: '36px',
-      height: '36px',
-      padding: '0px',
-      margin: '0px 3px'
-    };
-    let elemLeft = simple ? (
-      <div>
-        <IconButton tooltip={lang.button.menu} onTouchTap={this._handleToggleLeft} style={buttonStyle}>
-          <IconNavigationMenu color={Colors.white}/>
-        </IconButton>
-        <IconButton tooltip = {user.name || lang.button.signin} style={buttonStyle}
-          onTouchTap = {() => history.to('/auth/signin')}>
-          <IconActionAccount color={Colors.white}/>
-        </IconButton>
-      </div>
-    ) : (
-      <div>
-        <IconButton tooltip = {lang.button.menu} style={buttonStyle}
-          onTouchTap = {this._handleToggleLeft} >
-          <IconNavigationMenu color={Colors.white}/>
-        </IconButton>
-        <IconButton tooltip = {user.name || lang.button.login} style={buttonStyle}
-          onTouchTap = {() => history.to('/auth/signin')}>
-          <IconActionAccount color={Colors.white}/>
-        </IconButton>
-        <IconButton tooltip = {lang.button.fullscreen} style={buttonStyle}
-          onTouchTap = {this._handleFullscreen}>
-          <IconFullscreen color={Colors.white}/>
-        </IconButton>
-        <IconButton tooltip = {lang.button.markdown} style={buttonStyle}
-          onTouchTap = {this._changeMode}>
-          <IconEditor color={Colors.white}/>
-        </IconButton>
-      </div>
-    );
-    let elemRgiht = simple ?
-      null : (
-        <IconButton tooltip = {lang.button.expand} style={buttonStyle}
+    var {user, simple, title} = this.props;
+    var elemRgiht, titleElem;
+    var avatarHanler = user.name ? (() => history.to('/home')) : (() => history.to('/auth/signin'));
+    if(simple){
+      titleElem = (
+        <div>
+          <RaisedButton label={lang.name} backgroundColor={Colors.redA100} labelColor={Colors.white}
+          onTouchTap = {simple ? (() => history.to('/')) : this._handleToggleLeft}
+          labelStyle={styles.labelStyle}
+          style={{
+            height: '40px'
+          }}/>
+
+          <div className="icon-container">
+            <IconButton tooltip = {user.name || lang.button.signin} style={styles.btn}
+              onTouchTap = {avatarHanler}>
+              <IconActionAccount color={Colors.white}/>
+            </IconButton>
+          </div>
+        </div>
+      );
+    }else {
+      titleElem = (
+        <div>
+          <RaisedButton label={lang.name} backgroundColor={Colors.redA100} labelColor={Colors.white}
+          onTouchTap = {simple ? (() => history.to('/')) : this._handleToggleLeft}
+          labelStyle={styles.labelStyle}
+          style={{
+            height: '40px'
+          }}/>
+
+          <div className="icon-container">
+            <IconButton tooltip = {user.name || lang.button.signin} style={styles.btn}
+              onTouchTap = {avatarHanler}>
+              <IconActionAccount color={Colors.white}/>
+            </IconButton>
+            <IconButton tooltip = {lang.button.fullscreen} style={styles.btn}
+              onTouchTap = {this._handleFullscreen}>
+              <IconFullscreen color={Colors.white}/>
+            </IconButton>
+            <IconButton tooltip = {lang.button.markdown} style={styles.btn}
+              onTouchTap = {this._changeMode}>
+              <IconEditor color={Colors.white}/>
+            </IconButton>
+          </div>
+
+          <span className="title">
+            <EditableText value={title} onStartEdit={this._handleStartEditTitle}
+              onEndEdit={this._handleEndEditTitle}/>
+          </span>
+        </div>
+      );
+      elemRgiht = (
+        <IconButton tooltip = {lang.button.expand} style={styles.btn}
           onTouchTap = {this._handleToggleRight}>
           <IconChevronLeft color={Colors.white}/>
         </IconButton>
       );
+    }
+
     return (
       <AppBar
-        title = {<span style={{cursor: 'pointer'}}>{lang.name}</span>}
-        onTitleTouchTap = {() => history.to('/home')}
-        iconElementLeft = {elemLeft}
+        title = {titleElem}
+        iconElementLeft = {<span/>}
+        iconStyleRight = {styles.iconStyleRight}
         iconElementRight = {elemRgiht}
-        style = {{zIndex:500, height: Constants.APPBAR_HEIGHT, minHeight: '50px'}}
-        titleStyle = {{lineHeight: '50px'}}
+        style = {styles.root}
+        titleStyle = {styles.titleStyle}
       >
       </AppBar>
     );
@@ -88,6 +134,7 @@ const MyAppBar = React.createClass({
   _handleToggleLeft() {
     Actions.toggleLeft();
   },
+
   _handleToggleRight() {
     Actions.toggleRight();
   },
@@ -95,10 +142,18 @@ const MyAppBar = React.createClass({
   _handleFullscreen() {
     Actions.toggleFullscreen();
   },
+
+  _handleStartEditTitle() {
+    this._lastMode = this.props.mode;
+    Actions.changeMode(Constants.MODE.EDITING);
+  },
+
+  _handleEndEditTitle(title, oldTitle) {
+    if(title !== oldTitle){
+      Actions.titleChange(title);
+    }
+    Actions.changeMode(this._lastMode);
+  },
 });
-// <IconButton tooltip = {lang.button.help} style={buttonStyle}
-//   onTouchTap = {() => history.to('/help')}>
-//   <IconActionHelp color={Colors.white}/>
-// </IconButton>
 
 export default MyAppBar;

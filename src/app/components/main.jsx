@@ -27,7 +27,7 @@ const Main = React.createClass({
   },
 
   render() {
-    let {slideGroup, current, mode, leftOpen, rightOpen, bottomMessage} = this.state;
+    let {slideGroup, current, mode, leftOpen, rightOpen, bottomMessage, title} = this.state;
     let user = Store.getUser();
     let {children, location} = this.props;
     let simple = location.pathname !== '/';
@@ -72,7 +72,7 @@ const Main = React.createClass({
 
     return (
       <div style = {containerStyle}>
-        <AppBar mode = {mode} user = {user} simple = {simple}/>
+        <AppBar mode = {mode} user = {user} simple = {simple} title={title}/>
         <SlideGroup data = {slideGroup} index = {current} mode = {mode}/>
         <Right open = {rightOpen} data = {slideGroup} current = {current}/>
         <Left open = {leftOpen}/>

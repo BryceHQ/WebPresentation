@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 
 import FlatButton from 'material-ui/lib/flat-button';
+import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
 
 import LinkButton from '../../../components/common/linkButton.jsx';
@@ -34,7 +35,7 @@ const Profile = React.createClass({
             onChange = {this._handleChange.bind(this, 'description')}
           />
           <div>
-            <FlatButton label="确定" secondary={true} onTouchTap = {this._endEdit}/>
+            <RaisedButton label="确定" secondary={true} onTouchTap = {this._endEdit} />
             <FlatButton label="取消" secondary={true} onTouchTap = {this._cancelEdit}/>
           </div>
         </div>
