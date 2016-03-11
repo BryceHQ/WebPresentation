@@ -6,7 +6,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import Checkbox from 'material-ui/lib/checkbox';
 
 
-import Alert from '../../../components/alert.jsx';
+import Alert from '../../../components/common/alert.jsx';
 
 
 const SignIn = React.createClass({

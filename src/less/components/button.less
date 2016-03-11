@@ -1,0 +1,77 @@
+.button {
+	.user-select(none);
+	background: none;
+	border: 1px solid transparent;
+	border-radius: @border-radius-base;
+	cursor: pointer;
+	display: inline-block;
+	font-weight: @button-font-weight;
+	line-height: @component-line-height;
+	height: @component-height;
+	margin-bottom: 0;
+	overflow: hidden; // contain gradient on IE9
+	padding: 0 @button-padding-horizontal;
+	text-align: center;
+	touch-action: manipulation;
+	vertical-align: middle;
+	white-space: nowrap;
+	-webkit-appearance: none;
+
+	&:hover,
+	&:focus,
+	&.focus,
+	&.is-focus {
+		color: @button-default-color;
+		text-decoration: none;
+	}
+
+	&:active,
+	&.active,
+	&.is-active {
+		background-image: none;
+		outline: 0;
+	}
+
+	&.disabled,
+	&[disabled] {
+		opacity: .4;
+		pointer-events: none;
+	}
+}
+
+.link-button {
+	color: @link-color;
+	font-weight: normal;
+
+	&,
+	&:active,
+	&.active,
+	&[disabled],
+	fieldset[disabled] & {
+		.box-shadow(none);
+		background-color: transparent;
+	}
+	&,
+	&:hover,
+	&:focus,
+	&:active {
+		border-color: transparent;
+		outline: none;
+	}
+	&:hover,
+	&:focus {
+		background-color: transparent;
+		color: @link-hover-color;
+		text-decoration: underline;
+	}
+}
+.link-text {
+	.link-button();
+	color: @text-color;
+
+	&:hover,
+	&:focus {
+		color: @app-primary;
+		outline: none;
+	}
+}

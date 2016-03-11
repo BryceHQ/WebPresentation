@@ -3,7 +3,6 @@ import lang from '../lang/zh-cn.js';
 
 import LeftNav from 'material-ui/lib/left-nav';
 import Avatar from 'material-ui/lib/avatar';
-import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
 
@@ -12,7 +11,7 @@ import Actions from '../actions/actions.js';
 import StoreMenu from '../stores/storeMenu.js';
 
 import SelectableList from './selectableList.jsx';
-import HistoryRecords from './historyRecords.jsx';
+import SimpleList from './common/list.jsx';
 
 
 const Left = React.createClass({
@@ -40,7 +39,7 @@ const Left = React.createClass({
     let {open, openRight} = this.props;
     let {items, current, history} = this.state;
 
-    let body = current === 4 ? <HistoryRecords data = {history}/> : null;
+    let body = current === 4 ? <SimpleList data = {history}/> : null;
 
     return (
       <LeftNav

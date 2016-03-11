@@ -7,10 +7,10 @@ import Checkbox from 'material-ui/lib/checkbox';
 
 import Actions from '../../../actions/actions.js';
 
-//router
-import { browserHistory  } from 'react-router';
+//history
+import history from '../../../history.js';
 
-import Alert from '../../../components/alert.jsx';
+import Alert from '../../../components/common/alert.jsx';
 import ajax from '../../../ajax.js';
 
 const SignIn = React.createClass({
@@ -65,7 +65,7 @@ const SignIn = React.createClass({
         <FlatButton label="Sign In" secondary={true} onTouchTap = {this._handleSignIn}
           disabled = {!(userName && password)}
         />
-        <FlatButton label="Sign Up" secondary={true} onTouchTap = {() => browserHistory.push('/auth/signup')}/>
+        <FlatButton label="Sign Up" secondary={true} onTouchTap = {() => history.to('/auth/signup')}/>
       </div>
     );
   },
@@ -80,7 +80,7 @@ const SignIn = React.createClass({
           if(!data) return;
           if(data.success){
             //redirect to home
-            browserHistory.push('/');
+            history.home();
             Actions.signIn({name: data.user});
           }
           else{
@@ -92,13 +92,8 @@ const SignIn = React.createClass({
   },
 
   _handleChange(key, e) {
-    const newState = {};
-    if(key === 'rememberMe'){
-      newState[key] = e.target.checked;
-    }
-    else{
-      newState[key] = e.target.value || '';
-    }
+    var newState = {};
+    newState[key] = key === 'rememberMe' ? e.target.checked : (e.target.value || '');
     this.setState(newState);
   },
 });

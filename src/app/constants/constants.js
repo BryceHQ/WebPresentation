@@ -28,5 +28,9 @@ const constants = {
     PRESENTATION: 'presentation',
     FULLSCREEN: 'fullscreen',
   },
+
+
+  APPBAR_HEIGHT: '50px',
+  INFO_WIDTH: '300px',
 };
 export default constants;

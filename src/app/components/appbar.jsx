@@ -14,7 +14,7 @@ import IconNavigationMenu from 'material-ui/lib/svg-icons/navigation/menu';
 import IconActionHelp from 'material-ui/lib/svg-icons/action/help';
 
 //router
-import { browserHistory  } from 'react-router';
+import history from '../history.js';
 
 // flux
 import Actions from '../actions/actions.js';
@@ -37,7 +37,7 @@ const MyAppBar = React.createClass({
           <IconNavigationMenu color={Colors.white}/>
         </IconButton>
         <IconButton tooltip = {user.name || lang.button.signin} style={buttonStyle}
-          onTouchTap = {() => browserHistory.push('/auth/signin')}>
+          onTouchTap = {() => history.to('/auth/signin')}>
           <IconActionAccount color={Colors.white}/>
         </IconButton>
       </div>
@@ -48,7 +48,7 @@ const MyAppBar = React.createClass({
           <IconNavigationMenu color={Colors.white}/>
         </IconButton>
         <IconButton tooltip = {user.name || lang.button.login} style={buttonStyle}
-          onTouchTap = {() => browserHistory.push('/auth/signin')}>
+          onTouchTap = {() => history.to('/auth/signin')}>
           <IconActionAccount color={Colors.white}/>
         </IconButton>
         <IconButton tooltip = {lang.button.fullscreen} style={buttonStyle}
@@ -71,10 +71,10 @@ const MyAppBar = React.createClass({
     return (
       <AppBar
         title = {<span style={{cursor: 'pointer'}}>{lang.name}</span>}
-        onTitleTouchTap = {() => browserHistory.push('/')}
+        onTitleTouchTap = {() => history.to('/home')}
         iconElementLeft = {elemLeft}
         iconElementRight = {elemRgiht}
-        style = {{zIndex:500, height: '50px', minHeight: '50px'}}
+        style = {{zIndex:500, height: Constants.APPBAR_HEIGHT, minHeight: '50px'}}
         titleStyle = {{lineHeight: '50px'}}
       >
       </AppBar>
@@ -97,7 +97,7 @@ const MyAppBar = React.createClass({
   },
 });
 // <IconButton tooltip = {lang.button.help} style={buttonStyle}
-//   onTouchTap = {() => browserHistory.push('/help')}>
+//   onTouchTap = {() => history.to('/help')}>
 //   <IconActionHelp color={Colors.white}/>
 // </IconButton>
 

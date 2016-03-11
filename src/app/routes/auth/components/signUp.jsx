@@ -6,10 +6,10 @@ import FlatButton from 'material-ui/lib/flat-button';
 
 import Actions from '../../../actions/actions.js';
 
-//router
-import { browserHistory  } from 'react-router';
+//history
+import history from '../../../history.js';
 
-import Alert from '../../../components/alert.jsx';
+import Alert from '../../../components/common/alert.jsx';
 import ajax from '../../../ajax.js';
 
 const SignUp = React.createClass({
@@ -66,7 +66,7 @@ const SignUp = React.createClass({
         /><br/>
         <FlatButton label="Sign Up" secondary={true} onTouchTap = {this._handleSignUp}
           disabled = {!(password === confirmPassword && userName && password)}/>
-        <FlatButton label="Sign In" secondary={true} onTouchTap = {() => browserHistory.push('/auth/signin')}/>
+        <FlatButton label="Sign In" secondary={true} onTouchTap = {() => history.to('/auth/signin')}/>
       </div>
     );
   },
@@ -81,7 +81,7 @@ const SignUp = React.createClass({
           if(!data) return;
           if(data.success){
             //redirect to home
-            browserHistory.push('/');
+            history.home();
             Actions.signIn({ name: data.user });
           }
           else{
@@ -93,7 +93,7 @@ const SignUp = React.createClass({
   },
 
   _handleChange(key, e) {
-    const newState = {};
+    var newState = {};
     newState[key] = e.target.value;
     this.setState(newState);
   },

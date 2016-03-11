@@ -4,9 +4,14 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Main from './components/main.jsx'; // Our custom react component
 
 //routers
-import { Router, browserHistory } from 'react-router';
+import { Router } from 'react-router';
 import Auth from './routes/auth/index.js';
 import Help from './routes/help/index.js';
+import Home from './routes/home/index.js';
+
+//history
+import history from './history.js';
+
 
 import ajax from './ajax.js';
 
@@ -26,10 +31,11 @@ const rootRoute = {
     childRoutes: [
       Auth,
       Help,
+      Home,
     ]
   }]
 };
 
 // Render the main app react component into the app div.
 // For more details see: https://facebook.github.io/react/docs/top-level-api.html#react.render
-ReactDOM.render(<Router history={browserHistory} routes={rootRoute} />, document.getElementById('app'));
+ReactDOM.render(<Router history={history.host} routes={rootRoute} />, document.getElementById('app'));

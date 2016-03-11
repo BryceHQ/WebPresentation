@@ -4,7 +4,7 @@ import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
 
-const HistoryRecords = React.createClass({
+const SimpleList = React.createClass({
   render() {
     var {data} = this.props;
     var children = [];
@@ -18,7 +18,6 @@ const HistoryRecords = React.createClass({
               <span className = "text-name">{item.name}</span>
               <span className = "text-info">
                 {item.value}
-                <a>click</a>
               </span>
             </div>
           }
@@ -36,4 +35,4 @@ const HistoryRecords = React.createClass({
   },
 });
 
-export default HistoryRecords;
+export default SimpleList;

@@ -7,6 +7,7 @@ import Right from './right.jsx';
 import Left from './left.jsx';
 import SlideGroup from './slideGroup.jsx';
 import Snackbar from 'material-ui/lib/snackbar';
+import Colors from 'material-ui/lib/styles/colors';
 
 // flux
 import Store from '../stores/store.js';
@@ -28,10 +29,13 @@ const Main = React.createClass({
   render() {
     let {slideGroup, current, mode, leftOpen, rightOpen, bottomMessage} = this.state;
     let user = Store.getUser();
+    let {children, location} = this.props;
+    let simple = location.pathname !== '/';
     let containerStyle = {
       width: '100%',
       height: '100%',
       position: 'absolute',
+      backgroundColor: simple ? Colors.white : Colors.grey200,
     };
     let snackbar = (
       <Snackbar
@@ -55,8 +59,6 @@ const Main = React.createClass({
       );
     }
 
-    let {children, location} = this.props;
-    let simple = location.pathname !== '/';
     if(children){
       return (
         <div style = {containerStyle}>
