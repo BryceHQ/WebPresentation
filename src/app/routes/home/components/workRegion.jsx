@@ -1,4 +1,9 @@
+/**
+* 工作区
+*/
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+
 import _ from 'lodash';
 
 import FlatButton from 'material-ui/lib/flat-button';
@@ -8,7 +13,10 @@ import Colors from 'material-ui/lib/styles/colors';
 
 import Constants from '../../../constants/constants.js';
 
+import ajax from '../../../ajax.js';
+
 import AllFiles from './allFiles.jsx';
+import RecentFiles from './recentFiles.jsx';
 
 const styles = {
   root: {
@@ -39,34 +47,72 @@ const styles = {
 };
 const WorkRegion = React.createClass({
   getInitialState() {
+    this._flag = {};
+    return {};
+  },
+
+  getDefaultProps(){
     return {
+      placeholder: '加载中...'
     };
   },
 
   render() {
-    var {editing, name, description} = this.state;
+    var {recent, all} = this.state;
+    var {placeholder} = this.props;
 
+    if(!recent){
+      this._handleChange('recent');
+    }
+    let otherProps = {};
+    var me = this;
+    ['all', 'recent'].forEach(function(key){
+      if(!me._flag[key]){
+        otherProps[key] = {placeholder: placeholder};
+      }
+    });
     return (
       <div style = {styles.root}>
-        <Tabs inkBarStyle = {styles.inkBar}>
-          <Tab label="最近的文件" style={styles.tab}>
-            <div>
-              <h2 style={styles.headline}>Tab One</h2>
-              <p>
-                This is an example tab.
-              </p>
-              <p>
-                You can put any sort of HTML or react component in here. It even keeps the component state!
-              </p>
-            </div>
+        <Tabs inkBarStyle = {styles.inkBar} onChange = {this._handleChange}>
+          <Tab label="最近的文件" style={styles.tab} value="recent">
+            <RecentFiles data = {recent} onError = {this._handleError} {...otherProps.recent}/>
           </Tab>
-          <Tab label="全部文件" style={styles.tab}>
-            <AllFiles/>
+          <Tab label="全部文件" style={styles.tab} value="all">
+            <AllFiles data = {all} onError = {this._handleError} {...otherProps.all}/>
           </Tab>
         </Tabs>
       </div>
     );
   },
+
+  _handleChange(value) {
+    if(!this._flag[value] && window._config){
+      let me = this;
+      ajax.get(
+        window._config[value],
+        function(data){
+          if(!data) return;
+          me._flag[value] = true;
+
+          if(data.success){
+            let newState = {};
+            newState[value] = data.value;
+            me.setState(newState);
+          }
+          else{
+            this._handleError(data.message);
+          }
+        }
+      );
+    }
+  },
+
+  _handleError(error){
+    if(this.props.onError){
+      this.props.onError(error);
+    }
+  }
+
 });
 
 export default WorkRegion;

@@ -626,6 +626,13 @@ a {
   height: 100%;
   width: 100%;
 }
+.progress {
+  z-index: 9999;
+  width: 100%;
+  top: 40%;
+  position: absolute;
+  text-align: center;
+}
 .button {
   -webkit-user-select: none;
   -moz-user-select: none;

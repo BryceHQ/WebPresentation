@@ -73,6 +73,7 @@ const Profile = React.createClass({
     var newState = {};
     newState[key] = e.target.value;
     this.setState(newState);
+    //todo: backend
   },
 });
 

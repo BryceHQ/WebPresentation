@@ -2,12 +2,21 @@ import Dispatcher from '../dispatcher/dispatcher.js';
 import Constants from '../constants/constants.js';
 
 const Action = {
+  //add
+  add(type){
+    Dispatcher.dispatch({
+      actionType: Constants.Add,
+      data: { type: type },
+    });
+  },
+
   //save
   save(){
     Dispatcher.dispatch({
       actionType: Constants.SAVE,
     });
   },
+
   //sign
   signIn(data) {
     if(!data) return;
@@ -103,7 +112,11 @@ const Action = {
       actionType: Constants.CLEAR_MESSAGE
     });
   },
-
+  clearError() {
+    Dispatcher.dispatch({
+      actionType: Constants.CLEAR_ERROR
+    });
+  },
 
   //---------------menu------------------
   menuSelect(index) {

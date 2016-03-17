@@ -20,6 +20,7 @@ import history from '../history.js';
 // flux
 import Actions from '../actions/actions.js';
 import Constants from '../constants/constants.js';
+import Store from '../stores/store.js';
 
 //common
 import EditableText from '../components/common/editableText.jsx';
@@ -54,9 +55,10 @@ const styles = {
 const MyAppBar = React.createClass({
 
   render() {
-    var {user, simple, title} = this.props;
+    var {user, simple, title, children} = this.props;
+    user = user || Store.getUser();
     var elemRgiht, titleElem;
-    var avatarHanler = user.name ? (() => history.to('/home')) : (() => history.to('/auth/signin'));
+    var avatarHanler = user.isAuthenticated ? (() => history.to('/home')) : (() => history.to('/auth/signin'));
     if(simple){
       titleElem = (
         <div>
@@ -68,7 +70,7 @@ const MyAppBar = React.createClass({
           }}/>
 
           <div className="icon-container">
-            <IconButton tooltip = {user.name || lang.button.signin} style={styles.btn}
+            <IconButton tooltip = {user.isAuthenticated ? user.name : lang.button.signin} style={styles.btn}
               onTouchTap = {avatarHanler}>
               <IconActionAccount color={Colors.white}/>
             </IconButton>
@@ -86,7 +88,7 @@ const MyAppBar = React.createClass({
           }}/>
 
           <div className="icon-container">
-            <IconButton tooltip = {user.name || lang.button.signin} style={styles.btn}
+            <IconButton tooltip = {user.isAuthenticated ? user.name : lang.button.signin} style={styles.btn}
               onTouchTap = {avatarHanler}>
               <IconActionAccount color={Colors.white}/>
             </IconButton>
@@ -114,16 +116,20 @@ const MyAppBar = React.createClass({
       );
     }
 
+    // iconElementLeft = {<span/>} iconElementLeft如果不传，会使用默认的iconElementLeft，所以这里传<span/>
     return (
-      <AppBar
-        title = {titleElem}
-        iconElementLeft = {<span/>}
-        iconStyleRight = {styles.iconStyleRight}
-        iconElementRight = {elemRgiht}
-        style = {styles.root}
-        titleStyle = {styles.titleStyle}
-      >
-      </AppBar>
+      <div>
+        <AppBar
+          title = {titleElem}
+          iconElementLeft = {<span/>}
+          iconStyleRight = {styles.iconStyleRight}
+          iconElementRight = {elemRgiht}
+          style = {styles.root}
+          titleStyle = {styles.titleStyle}
+        >
+        </AppBar>
+        {children}
+      </div>
     );
   },
 
@@ -151,8 +157,9 @@ const MyAppBar = React.createClass({
   _handleEndEditTitle(title, oldTitle) {
     if(title !== oldTitle){
       Actions.titleChange(title);
+    } else{
+      Actions.changeMode(this._lastMode);
     }
-    Actions.changeMode(this._lastMode);
   },
 });
 

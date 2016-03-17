@@ -1,4 +1,6 @@
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+
 import classNames from 'classnames';
 
 const ALERT_TYPES = [
@@ -11,6 +13,7 @@ const ALERT_TYPES = [
 ];
 
 const Alert = React.createClass({
+	mixins: [PureRenderMixin],
 
 	render() {
 		var componentClass = classNames(

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import _ from 'lodash';
 
 import Constants from '../../../constants/constants.js';
@@ -11,27 +12,38 @@ import Paper from 'material-ui/lib/paper';
 import Info from './info.jsx';
 import WorkRegion from './workRegion.jsx';
 
+import AppBar from '../../../components/appbar.jsx';
+import ErrorDialog from '../../../components/error.jsx';
+
+
 const Home = React.createClass({
-  getInitialState() {
+  getInitialState(){
     return {
+      error: null,
     };
   },
 
   render() {
-    const style = {
-      top: Constants.APPBAR_HEIGHT,
-      left: '0px',
-      bottom: '0px',
-      width: Constants.INFO_WIDTH,
-      padding: 20,
-      position: 'absolute',
-    };
+    let {error} = this.state;
+    let errorElem = error ? <ErrorDialog error={error} onClearError={this._handleClearError}/> : null;
     return (
       <div className = "home">
-        <Info/>
-        <WorkRegion/>
+        <AppBar simple = {true} />
+        <Info onError={this._handleError} />
+        <WorkRegion onError={this._handleError} />
+        {errorElem}
       </div>
     );
+  },
+
+  _handleError(error) {
+    if(error){
+      this.setState({error: error});
+    }
+  },
+
+  _handleClearError(){
+    this.setState({error: null});
   },
 
 });

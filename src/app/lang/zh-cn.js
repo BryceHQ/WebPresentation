@@ -18,6 +18,9 @@ const lang = {
     signin: '登录',
     menu: '菜单',
   },
+  message: {
+    fullscreen: '按ESC退出全屏',
+  }
 };
 
 export default lang;

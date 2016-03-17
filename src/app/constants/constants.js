@@ -1,4 +1,5 @@
 const constants = {
+  Add: 'ADD',
   SAVE: 'SAVE',
   SIGN_IN: 'SIGN_IN',
   SIGN_UP: 'SIGN_UP',
@@ -22,7 +23,7 @@ const constants = {
 
   //messages
   CLEAR_MESSAGE: 'CLEAR_MESSAGE',
-
+  CLEAR_ERROR: 'CLEAR_ERROR',
 
   MODE: {
     MARKDOWN: 'markdown',
@@ -35,4 +36,5 @@ const constants = {
   APPBAR_HEIGHT: '40px',
   INFO_WIDTH: '300px',
 };
+
 export default constants;

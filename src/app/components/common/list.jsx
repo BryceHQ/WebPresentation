@@ -1,10 +1,14 @@
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+
 import Avatar from 'material-ui/lib/avatar';
 import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
 
 const SimpleList = React.createClass({
+  mixins: [PureRenderMixin],
+
   render() {
     var {data} = this.props;
     var children = [];

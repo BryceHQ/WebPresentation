@@ -4,6 +4,7 @@ import Constants from '../constants/constants.js';
 import _ from 'lodash';
 
 import ajax from '../ajax.js';
+import lang from '../lang/zh-cn.js';
 
 import helper from '../helper.js';
 
@@ -12,15 +13,17 @@ const MODE = Constants.MODE;
 
 let _lastMode = MODE.PRESENTATION;
 let _user = {
-  name: window._config && window._config.userName || 'a',
-
+  name: '',
+  isAuthenticated: false,
 };
 let _data = {
+  fileId: 'readme',
   rightOpen: false,
   leftOpen: false,
+  loading: false,
   mode: MODE.PRESENTATION,// markdown, presentation
   current: 0,
-  title: '未命名',
+  title: 'readme',
   slideGroup: [{
     transition: 'slide',
     content: '# 快捷键 \n - Esc: 全屏切换 \n - Space/右/下: 下一页 \n - 左/上: 上一页',
@@ -62,7 +65,8 @@ function contentChange(content, index) {
 
 function titleChange(title) {
   _data.title = title;
-  save({name: title});
+  save({name: title, id: _data.fileId});
+  changeMode(_lastMode);
 }
 
 //sidebar
@@ -89,6 +93,7 @@ function toggleFullscreen() {
   else{
     _lastMode = _data.mode;
     _data.mode = MODE.FULLSCREEN;
+    _data.bottomMessage = lang.message.fullscreen;
   }
 }
 
@@ -125,11 +130,15 @@ const slide = {
 
   pre() {
     _data.current -= 1;
-  }
+  },
 };
 
 function clearMessage(){
   _data.bottomMessage = null;
+}
+
+function clearError(){
+  _data.error = null;
 }
 
 const Store = _.assign({}, EventEmitter.prototype, {
@@ -137,12 +146,32 @@ const Store = _.assign({}, EventEmitter.prototype, {
     _data = data;
     this.emitChange();
   },
-  getData() {
-    return _data;
+
+  //重设其他状态
+  // resetData(data) {
+  //   _data = _.assign(data, {
+  //     rightOpen: false,
+  //     leftOpen: false,
+  //     mode: MODE.PRESENTATION,
+  //   });
+  //   _lastMode = MODE.PRESENTATION;
+  //   this.emitChange();
+  // },
+
+  getData(fileId) {
+    if(fileId && fileId !== _data.fileId){
+      get(fileId);
+      _data.loading = true;
+    }
+    return _.assign(_data);
   },
 
   getUser() {
     return _user;
+  },
+
+  isAuthenticated() {
+    return _user.isAuthenticated;
   },
 
   emitChange() {
@@ -237,14 +266,47 @@ Dispatcher.register((action) => {
       clearMessage();
       Store.emitChange();
       break;
+    case Constants.CLEAR_ERROR:
+      clearError();
+      Store.emitChange();
+      break;
     default:
       break;
   }
 });
 
+function get(fileId){
+  if(window._config){
+    ajax.get(
+      window._config.get,
+      {id: fileId},
+      function(data){
+        if(!data) return;
+        if(data.success){
+          data = data.value;
+          _.assign(_data, {
+            fileId: data.Id,
+            slideGroup: JSON.parse(data.Raw),
+            title: data.Name,
+            rightOpen: false,
+            leftOpen: false,
+            mode: MODE.PRESENTATION,
+            current: 0,
+            loading: false,
+          });
+        }
+        else{
+          _data.error = data.message;
+        }
+        Store.emitChange();
+      }
+    );
+  }
+}
+
 //更新presetation中任意属性的值
 function save(data){
-  data = data || {raw: JSON.stringify(_data.slideGroup), id: 1};
+  data = data || {raw: JSON.stringify(_data.slideGroup), id: _data.fileId};
   if(window._config){
     ajax.post(
       window._config.save,
@@ -254,7 +316,7 @@ function save(data){
         if(data.success){
           _data.bottomMessage = '保存成功';
         }else{
-          _data.bottomMessage = data.Message;
+          _data.error = data.message || data.Message;
         }
         Store.emitChange();
       }
@@ -262,20 +324,12 @@ function save(data){
   }
 }
 
-//只更新presetation.raw
+//只更新presentation.raw
 var autoSave = _.debounce(save, 3000);
 
-
-if(window._config && _user.name){
-  ajax.get(
-    window._config.get,
-    {id: 1},
-    function(data){
-      if(!data || !data.Raw) return;
-      _.assign(_data, {raw: JSON.parse(data.Raw), title: data.Name});
-      Store.emitChange();
-    }
-  );
+//init
+if(window._config){
+  _.assign(_user, _.pick(window._config, ['name', 'isAuthenticated']));
 }
 
 export default Store;

@@ -1,4 +1,6 @@
 import React from 'react';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
+
 import _ from 'lodash';
 
 import Table from 'material-ui/lib/table/table';
@@ -9,49 +11,71 @@ import TableRowColumn from 'material-ui/lib/table/table-row-column';
 import TableBody from 'material-ui/lib/table/table-body';
 
 const SimpleTable = React.createClass({
-  renderBodyRow(item) {
+  mixins: [PureRenderMixin],
+
+  propTypes: {
+    stripedRows: React.PropTypes.bool,
+    placeholder: React.PropTypes.string,
+  },
+
+  getDefaultProps() {
+    return {
+      placeholder: '这里什么也没有...',
+      tableProps: {},
+      bodyProps: {},
+      headerProps: {},
+    };
+  },
+
+  renderRow(item) {
     var {columns} = this.props;
     if(columns && columns.length){
       return _.map(columns, function(col){
-        return (
-          <TableRowColumn key={col.key}>{item[col.key]}</TableRowColumn>
-        );
+        if(col.key){
+          return (
+            <TableRowColumn key={col.key}>{item[col.key]}</TableRowColumn>
+          );
+        }
       });
     }
-
   },
 
   render() {
-    var {data, columns} = this.props;
-    var headerRows = [];
+    var {data, columns, placeholder, tableProps, bodyProps, headerProps} = this.props;
+    var headerRows = [], rows = [], me = this;
     if(columns && columns.length){
       columns.forEach(function(col){
         headerRows.push(
           <TableHeaderColumn key ={col.key}>{col.text}</TableHeaderColumn>
         );
       });
-    }
 
-    var rows = [], me = this;
-    if(data && data.length){
-      data.forEach(function(item, i){
-        rows.push(
-          <TableRow key={i}>
-            {me.renderBodyRow(item)}
+      if(data && data.length){
+        data.forEach(function(item, i){
+          rows.push(
+            <TableRow key={i}>
+              {me.renderRow(item)}
+            </TableRow>
+          );
+        });
+      }
+      else if(placeholder){
+        rows = (
+          <TableRow key={0}>
+            <TableRowColumn>{placeholder}</TableRowColumn>
           </TableRow>
         );
-      });
+      }
     }
 
     return (
-      <Table style = {{
-      }}>
-        <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+      <Table {...tableProps}>
+        <TableHeader adjustForCheckbox={false} displaySelectAll={false} {...headerProps}>
           <TableRow>
             {headerRows}
           </TableRow>
         </TableHeader>
-        <TableBody displayRowCheckbox={false} stripedRows={true}>
+        <TableBody displayRowCheckbox={false} {...bodyProps}>
           {rows}
         </TableBody>
       </Table>
