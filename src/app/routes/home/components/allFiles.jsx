@@ -47,14 +47,17 @@ const AllFiles = React.createClass({
 
   _handleNew() {
     if(window._config){
+      var me = this;
       ajax.post(
         window._config.add,
         function(data){
           if(!data) return;
-          if(data.success){
-            history.to(`/file/${data.id}`);
-          }else if(this.props.onError){
-            this.props.onError(data.message);
+          if(data.success === false){
+            if(me.props.onError){
+              me.props.onError(data.message);
+            }
+          }else{
+            history.to(`/file/${data}`);
           }
         }
       );

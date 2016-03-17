@@ -84,13 +84,13 @@ const SignIn = React.createClass({
         _.pick(this.state, ['userName', 'password', 'rememberMe']),
         function(data){
           if(!data) return;
-          if(data.success){
-            //redirect to home
-            history.home();
-            Actions.signIn({name: data.user});
+          if(data.success === false){
+            me.setState({ message: data.message});
           }
           else{
-            me.setState({ message: data.message});
+            //redirect to home
+            history.home();
+            Actions.signIn({name: data});
           }
         }
       );

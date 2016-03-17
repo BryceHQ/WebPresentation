@@ -25,6 +25,8 @@ import Store from '../stores/store.js';
 //common
 import EditableText from '../components/common/editableText.jsx';
 
+import DefaultAvater from '../components/avatar.jsx';
+
 const styles = {
   root: {
     zIndex:500,
@@ -42,6 +44,12 @@ const styles = {
     height: 'inherit',
     padding: '0px',
     margin: '0px 3px'
+  },
+  avatar: {
+    width: 'inherit',
+    height: 'inherit',
+    padding: '0px',
+    margin: '0px 20px',
   },
   labelStyle: {
     fontSize: 'inherit',
@@ -70,9 +78,9 @@ const MyAppBar = React.createClass({
           }}/>
 
           <div className="icon-container">
-            <IconButton tooltip = {user.isAuthenticated ? user.name : lang.button.signin} style={styles.btn}
+            <IconButton tooltip = {user.isAuthenticated ? user.name : lang.button.signin} style={styles.avatar}
               onTouchTap = {avatarHanler}>
-              <IconActionAccount color={Colors.white}/>
+              <DefaultAvater src={user.isAuthenticated ? "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAABmJLR0QA/wD/AP+gvaeTAAAA7UlEQVR4nO3asQ3CQBAAwX9kiVqogP5DV0AtRFDEBCfDTm6/vbrodfv5un/WoPPx3vL89PffJg//BQVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUR7+j7t6ppAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQES7eWv5ft70fqCe3wSiAqICogKiAqICogKiAqICogKiAqICogKiAqICouPf9wP1/5tAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQHToC66+39d94LACogKiAqICogKiAqICogKiAqICogKiAqICogKiL2SGHPJ+jTmVAAAAAElFTkSuQmCC" : null} />
             </IconButton>
           </div>
         </div>
@@ -88,9 +96,9 @@ const MyAppBar = React.createClass({
           }}/>
 
           <div className="icon-container">
-            <IconButton tooltip = {user.isAuthenticated ? user.name : lang.button.signin} style={styles.btn}
+            <IconButton tooltip = {user.isAuthenticated ? user.name : lang.button.signin} style={styles.avatar}
               onTouchTap = {avatarHanler}>
-              <IconActionAccount color={Colors.white}/>
+              <DefaultAvater src={user.isAuthenticated ? "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAABmJLR0QA/wD/AP+gvaeTAAAA7UlEQVR4nO3asQ3CQBAAwX9kiVqogP5DV0AtRFDEBCfDTm6/vbrodfv5un/WoPPx3vL89PffJg//BQVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUR7+j7t6ppAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQES7eWv5ft70fqCe3wSiAqICogKiAqICogKiAqICogKiAqICogKiAqICouPf9wP1/5tAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQHToC66+39d94LACogKiAqICogKiAqICogKiAqICogKiAqICogKiL2SGHPJ+jTmVAAAAAElFTkSuQmCC" : null}/>
             </IconButton>
             <IconButton tooltip = {lang.button.fullscreen} style={styles.btn}
               onTouchTap = {this._handleFullscreen}>

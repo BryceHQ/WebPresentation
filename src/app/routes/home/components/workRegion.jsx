@@ -94,13 +94,13 @@ const WorkRegion = React.createClass({
           if(!data) return;
           me._flag[value] = true;
 
-          if(data.success){
-            let newState = {};
-            newState[value] = data.value;
-            me.setState(newState);
+          if(data.success === false){
+            me._handleError(data.message);
           }
           else{
-            this._handleError(data.message);
+            let newState = {};
+            newState[value] = data;
+            me.setState(newState);
           }
         }
       );

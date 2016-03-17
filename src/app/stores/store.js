@@ -282,8 +282,10 @@ function get(fileId){
       {id: fileId},
       function(data){
         if(!data) return;
-        if(data.success){
-          data = data.value;
+        if(data.success === false){
+          _data.error = data.message;
+        }
+        else{
           _.assign(_data, {
             fileId: data.Id,
             slideGroup: JSON.parse(data.Raw),
@@ -294,9 +296,6 @@ function get(fileId){
             current: 0,
             loading: false,
           });
-        }
-        else{
-          _data.error = data.message;
         }
         Store.emitChange();
       }
@@ -313,10 +312,10 @@ function save(data){
       data,
       function(data){
         if(!data) return;
-        if(data.success){
-          _data.bottomMessage = '保存成功';
-        }else{
+        if(data.success === false){
           _data.error = data.message || data.Message;
+        }else{
+          _data.bottomMessage = '保存成功';
         }
         Store.emitChange();
       }

@@ -13,6 +13,22 @@ import StoreMenu from '../stores/storeMenu.js';
 import SelectableList from './selectableList.jsx';
 import SimpleList from './common/list.jsx';
 
+const styles = {
+  avatarContainer: {
+    padding: '10px 0px 10px 20px',
+    textAlign: 'center',
+  },
+  list: {
+    position: 'absolute',
+    height: '100%',
+    width: '100px',
+  },
+  body: {
+    position: 'absolute',
+    left: '100px',
+    top: '63px',
+  },
+};
 
 const Left = React.createClass({
   getDefaultProps() {
@@ -31,11 +47,6 @@ const Left = React.createClass({
   },
 
   render() {
-    const listStyle = {
-      position: 'absolute',
-      height: '100%',
-      width: '100px',
-    };
     let {open, openRight} = this.props;
     let {items, current, history} = this.state;
 
@@ -50,15 +61,13 @@ const Left = React.createClass({
         openRight = {false}
         onRequestChange = {open => Actions.toggleLeft(open.open)}
       >
-        <div style={{
-            padding: '10px 0px 10px 20px',
-          }}
+        <div style={styles.avatarContainer}
         >
           <Avatar src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAABmJLR0QA/wD/AP+gvaeTAAAA7UlEQVR4nO3asQ3CQBAAwX9kiVqogP5DV0AtRFDEBCfDTm6/vbrodfv5un/WoPPx3vL89PffJg//BQVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUR7+j7t6ppAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQES7eWv5ft70fqCe3wSiAqICogKiAqICogKiAqICogKiAqICogKiAqICouPf9wP1/5tAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQHToC66+39d94LACogKiAqICogKiAqICogKiAqICogKiAqICogKiL2SGHPJ+jTmVAAAAAElFTkSuQmCC" />
         </div>
         <Divider/>
         <SelectableList onSelectedChange = {this._handleMenuSelect}
-          style={listStyle}
+          style={styles.list}
         >
           <ListItem value={1} primaryText={lang.menu.new} />
           <ListItem value={2} primaryText={lang.menu.open} />
@@ -67,11 +76,7 @@ const Left = React.createClass({
         </SelectableList>
 
         <div
-          style={{
-            position: 'absolute',
-            left: '100px',
-            top: '63px',
-          }}
+          style={styles.body}
         >
           {body}
         </div>
