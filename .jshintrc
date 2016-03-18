@@ -15,6 +15,7 @@
         "require",
         "window",
         "console",
-        "module"
+        "module",
+        "global"
     ]
 }

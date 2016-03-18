@@ -6,35 +6,48 @@
    See browserify.bundleConfigs in gulp/config.js
 */
 
-var browserify   = require('browserify');
-var watchify     = require('watchify');
+var browserify = require('browserify');
+var watchify = require('watchify');
 var bundleLogger = require('../util/bundleLogger');
-var gulp         = require('gulp');
+var gulp = require('gulp');
 var handleErrors = require('../util/handleErrors');
-var source       = require('vinyl-source-stream');
-var config       = require('../config').browserify;
-var babelify     = require('babelify');
+var source = require('vinyl-source-stream');
+var config = require('../config').browserify;
+var babelify = require('babelify');
+var uglify = require('gulp-uglify');
+var streamify = require('gulp-streamify');
+var rename = require('gulp-rename');
 
-gulp.task('browserify', function(callback) {
+gulp.task('browserify', function (callback) {
 
   var bundleQueue = config.bundleConfigs.length;
 
-  var browserifyThis = function(bundleConfig) {
-
-    var bundler = browserify({
+  var browserifyThis = function (bundleConfig) {
+    var opts = {
       // Required watchify args
-      cache: {}, packageCache: {}, fullPaths: false,
+      cache: {},
+      packageCache: {},
+      fullPaths: false,
       // Specify the entry point of your app
       entries: bundleConfig.entries,
       // Add file extentions to make optional in your requires
       extensions: config.extensions,
       // Enable source maps!
       debug: config.debug
-    });
+    };
+    //custom scripts
+    var bundler = browserify(opts);
+    // //dependencies
+    // var common = browserify();
+    //
+    // config.dependencies.forEach(function (pkg) {
+    //   common.require(pkg);
+		// 	bundle.exclude(pkg);
+    // });
 
-    var bundle = function() {
+    var bundle = function () {
       // Log when bundling starts
-      bundleLogger.start(bundleConfig.outputName);
+      bundleLogger.start(bundleConfig.outputName + '.js');
 
       return bundler
         .bundle()
@@ -43,8 +56,11 @@ gulp.task('browserify', function(callback) {
         // Use vinyl-source-stream to make the
         // stream gulp compatible. Specifiy the
         // desired output filename here.
-        .pipe(source(bundleConfig.outputName))
+        .pipe(source(bundleConfig.outputName + '.js'))
         // Specify the output destination
+        .pipe(gulp.dest(bundleConfig.dest))
+        .pipe(rename(bundleConfig.outputName + '.min.js'))
+        .pipe(streamify(uglify()))
         .pipe(gulp.dest(bundleConfig.dest))
         .on('end', reportFinished);
     };
@@ -58,7 +74,7 @@ gulp.task('browserify', function(callback) {
       bundler.on('update', bundle);
     }
 
-    var reportFinished = function() {
+    var reportFinished = function () {
       // Log when bundling completes
       bundleLogger.end(bundleConfig.outputName);
 

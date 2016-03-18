@@ -30,11 +30,12 @@ module.exports = {
     bundleConfigs: [{
       entries: src + '/app/app.jsx',
       dest: dest,
-      outputName: 'app.js'
-    }]
+      outputName: 'app'
+    }],
   },
+
   move: {
-    watch: src + "/www/index.html", 
+    watch: src + "/www/index.html",
     scripts: {
       src: dest + "/*.js",
       dest: 'D:/job/2016/presentation/presentation/Scripts'
