@@ -20,7 +20,7 @@ import history from '../history.js';
 // flux
 import Actions from '../actions/actions.js';
 import Constants from '../constants/constants.js';
-import Store from '../stores/store.js';
+import UserStore from '../stores/userStore.js';
 
 //common
 import EditableText from '../components/common/editableText.jsx';
@@ -64,7 +64,7 @@ const MyAppBar = React.createClass({
 
   render() {
     var {user, simple, title, children} = this.props;
-    user = user || Store.getUser();
+    user = user || UserStore.getData();
     var elemRgiht, titleElem;
     var avatarHanler = user.isAuthenticated ? (() => history.to('/home')) : (() => history.to('/auth/signin'));
     if(simple){

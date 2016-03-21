@@ -9,6 +9,7 @@ import Snackbar from 'material-ui/lib/snackbar';
 import CircularProgress from 'material-ui/lib/circular-progress';
 
 import Store from '../stores/store.js';
+import UserStore from '../stores/userStore.js';
 import Actions from '../actions/actions.js';
 
 import Constants from '../constants/constants.js';
@@ -61,7 +62,7 @@ const File = React.createClass({
       );
     }
 
-    let user = Store.getUser();
+    let user = UserStore.getData();
 
     let errorElem = null;
     if(error){

@@ -50,7 +50,7 @@ function guid() {
 
 
 function signIn(data) {
-  _.assign(_user, data);
+  _.assign(_user, data, {isAuthenticated: true});
 }
 
 function changeMode(mode) {
@@ -166,9 +166,6 @@ const Store = _.assign({}, EventEmitter.prototype, {
     return _.assign(_data);
   },
 
-  getUser() {
-    return _user;
-  },
 
   isAuthenticated() {
     return _user.isAuthenticated;

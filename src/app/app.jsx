@@ -4,16 +4,12 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Main from './components/main.jsx'; // Our custom react component
 
 //routers
-import {
-  Router
-}
-from 'react-router';
+import { Router } from 'react-router';
+
 import Auth from './routes/auth/index.js';
 import Help from './routes/help/index.js';
 import Home from './routes/home/index.js';
 import File from './routes/file/index.js';
-
-import Store from './stores/store.js';
 
 //history
 import history from './history.js';

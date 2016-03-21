@@ -8,7 +8,7 @@ import Divider from 'material-ui/lib/divider';
 
 import Actions from '../actions/actions.js';
 
-import StoreMenu from '../stores/storeMenu.js';
+import MenuStore from '../stores/menuStore.js';
 
 import SelectableList from './selectableList.jsx';
 import SimpleList from './common/list.jsx';
@@ -36,14 +36,14 @@ const Left = React.createClass({
   },
 
   getInitialState() {
-    return StoreMenu.getData();
+    return MenuStore.getData();
   },
 
   componentDidMount() {
-    StoreMenu.addChangeListener(this._onChange);
+    MenuStore.addChangeListener(this._onChange);
   },
   componentWillUnmount() {
-    StoreMenu.removeChangeListener(this._onChange);
+    MenuStore.removeChangeListener(this._onChange);
   },
 
   render() {
@@ -89,7 +89,7 @@ const Left = React.createClass({
   },
 
   _onChange() {
-    this.setState(StoreMenu.getData());
+    this.setState(MenuStore.getData());
   },
 });
 
