@@ -1,8 +1,13 @@
 const constants = {
-  Add: 'ADD',
-  SAVE: 'SAVE',
+
+  //---------------user------------------
   SIGN_IN: 'SIGN_IN',
   SIGN_UP: 'SIGN_UP',
+  UPDATE_USER: 'UPDATE_USER',
+
+  //---------------presentation------------------
+  Add: 'ADD',
+  SAVE: 'SAVE',
 
   CHANGE_MODE: 'CHANGE_MODE',
   CONTENT_CHANGE: 'CONTENT_CHANGE',
@@ -21,10 +26,6 @@ const constants = {
     PRE: 'SLIDE.PRE',
   },
 
-  //messages
-  CLEAR_MESSAGE: 'CLEAR_MESSAGE',
-  CLEAR_ERROR: 'CLEAR_ERROR',
-
   MODE: {
     MARKDOWN: 'markdown',
     PRESENTATION: 'presentation',
@@ -32,7 +33,14 @@ const constants = {
     EDITING: 'editing',
   },
 
+  //---------------message------------------
+  SET_MESSAGE: 'SET_MESSAGE',
+  CLEAR_MESSAGE: 'CLEAR_MESSAGE',
+  SET_ERROR: 'SET_ERROR',
+  CLEAR_ERROR: 'CLEAR_ERROR',
 
+
+  //---------------style------------------
   APPBAR_HEIGHT: '40px',
   INFO_WIDTH: '300px',
 };

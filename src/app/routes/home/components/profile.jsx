@@ -7,12 +7,22 @@ import TextField from 'material-ui/lib/text-field';
 
 import LinkButton from '../../../components/common/linkButton.jsx';
 
+import Actions from '../../../actions/actions.js';
+
+
 const Profile = React.createClass({
   getInitialState() {
     return {
       editing: false,
-      name: 'bryce',
-      description: 'this is me.',
+      name: this.props.name,
+      description: this.props.description,
+    };
+  },
+
+  getDefaultProps() {
+    return {
+      name: '',
+      description: '',
     };
   },
 
@@ -62,6 +72,9 @@ const Profile = React.createClass({
   },
 
   _endEdit() {
+    if(this._start.name !== this.state.name || this._start.description !== this.state.description){
+      Actions.updateUser(_.pick(this.state, ['name', 'description']));
+    }
     this.setState({editing: false});
   },
 
@@ -73,7 +86,6 @@ const Profile = React.createClass({
     var newState = {};
     newState[key] = e.target.value;
     this.setState(newState);
-    //todo: backend
   },
 });
 

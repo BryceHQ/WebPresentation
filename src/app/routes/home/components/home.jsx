@@ -15,25 +15,37 @@ import WorkRegion from './workRegion.jsx';
 import AppBar from '../../../components/appbar.jsx';
 import ErrorDialog from '../../../components/error.jsx';
 
+import Store from '../../../stores/store.js';
+import Actions from '../../../actions/actions.js';
+
 
 const Home = React.createClass({
   getInitialState(){
-    return {
-      error: null,
-    };
+    return Store.getData();
+  },
+
+  componentDidMount() {
+    Store.addChangeListener(this._onChange);
+  },
+  componentWillUnmount() {
+    Store.removeChangeListener(this._onChange);
   },
 
   render() {
-    let {error} = this.state;
-    let errorElem = error ? <ErrorDialog error={error} onClearError={this._handleClearError}/> : null;
+    let {user, error} = this.state;
+    let errorElem = error ? <ErrorDialog error={error} onClearError={() => Actions.clearError()}/> : null;
     return (
       <div className = "home">
         <AppBar simple = {true} />
-        <Info onError={this._handleError} />
+        <Info user={user} onError={this._handleError} />
         <WorkRegion onError={this._handleError} />
         {errorElem}
       </div>
     );
+  },
+
+  _onChange() {
+    this.setState(Store.getData());
   },
 
   _handleError(error) {

@@ -59,9 +59,9 @@ gulp.task('browserify', function (callback) {
         .pipe(source(bundleConfig.outputName + '.js'))
         // Specify the output destination
         .pipe(gulp.dest(bundleConfig.dest))
-        .pipe(rename(bundleConfig.outputName + '.min.js'))
-        .pipe(streamify(uglify()))
-        .pipe(gulp.dest(bundleConfig.dest))
+        // .pipe(rename(bundleConfig.outputName + '.min.js'))
+        // .pipe(streamify(uglify()))
+        // .pipe(gulp.dest(bundleConfig.dest))
         .on('end', reportFinished);
     };
 

@@ -12,6 +12,7 @@ import Tab from 'material-ui/lib/tabs/tab';
 import Colors from 'material-ui/lib/styles/colors';
 
 import Constants from '../../../constants/constants.js';
+import Store from '../../../stores/store.js';
 
 import ajax from '../../../ajax.js';
 
@@ -86,10 +87,11 @@ const WorkRegion = React.createClass({
   },
 
   _handleChange(value) {
-    if(!this._flag[value] && window._config){
+    var config = Stroe.getConfig();
+    if(!this._flag[value] && config){
       let me = this;
       ajax.get(
-        window._config[value],
+        config[value],
         function(data){
           if(!data) return;
           me._flag[value] = true;

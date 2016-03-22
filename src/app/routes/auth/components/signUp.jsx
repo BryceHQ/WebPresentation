@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 
 import Actions from '../../../actions/actions.js';
+import Store from '../../../stores/store.js';
 
 //history
 import history from '../../../history.js';
@@ -79,10 +80,11 @@ const SignUp = React.createClass({
   },
 
   _handleSignUp() {
-    if(window._config){
+    var config = Store.getConfig();
+    if(config){
       let me = this;
       ajax.post(
-        window._config.signUp,
+        config.signUp,
         _.pick(this.state, ['userName', 'password', 'confirmPassword']),
         function(data){
           if(!data) return;
@@ -92,7 +94,7 @@ const SignUp = React.createClass({
           else{
             //redirect to home
             history.home();
-            Actions.signIn({ name: data });
+            Actions.signIn({ user: data });
           }
         }
       );

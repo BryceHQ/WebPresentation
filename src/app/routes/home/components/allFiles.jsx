@@ -5,6 +5,8 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Colors from 'material-ui/lib/styles/colors';
 import Divider from 'material-ui/lib/divider';
 
+import Store from '../../../stores/store.js';
+
 // import Constants from '../../../constants/constants.js';
 import SimpleTable from '../../../components/common/table.jsx';
 
@@ -46,10 +48,11 @@ const AllFiles = React.createClass({
   },
 
   _handleNew() {
-    if(window._config){
+    var config = Store.getConfig();
+    if(config){
       var me = this;
       ajax.post(
-        window._config.add,
+        config.add,
         function(data){
           if(!data) return;
           if(data.success === false){

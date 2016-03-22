@@ -1,9 +1,26 @@
-import Jquery from 'jquery';
+import $ from 'jquery';
 
 const Ajax = {
-  get: Jquery.get,
-  post: Jquery.post,
-  ajax: Jquery.ajax,
+  get(url, data, callback) {
+    if(url){
+      $.get(url, data, callback);
+    }
+    else{
+      setTimeout(function(){
+        callback({});
+      }, 0);
+    }
+  },
+  post(url, data, callback) {
+    if(url){
+      $.get(url, data, callback);
+    }
+    else{
+      setTimeout(function(){
+        callback({});
+      }, 0);
+    }
+  },
 };
 
 export default Ajax;

@@ -45,7 +45,7 @@ function select(index){
 }
 
 
-const StoreMenu = _.assign({}, EventEmitter.prototype, {
+const MenuStore = _.assign({}, EventEmitter.prototype, {
   setData(data) {
     _data = data;
     this.emitChange();
@@ -71,11 +71,11 @@ Dispatcher.register((action) => {
   switch (action.actionType) {
     case Constants.MENU_SELECT:
       select(action.data);
-      StoreMenu.emitChange();
+      MenuStore.emitChange();
       break;
     default:
       break;
   }
 });
 
-export default StoreMenu;
+export default MenuStore;

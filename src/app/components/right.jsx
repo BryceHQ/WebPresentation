@@ -17,7 +17,7 @@ const Right = React.createClass({
     let {open, data, current} = this.props;
     return (
       <LeftNav
-        style = {{overflow: 'hidden'}}
+        style = {{overflow: 'hidden', zIndex: '1000'}}
         width = {350}
         open = {open}
         openRight = {true}

@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Checkbox from 'material-ui/lib/checkbox';
 
 import Actions from '../../../actions/actions.js';
+import Store from '../../../stores/store.js';
 
 //history
 import history from '../../../history.js';
@@ -77,10 +78,11 @@ const SignIn = React.createClass({
   },
 
   _handleSignIn() {
-    if(window._config){
+    var config = Store.getConfig();
+    if(config){
       let me = this;
       ajax.post(
-        window._config.signIn,
+        config.signIn,
         _.pick(this.state, ['userName', 'password', 'rememberMe']),
         function(data){
           if(!data) return;
@@ -90,7 +92,7 @@ const SignIn = React.createClass({
           else{
             //redirect to home
             history.home();
-            Actions.signIn({name: data});
+            Actions.signIn({user: data});
           }
         }
       );

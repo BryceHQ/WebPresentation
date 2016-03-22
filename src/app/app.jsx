@@ -14,6 +14,7 @@ import File from './routes/file/index.js';
 //history
 import history from './history.js';
 
+import Store from './stores/store.js'; // Our custom react component
 
 import ajax from './ajax.js';
 
@@ -31,6 +32,8 @@ function indexRedirect(newState, replace) {
     replace('/file/readme');
   }
 }
+
+Store.setConfig(window._config);
 
 const rootRoute = {
   path: '/',

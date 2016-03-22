@@ -2,6 +2,9 @@ import Dispatcher from '../dispatcher/dispatcher.js';
 import Constants from '../constants/constants.js';
 
 const Action = {
+  //---------------user------------------
+
+  //---------------presentation------------------
   //add
   add(type){
     Dispatcher.dispatch({
@@ -106,10 +109,22 @@ const Action = {
     },
   },
 
-  //message
+  //---------------message------------------
+  setMessage(message) {
+    Dispatcher.dispatch({
+      actionType: Constants.SET_MESSAGE,
+      data: message,
+    });
+  },
   clearMessage() {
     Dispatcher.dispatch({
       actionType: Constants.CLEAR_MESSAGE
+    });
+  },
+  setError(error) {
+    Dispatcher.dispatch({
+      actionType: Constants.SET_ERROR,
+      data: error,
     });
   },
   clearError() {

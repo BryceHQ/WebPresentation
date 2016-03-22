@@ -9,7 +9,6 @@ import Snackbar from 'material-ui/lib/snackbar';
 import CircularProgress from 'material-ui/lib/circular-progress';
 
 import Store from '../stores/store.js';
-import UserStore from '../stores/userStore.js';
 import Actions from '../actions/actions.js';
 
 import Constants from '../constants/constants.js';
@@ -28,7 +27,7 @@ const File = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.params);
+    Store.getData(this.props.params.fileId);
   },
 
   componentDidMount() {
@@ -39,8 +38,8 @@ const File = React.createClass({
   },
 
   render() {
-    let {slideGroup, current, mode, leftOpen, rightOpen, title, loading, bottomMessage, error} = this.state;
-
+    let {presentation, bottomMessage, error} = this.state;
+    let {slideGroup, current, mode, leftOpen, rightOpen, title, loading} = presentation;
     let snackbar = (
       <Snackbar
         open={!!bottomMessage}
@@ -62,7 +61,7 @@ const File = React.createClass({
       );
     }
 
-    let user = UserStore.getData();
+    let user = Store.getUser();
 
     let errorElem = null;
     if(error){
