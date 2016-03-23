@@ -3,13 +3,29 @@ import Constants from '../constants/constants.js';
 
 const Action = {
   //---------------user------------------
+  //sign
+  signIn(data) {
+    if(!data) return;
+    Dispatcher.dispatch({
+      actionType: Constants.SIGN_IN,
+      data: data,
+    });
+  },
+
+  updateUser(data) {
+    if(!data) return;
+    Dispatcher.dispatch({
+      actionType: Constants.UPDATE_USER,
+      data: data,
+    });
+  },
 
   //---------------presentation------------------
   //add
-  add(type){
+  add(callback){
     Dispatcher.dispatch({
-      actionType: Constants.Add,
-      data: { type: type },
+      actionType: Constants.ADD,
+      data: { callback: callback },
     });
   },
 
@@ -17,15 +33,6 @@ const Action = {
   save(){
     Dispatcher.dispatch({
       actionType: Constants.SAVE,
-    });
-  },
-
-  //sign
-  signIn(data) {
-    if(!data) return;
-    Dispatcher.dispatch({
-      actionType: Constants.SIGN_IN,
-      data: data,
     });
   },
 
@@ -109,6 +116,14 @@ const Action = {
     },
   },
 
+  //---------------menu------------------
+  menuSelect(index) {
+    Dispatcher.dispatch({
+      actionType: Constants.MENU_SELECT,
+      data: index,
+    });
+  },
+
   //---------------message------------------
   setMessage(message) {
     Dispatcher.dispatch({
@@ -130,14 +145,6 @@ const Action = {
   clearError() {
     Dispatcher.dispatch({
       actionType: Constants.CLEAR_ERROR
-    });
-  },
-
-  //---------------menu------------------
-  menuSelect(index) {
-    Dispatcher.dispatch({
-      actionType: Constants.MENU_SELECT,
-      data: index
     });
   },
 };

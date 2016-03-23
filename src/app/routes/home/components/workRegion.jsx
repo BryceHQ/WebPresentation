@@ -87,7 +87,7 @@ const WorkRegion = React.createClass({
   },
 
   _handleChange(value) {
-    var config = Stroe.getConfig();
+    var config = Store.getConfig();
     if(!this._flag[value] && config){
       let me = this;
       ajax.get(

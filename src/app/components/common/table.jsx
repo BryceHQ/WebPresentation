@@ -16,6 +16,8 @@ const SimpleTable = React.createClass({
   propTypes: {
     stripedRows: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
+    bodyProps: React.PropTypes.object,
+    headerProps: React.PropTypes.object,
   },
 
   getDefaultProps() {

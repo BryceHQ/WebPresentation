@@ -78,7 +78,7 @@ const SignIn = React.createClass({
   },
 
   _handleSignIn() {
-    var config = Store.getConfig();
+    var config = Store.getConfig().user;
     if(config){
       let me = this;
       ajax.post(

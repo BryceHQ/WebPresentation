@@ -1,81 +1,86 @@
-import Dispatcher from '../dispatcher/dispatcher.js';
-import { EventEmitter } from 'events';
 import Constants from '../constants/constants.js';
 import _ from 'lodash';
 
 import ajax from '../ajax.js';
 
-import helper from '../helper.js';
+import Store from './store.js';
+import Actions from '../actions/actions.js';
 
-const CHANGE_EVENT = 'change';
+import helper from '../helper.js';
 
 let _data = {
   current: 1,
-  history: [
-    {
-      name: 'record1',
-      value: 1,
-    },{
-      name: 'record2',
-      value: 2
-    },{
-      name: 'record3',
-      value: 3,
-    }
-  ]
-  // items: [
-  //   {
-  //     value: 1,
-  //     text: 'new',
-  //   },{
-  //     value: 2,
-  //     text: 'open',
-  //   },{
-  //     value: 3,
-  //     text: 'saveAs',
-  //   },{
-  //     value: 4,
-  //     text: 'history',
-  //   }
-  // ],
+  history: [],
+  recent: [],
+  refresh: false,
 };
 
-function select(index){
-  _data.current = index;
+//历史记录
+function history(callback){
+  var config = Store.getConfig();
+  var presentation = Store.getData().presentation;
+  if(config){
+    ajax.get(
+      config.history,
+      {},
+      function(data){
+        if(!data) return;
+        if(data.success !== false){
+          _data.history = data;
+        }
+        callback(data, true);
+      }
+    );
+  }
+}
+
+//最近的文件
+function recent(callback){
+  var config = Store.getConfig();
+  var user = Store.getData().user;
+  if(config){
+    ajax.get(
+      config.recent,
+      {userId: user.id},
+      function(data){
+        if(!data) return;
+        if(data.success !== false){
+          _data.recent = data;
+        }
+        callback(data, true);
+      }
+    );
+  }
 }
 
 
-const MenuStore = _.assign({}, EventEmitter.prototype, {
-  setData(data) {
-    _data = data;
-    this.emitChange();
-  },
-  getData() {
-    return _data;
+var menuStore = {
+  data: _data,
+
+  // init(config) {
+  //   _.assign(_user, _.pick(config, ['id', 'name', 'description', 'isAuthenticated']));
+  // },
+
+  select(index, callback) {
+    console.log('select - ' + index);
+    switch (index) {
+      case 1: //new
+        Actions.add();
+        break;
+      case 2: //open
+        recent(callback);
+        break;
+      case 3: //download
+        break;
+      case 4: //history
+        history(callback);
+        break;
+      default:
+        break;
+    }
+    _data.current = index;
   },
 
-  emitChange() {
-    this.emit(CHANGE_EVENT);
-  },
-  addChangeListener(callback) {
-    this.on(CHANGE_EVENT, callback);
-  },
-  removeChangeListener(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
-  },
-});
+};
 
-
-// Register callback to handle all updates
-Dispatcher.register((action) => {
-  switch (action.actionType) {
-    case Constants.MENU_SELECT:
-      select(action.data);
-      MenuStore.emitChange();
-      break;
-    default:
-      break;
-  }
-});
-
-export default MenuStore;
+export default menuStore;

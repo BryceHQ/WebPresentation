@@ -14,15 +14,17 @@ const Profile = React.createClass({
   getInitialState() {
     return {
       editing: false,
-      name: this.props.name,
-      description: this.props.description,
+      name: this.props.user.name,
+      description: this.props.user.description,
     };
   },
 
   getDefaultProps() {
     return {
-      name: '',
-      description: '',
+      user: {
+        name: '',
+        description: '',
+      }
     };
   },
 

@@ -1,6 +1,8 @@
 import Constants from '../constants/constants.js';
 import _ from 'lodash';
 
+import history from '../history.js';
+
 import ajax from '../ajax.js';
 import lang from '../lang/zh-cn.js';
 
@@ -69,9 +71,25 @@ function get(fileId, callback){
           loading: false,
         });
       }
-      callback(data);
+      callback(data, true);
     }
   );
+}
+
+//新增
+function add(callback){
+  var config = Store.getConfig();
+  if(config){
+    var me = this;
+    ajax.post(
+      config.add,
+      function(data){
+        if(!data) return;
+
+        callback(data);
+      }
+    );
+  }
 }
 
 //更新presetation中任意属性的值
@@ -82,7 +100,7 @@ function save(data, callback){
     config.save,
     data,
     function(data){
-      if(!data) return;
+      if(data === null || typeof data === 'undefined') return;
       callback(data);
     }
   );
@@ -96,7 +114,7 @@ var presentationStore = {
 
   // init(config) {
   // },
-
+  add:add,
   save: save,
 
   get(fileId, callback) {

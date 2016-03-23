@@ -6,7 +6,7 @@ const constants = {
   UPDATE_USER: 'UPDATE_USER',
 
   //---------------presentation------------------
-  Add: 'ADD',
+  ADD: 'ADD',
   SAVE: 'SAVE',
 
   CHANGE_MODE: 'CHANGE_MODE',
@@ -32,6 +32,9 @@ const constants = {
     FULLSCREEN: 'fullscreen',
     EDITING: 'editing',
   },
+
+  //---------------menu------------------
+  MENU_SELECT: 'MENU_SELECT',
 
   //---------------message------------------
   SET_MESSAGE: 'SET_MESSAGE',

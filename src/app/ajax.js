@@ -13,7 +13,7 @@ const Ajax = {
   },
   post(url, data, callback) {
     if(url){
-      $.get(url, data, callback);
+      $.post(url, data, callback);
     }
     else{
       setTimeout(function(){

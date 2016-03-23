@@ -6,33 +6,62 @@ import List from 'material-ui/lib/lists/list';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Divider from 'material-ui/lib/divider';
 
+const styles = {
+  listItem: {
+    padding: '5px',
+  },
+  list: {
+    width: '400px',
+    padding: '0px 20px',
+  },
+};
+
 const SimpleList = React.createClass({
   mixins: [PureRenderMixin],
 
+  propTypes: {
+    placeholder: React.PropTypes.string,
+    data: React.PropTypes.array,
+  },
+
+  getDefaultProps(){
+    return {
+      placeholder: '这里什么也没有...',
+      data: [],
+    };
+  },
+
   render() {
-    var {data} = this.props;
+    var {data, placeholder} = this.props;
     var children = [];
-    data.forEach(function(item, i){
+    if(data && data.length){
+      data.forEach(function(item, i){
+        children.push(
+          <ListItem key = {i} innerDivStyle = {styles}
+            primaryText={
+              <div>
+                <span className = "text-name">{item.name}</span>
+                <span className = "text-info">
+                  {item.value}
+                </span>
+              </div>
+            }
+          />
+        );
+      });
+    } else {
       children.push(
-        <ListItem key = {i} innerDivStyle = {{
-          padding: '5px',
-        }}
+        <ListItem key = {0} innerDivStyle = {styles.listItem}
           primaryText={
             <div>
-              <span className = "text-name">{item.name}</span>
-              <span className = "text-info">
-                {item.value}
-              </span>
+              <span className = "text-name">{placeholder}</span>
             </div>
           }
         />
       );
-    });
+    }
     return (
-      <List style = {{
-        width: '400px',
-        padding: '0px 20px',
-      }}>
+      <List style = {styles.list}>
         {children}
       </List>
     );

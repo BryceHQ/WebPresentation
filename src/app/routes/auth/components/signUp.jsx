@@ -80,7 +80,7 @@ const SignUp = React.createClass({
   },
 
   _handleSignUp() {
-    var config = Store.getConfig();
+    var config = Store.getConfig().user;
     if(config){
       let me = this;
       ajax.post(

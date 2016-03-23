@@ -6,6 +6,7 @@ import Colors from 'material-ui/lib/styles/colors';
 import Divider from 'material-ui/lib/divider';
 
 import Store from '../../../stores/store.js';
+import Actions from '../../../actions/actions.js';
 
 // import Constants from '../../../constants/constants.js';
 import SimpleTable from '../../../components/common/table.jsx';
@@ -48,23 +49,16 @@ const AllFiles = React.createClass({
   },
 
   _handleNew() {
-    var config = Store.getConfig();
-    if(config){
-      var me = this;
-      ajax.post(
-        config.add,
-        function(data){
-          if(!data) return;
-          if(data.success === false){
-            if(me.props.onError){
-              me.props.onError(data.message);
-            }
-          }else{
-            history.to(`/file/${data}`);
-          }
+    var me = this;
+    Actions.add(function(data){
+      if(data.success === false){
+        if(me.props.onError){
+          me.props.onError(data.message);
         }
-      );
-    }
+      }else{
+        history.to(`/file/${data}`);
+      }
+    });
   },
 
   _handleClickCell(row, col) {

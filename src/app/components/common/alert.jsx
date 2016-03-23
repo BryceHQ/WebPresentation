@@ -15,6 +15,11 @@ const ALERT_TYPES = [
 const Alert = React.createClass({
 	mixins: [PureRenderMixin],
 
+	propTypes: {
+    type: React.PropTypes.string,
+    className: React.PropTypes.string,
+  },
+
 	render() {
 		var componentClass = classNames(
 			'Alert',

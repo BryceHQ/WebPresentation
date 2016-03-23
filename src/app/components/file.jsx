@@ -27,7 +27,9 @@ const File = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    Store.getData(this.props.params.fileId);
+    if(this.props.params.fileId !== nextProps.fileId){
+      Store.getData(this.props.params.fileId);
+    }
   },
 
   componentDidMount() {
@@ -38,7 +40,7 @@ const File = React.createClass({
   },
 
   render() {
-    let {presentation, bottomMessage, error} = this.state;
+    let {presentation, menu, user, bottomMessage, error} = this.state;
     let {slideGroup, current, mode, leftOpen, rightOpen, title, loading} = presentation;
     let snackbar = (
       <Snackbar
@@ -60,8 +62,6 @@ const File = React.createClass({
         </div>
       );
     }
-
-    let user = Store.getUser();
 
     let errorElem = null;
     if(error){
@@ -86,7 +86,7 @@ const File = React.createClass({
       <div>
         <AppBar mode = {mode} user = {user} simple = {false} title={title}>
           <Right open = {rightOpen} data = {slideGroup} current = {current}/>
-          <Left open = {leftOpen}/>
+          <Left open = {leftOpen} menu = {menu}/>
         </AppBar>
         {center}
         {errorElem}

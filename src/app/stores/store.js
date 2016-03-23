@@ -10,6 +10,7 @@ import helper from '../helper.js';
 
 import userStore from './userStore.js';
 import presentationStore from './presentationStore.js';
+import menuStore from './menuStore.js';
 
 const CHANGE_EVENT = 'change';
 
@@ -18,6 +19,7 @@ let _config = {};
 let _data = {
   presentation: presentationStore.data,
   user: userStore.data,
+  menu: menuStore.data,
 };
 
 function setMessage(message){
@@ -41,6 +43,10 @@ const Store = _.assign({}, EventEmitter.prototype, {
   setConfig(config) {
     if(config){
       _config = config;
+      // init other store
+      if(_config.user){
+        userStore.init(_config.user);
+      }
     }
   },
 
@@ -55,7 +61,8 @@ const Store = _.assign({}, EventEmitter.prototype, {
 
   getData(fileId) {
     if(fileId){
-      presentationStore.get(fileId, errorHandleCallback);
+      presentationStore.get(fileId, defaultCallback);
+      Store.emitChange();
     }
     return _data;
   },
@@ -85,13 +92,24 @@ Dispatcher.register((action) => {
   switch (action.actionType) {
     //---------------user------------------
     case Constants.SIGN_IN:
-      userStore.signIn(action.data, errorHandleCallback);
+      userStore.signIn(action.data);
       Store.emitChange();
       break;
 
+    case Constants.UPDATE_USER:
+      userStore.update(action.data, defaultCallback);
+      break;
+
     //---------------presentation------------------
+    case Constants.ADD:
+      presentationStore.add(function(data){
+        defaultCallback(data, true);
+        action.data.callback(data);
+      });
+      break;
+
     case Constants.SAVE:
-      presentationStore.save(null, messageCallback);
+      presentationStore.save(null, defaultCallback);
       break;
 
     case Constants.CHANGE_MODE:
@@ -104,11 +122,11 @@ Dispatcher.register((action) => {
 
     case Constants.CONTENT_CHANGE:
       var {content, index} = action.data;
-      presentationStore.contentChange(content, index, messageCallback);
+      presentationStore.contentChange(content, index, defaultCallback);
       break;
 
     case Constants.TITLE_CHANGE:
-      presentationStore.titleChange(action.data, messageCallback);
+      presentationStore.titleChange(action.data, defaultCallback);
       break;
 
 
@@ -129,7 +147,7 @@ Dispatcher.register((action) => {
 
     //overview
     case Constants.REINSERT:
-      presentationStore.reinsert(action.data, messageCallback);
+      presentationStore.reinsert(action.data, defaultCallback);
       Store.emitChange();
       break;
 
@@ -138,10 +156,10 @@ Dispatcher.register((action) => {
       Store.emitChange();
       break;
     case Constants.ADD_SLIDE:
-      presentationStore.addSlide(messageCallback);
+      presentationStore.addSlide(defaultCallback);
       break;
     case Constants.REMOVE_SLIDE:
-      presentationStore.moveSlide(messageCallback);
+      presentationStore.moveSlide(defaultCallback);
       break;
 
 
@@ -157,6 +175,12 @@ Dispatcher.register((action) => {
         Store.emitChange();
       }
       break;
+
+    //---------------menu------------------
+    case Constants.MENU_SELECT:
+      menuStore.select(action.data, defaultCallback);
+      break;
+
 
     //---------------message------------------
     case Constants.SET_MESSAGE:
@@ -184,30 +208,23 @@ Dispatcher.register((action) => {
 
 
 /*
-* 错误处理的回调函数
-*/
-function errorHandleCallback(data){
-  if(data.success === false){
-    _data.error = data.message || data.Message;
-  }
-  Store.emitChange();
-}
-
-/*
 * 成功消息和错误处理的回调函数
+*
+* @param data
+* @param success 是否忽略成功状态下的处理
+* @param error 是否忽略错误状态下的处理
 */
-function messageCallback(data){
+function defaultCallback(data, success, error){
   if(data.success === false){
-    _data.error = data.message || data.Message;
-  }else{
+    if(!error){
+      _data.error = data.message || data.Message;
+    }
+  } else if(!success){
     _data.bottomMessage = '保存成功';
   }
   Store.emitChange();
 }
 
 
-if(_config.user){
-  userStore.init(_config.user);
-}
 
 export default Store;
