@@ -8,7 +8,7 @@ import Divider from 'material-ui/lib/divider';
 
 const styles = {
   listItem: {
-    padding: '5px',
+    padding: '10px',
   },
   list: {
     width: '400px',
@@ -34,10 +34,11 @@ const SimpleList = React.createClass({
   render() {
     var {data, placeholder} = this.props;
     var children = [];
+    var me = this;
     if(data && data.length){
       data.forEach(function(item, i){
         children.push(
-          <ListItem key = {i} innerDivStyle = {styles}
+          <ListItem key={i} innerDivStyle={styles.listItem} onTouchTap={me._handleTouchTab.bind(me, item, i)}
             primaryText={
               <div>
                 <span className = "text-name">{item.name}</span>
@@ -66,6 +67,12 @@ const SimpleList = React.createClass({
       </List>
     );
   },
+
+  _handleTouchTab(data, index){
+    if(this.props.onTouchTap){
+      this.props.onTouchTap(data, index);
+    }
+  }
 });
 
 export default SimpleList;

@@ -15,6 +15,7 @@ import Constants from '../../../constants/constants.js';
 import Store from '../../../stores/store.js';
 
 import ajax from '../../../ajax.js';
+import lang from '../../../lang.js';
 
 import AllFiles from './allFiles.jsx';
 import RecentFiles from './recentFiles.jsx';
@@ -54,7 +55,7 @@ const WorkRegion = React.createClass({
 
   getDefaultProps(){
     return {
-      placeholder: '加载中...'
+      placeholder: lang.message.loading,
     };
   },
 

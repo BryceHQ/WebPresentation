@@ -1,5 +1,5 @@
 import React from 'react';
-import lang from '../../lang/zh-cn.js';
+import lang from '../../lang.js';
 
 import ListItem from 'material-ui/lib/lists/list-item';
 import Colors from 'material-ui/lib/styles/colors';
@@ -29,45 +29,30 @@ const styles = {
 };
 
 const Menu = React.createClass({
-  getDefaultProps() {
-    return {value: 2};
-  },
-
-  componentDidMount(){
-    console.log('menu did mount');
-  },
-
-  _prefixData(data){
-    if(data){
-      return data.map(function(item){
-        return {
-          name: item.Name,
-          value: item.LastUpdateTime,
-        };
-      });
-    }
-  },
 
   _renderBody(index) {
     switch (index) {
       case 2:
-        return (<Open data = {this._prefixData(this.props.recent)}/>);
+        return (<Open data = {this.props.recent} placeholder = {this.props.placeholder}/>);
+
+      case 3:
+        return (<span>保存到本地...</span>);
 
       case 4:
-        return (<History data = {this._prefixData(this.props.history)}/>);
+        return (<History data = {this.props.history} placeholder = {this.props.placeholder}/>);
       default:
         return null;
     }
   },
 
   render() {
-    let {current, history, value} = this.props;
+    let {current, history} = this.props;
 
     let body = this._renderBody(current);
 
     return (
       <div>
-        <SelectableList value = {value} onSelectedChange = {this._handleMenuSelect}
+        <SelectableList value = {current} onSelectedChange = {this._handleMenuSelect}
           style={styles.list}
         >
           <ListItem value={1} primaryText={lang.menu.new} />

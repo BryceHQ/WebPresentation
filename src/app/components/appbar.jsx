@@ -1,5 +1,5 @@
 import React from 'react';
-import lang from '../lang/zh-cn.js';
+import lang from '../lang.js';
 
 import Colors from 'material-ui/lib/styles/colors';
 import AppBar from 'material-ui/lib/app-bar';
@@ -29,7 +29,7 @@ import DefaultAvater from '../components/avatar.jsx';
 
 const styles = {
   root: {
-    zIndex:500,
+    zIndex: 500,
     height: Constants.APPBAR_HEIGHT,
     minHeight: '40px',
     paddingLeft: '0px',
@@ -64,14 +64,14 @@ const MyAppBar = React.createClass({
 
   render() {
     var {user, simple, title, children} = this.props;
-    user = user || Store.getData();
+    user = user || {};
     var elemRgiht, titleElem;
     var avatarHanler = user.isAuthenticated ? (() => history.to('/home')) : (() => history.to('/auth/signin'));
     if(simple){
       titleElem = (
         <div>
           <RaisedButton label={lang.name} backgroundColor={Colors.redA100} labelColor={Colors.white}
-          onTouchTap = {simple ? (() => history.to('/')) : this._handleToggleLeft}
+          onTouchTap = {() => history.to('/')}
           labelStyle={styles.labelStyle}
           style={{
             height: '40px'
@@ -82,7 +82,7 @@ const MyAppBar = React.createClass({
       titleElem = (
         <div>
           <RaisedButton label={lang.name} backgroundColor={Colors.redA100} labelColor={Colors.white}
-          onTouchTap = {simple ? (() => history.to('/')) : this._handleToggleLeft}
+          onTouchTap = {user.isAuthenticated ? this._handleToggleLeft : (() => history.to('/auth/signin'))}
           labelStyle={styles.labelStyle}
           style={{
             height: '40px'

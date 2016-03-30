@@ -1,5 +1,8 @@
+/*
+* 菜单-打开
+*/
 import React from 'react';
-import lang from '../../lang/zh-cn.js';
+import lang from '../../lang.js';
 
 import ListItem from 'material-ui/lib/lists/list-item';
 
@@ -24,14 +27,13 @@ const styles = {
   },
 };
 
-const Menu = React.createClass({
+const Open = React.createClass({
 
   render() {
-    let {data} = this.props;
 
     return (
       <div>
-        <SimpleList data = {data}/>
+        <SimpleList {...this.props} onTouchTap={this._handleTouchTab}/>
         <div className="align-center">
           <LinkButton onClick={() => history.to('/home')}>到个人中心中查看更多...</LinkButton>
         </div>
@@ -39,18 +41,12 @@ const Menu = React.createClass({
     );
   },
 
-  _handleMenuSelect(index) {
-    if(index === 1){
-      Actions.add(function(data){
-        if(data.success !== false){
-          history.to(`/file/${data}`);
-        }
-      });
-    } else{
-      Actions.menuSelect(index);
+  _handleTouchTab(data, index) {
+    if(data && data.id){
+      history.to(`/file/${data.id}`);
     }
   },
 
 });
 
-export default Menu;
+export default Open;

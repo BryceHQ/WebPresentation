@@ -8,7 +8,7 @@ import IconChevronRight from 'material-ui/lib/svg-icons/navigation/chevron-right
 import IconAdd from 'material-ui/lib/svg-icons/content/add';
 import IconRemove from 'material-ui/lib/svg-icons/content/remove';
 
-import lang from '../lang/zh-cn.js';
+import lang from '../lang.js';
 
 import Actions from '../actions/actions.js';
 import Constants from '../constants/constants.js';

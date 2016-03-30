@@ -24,9 +24,9 @@ const AllFiles = React.createClass({
   getDefaultProps() {
     return {
       columns: [
-        {key: 'Name', text: '名称'},
-        {key: 'LastUpdateTime', text: '修改时间'},
-        {key: 'CreateTime', text: '创建时间'},
+        {key: 'name', text: '名称'},
+        {key: 'lastUpdateTime', text: '修改时间'},
+        {key: 'createTime', text: '创建时间'},
       ],
     };
   },
@@ -64,8 +64,8 @@ const AllFiles = React.createClass({
   _handleClickCell(row, col) {
     let {data} = this.props;
     let target = data[row];
-    if(target && target.Id){
-      history.to(`/file/${target.Id}`);
+    if(target && target.id){
+      history.to(`/file/${target.id}`);
     }
   },
 });

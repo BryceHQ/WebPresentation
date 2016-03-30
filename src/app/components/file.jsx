@@ -27,8 +27,8 @@ const File = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if(this.props.params.fileId !== nextProps.fileId){
-      Store.getData(this.props.params.fileId);
+    if(this.props.params.fileId !== nextProps.params.fileId){
+      Store.getData(nextProps.params.fileId);
     }
   },
 

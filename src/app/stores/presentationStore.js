@@ -4,7 +4,7 @@ import _ from 'lodash';
 import history from '../history.js';
 
 import ajax from '../ajax.js';
-import lang from '../lang/zh-cn.js';
+import lang from '../lang.js';
 
 import Store from './store.js';
 
@@ -61,9 +61,9 @@ function get(fileId, callback){
       if(!data) return;
       if(data.success !== false){
         _.assign(_presentation, {
-          fileId: data.Id,
-          slideGroup: JSON.parse(data.Raw),
-          title: data.Name,
+          fileId: data.id,
+          slideGroup: JSON.parse(data.raw),
+          title: data.name,
           rightOpen: false,
           leftOpen: false,
           mode: MODE.PRESENTATION,
@@ -114,7 +114,7 @@ var presentationStore = {
 
   // init(config) {
   // },
-  add:add,
+  add: add,
   save: save,
 
   get(fileId, callback) {

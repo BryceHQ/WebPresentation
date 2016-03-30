@@ -1,5 +1,5 @@
 import React from 'react';
-import lang from '../../lang/zh-cn.js';
+import lang from '../../lang.js';
 
 import ListItem from 'material-ui/lib/lists/list-item';
 
@@ -12,13 +12,16 @@ import SimpleList from '../common/list.jsx';
 const History = React.createClass({
 
   render() {
-    let {data} = this.props;
 
     return (
       <div>
-        <SimpleList data = {data}/>
+        <SimpleList {...this.props} onTouchTap={this._handleTouchTab}/>
       </div>
     );
+  },
+
+  _handleTouchTab(data, index){
+
   },
 
 });

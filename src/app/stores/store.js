@@ -4,7 +4,7 @@ import Constants from '../constants/constants.js';
 import _ from 'lodash';
 
 import ajax from '../ajax.js';
-import lang from '../lang/zh-cn.js';
+import lang from '../lang.js';
 
 import helper from '../helper.js';
 
@@ -62,6 +62,7 @@ const Store = _.assign({}, EventEmitter.prototype, {
   getData(fileId) {
     if(fileId){
       presentationStore.get(fileId, defaultCallback);
+      menuStore.refresh();
       Store.emitChange();
     }
     return _data;
@@ -132,6 +133,7 @@ Dispatcher.register((action) => {
 
     case Constants.TOGGLE_LEFT:
       presentationStore.toggleLeft(action.data);
+      menuStore.select(null, defaultCallback, true);
       Store.emitChange();
       break;
 
@@ -217,7 +219,7 @@ Dispatcher.register((action) => {
 function defaultCallback(data, success, error){
   if(data.success === false){
     if(!error){
-      _data.error = data.message || data.Message;
+      _data.error = data.message;
     }
   } else if(!success){
     _data.bottomMessage = '保存成功';

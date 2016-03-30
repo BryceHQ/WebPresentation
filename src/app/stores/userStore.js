@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import ajax from '../ajax.js';
-import lang from '../lang/zh-cn.js';
+import lang from '../lang.js';
 
 import Store from './store.js';
 
@@ -38,13 +38,8 @@ var userStore = {
     _.assign(_user, _.pick(config, ['id', 'name', 'description', 'isAuthenticated']));
   },
 
-  signin(data) {
-    _.assign(_user, {
-      id: data.Id,
-      name: data.Name,
-      description: data.Description,
-      isAuthenticated: true,
-    });
+  signIn(data) {
+    _.assign(_user, _.pick(data, ['id', 'name', 'description']), {isAuthenticated: true});
   },
 
   update(data, callback) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import lang from '../lang/zh-cn.js';
+import lang from '../lang.js';
 
 import LeftNav from 'material-ui/lib/left-nav';
 

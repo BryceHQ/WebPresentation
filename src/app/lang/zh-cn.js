@@ -20,7 +20,29 @@ const lang = {
   },
   message: {
     fullscreen: '按ESC退出全屏',
-  }
+    loading: '加载中...',
+    nothing: '这里什么也没有...',
+
+    history(time){
+      return `创建于 ${time}`;
+    },
+    historyHint: '点击还原该历史记录',
+  },
+
+  time: {
+    justnow: '刚刚',
+    minutesago(m){
+      return `${m} 分钟前`;
+    },
+    hoursago(h){
+      return `${h} 小时前`;
+    },
+    yesterday: '昨天',
+    daysago(d){
+      return `${d} 天前`;
+    },
+    longago: '很久之前',
+  },
 };
 
 export default lang;
