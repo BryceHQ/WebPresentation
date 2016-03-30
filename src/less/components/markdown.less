@@ -2,25 +2,29 @@
  * Markdown Editor
  */
 
-@button-gutter: 4px;
-
 .MDEditor{
-		height: 100%;
-		width: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: @md-gutter;
 }
 
 .MDEditor_editor {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	overflow: hidden;
-	position: relative;
-	height: 100%;
-	width: 100%;
+	position: absolute;
+  left: 0;
+  right: 0;
+  top: @md-toolbar-height;
+  bottom: 0px;
 }
 
 .MDEditor_toolbar {
-	margin-bottom: @button-gutter;
-	margin-top: @button-gutter;
+	margin-bottom: @md-gutter;
+	margin-top: @md-gutter;
 }
 
 .MDEditor_toolbarButton {
@@ -29,7 +33,7 @@
 	border-radius: 4px;
 	cursor: pointer;
 	display: inline-block;
-	margin-right: @button-gutter;
+	margin-right: @md-gutter;
 	padding: 10px 0;
 	text-align: center;
 	vertical-align: middle;

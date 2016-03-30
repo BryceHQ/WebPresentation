@@ -1,10 +1,11 @@
 {
-  "name": "material-ui-example-browserify",
-  "version": "0.14.2",
-  "description": "Sample project that uses material-ui",
+  "name": "webPresentation",
+  "version": "0.0.0",
+  "description": "Web Presentaion",
+  "author": "bryce",
   "repository": {
     "type": "git",
-    "url": "https://github.com/callemall/material-ui.git"
+    "url": "https://github.com/BryceHQ/WebPresentation.git"
   },
   "scripts": {
     "start": "gulp"

@@ -408,10 +408,12 @@ span.CodeMirror-selectedtext { background: none; }
 }
 .slideItem {
   background-color: white;
-  height: 100%;
-  width: 100%;
   padding: 10px;
   position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   -moz-transition: all 0.5s;
   /* Firefox 4 */
   -webkit-transition: all 0.5s;
@@ -429,16 +431,22 @@ span.CodeMirror-selectedtext { background: none; }
  * Markdown Editor
  */
 .MDEditor {
-  height: 100%;
-  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 4px;
 }
 .MDEditor_editor {
   border: 1px solid #ccc;
   border-radius: 4px;
   overflow: hidden;
-  position: relative;
-  height: 100%;
-  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50px;
+  bottom: 0px;
 }
 .MDEditor_toolbar {
   margin-bottom: 4px;

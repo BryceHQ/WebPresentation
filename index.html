@@ -1,0 +1,53 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Web Presentation</title>
+  <meta name="description" content="An Easy Web Presentation.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .bg{
+      position: absolute;
+      top: 0;
+      width: 38%;
+      min-width: 600px;
+      min-height: 369px;
+      opacity: 0;
+      background-size: cover;
+      -webkit-transition: opacity .6s ease-in-out;
+
+      opacity: .5;
+
+      margin-top: -50px;
+      margin-left: -50px;
+    }
+    .bg-gradient{
+      position:absolute;
+      overflow:hidden;
+      z-index:2;
+      height:100%;
+      width:100%;
+      min-width:900px;
+      background: linear-gradient(to right, rgb(174, 164, 153) 0%, rgba(174, 164, 153, 0) 0%, rgba(174, 164, 153, 0) 0%, rgb(174, 164, 153) 30%, rgb(174, 164, 153) 100%);
+    }
+
+    .content{
+      width: 100px;
+      height: 200px;
+      z-index: 2;
+    }
+  </style>
+</head>
+
+<body>
+<div class="bg-gradient"></div>
+  <div class="content">
+    <div style="height:100px;"></div>
+    hello
+  </div>
+  <img src="1.jpg" class="bg">
+</body>
+
+</html>
