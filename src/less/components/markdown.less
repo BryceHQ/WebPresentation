@@ -3,23 +3,17 @@
  */
 
 .MDEditor{
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+	.fullscreen(0);
+
 	margin: @md-gutter;
 }
 
 .MDEditor_editor {
+	.fullscreen(@md-toolbar-height);
+
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	overflow: hidden;
-	position: absolute;
-  left: 0;
-  right: 0;
-  top: @md-toolbar-height;
-  bottom: 0px;
 }
 
 .MDEditor_toolbar {

@@ -22,6 +22,8 @@ const lang = {
     fullscreen: '按ESC退出全屏',
     loading: '加载中...',
     nothing: '这里什么也没有...',
+    upload: '拖拽到这里上传...',
+    background: '设置为默认背景',
 
     history(time){
       return `创建于 ${time}`;

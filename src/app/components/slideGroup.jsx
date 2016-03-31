@@ -2,11 +2,16 @@ import React from 'react';
 
 import Slide from './slide.jsx';
 import Markdown from './markdown.jsx';
+import Background from './background.jsx';
+
+import Upload from './common/upload.jsx';
 
 import Actions from '../actions/actions.js';
 
 
 import Constants from '../constants/constants.js';
+
+import Store from '../stores/store.js';
 
 
 const SlideGroup = React.createClass({
@@ -28,7 +33,9 @@ const SlideGroup = React.createClass({
       <div className = "slideGroup" style = {this.props.style}>
         <Slide transition = {transition}>
           <div key = {key} className = "slideItem" style = {style}>
-            <Markdown mode = {mode} content = {content} index = {index}/>
+            {/*<Background url="1.jpg" type="gradient"></Background>*/}
+            <Upload url={Store.getConfig().upload}></Upload>
+            {/*<Markdown mode = {mode} content = {content} index = {index}></Markdown>*/}
           </div>
         </Slide>
       </div>

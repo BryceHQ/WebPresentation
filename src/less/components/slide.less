@@ -7,23 +7,16 @@
 }
 
 .slideItem {
+  .fullscreen(0);
+
   background-color: white;
 
   padding: 10px;
 
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  
+
   .transition(all .5s)
 }
 
 .slideGroup {
-  position: absolute;
-  top: @appbar-height;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  .fullscreen(@appbar-height);
 }
