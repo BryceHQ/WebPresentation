@@ -16,6 +16,7 @@ import AppBar from '../../../components/appbar.jsx';
 
 
 import ajax from '../../../ajax.js';
+import lang from '../../../lang.js';
 
 const SignUp = React.createClass({
   getInitialState() {
@@ -35,7 +36,7 @@ const SignUp = React.createClass({
     let {userName, password, confirmPassword, message} = this.state;
     let errorText;
     if(confirmPassword && password !== confirmPassword){
-      errorText = '两次输入的密码不一致';
+      errorText = lang.error.passwordUnmatch;
     }
     let alert = message === null ?
       null :
@@ -51,29 +52,29 @@ const SignUp = React.createClass({
         <div className = "login">
           {alert}
           <TextField
-            hintText="please input your account."
-            floatingLabelText="Your Account"
+            hintText={lang.route.signup.userNameHint}
+            floatingLabelText={lang.route.signup.userNameLabel}
             onChange = {this._handleChange.bind(this, 'userName')}
             value = {userName}
           /><br/>
           <TextField
-            hintText="please input your password."
-            floatingLabelText="Your Password"
+            hintText={lang.route.signup.passwordHint}
+            floatingLabelText={lang.route.signup.passwordLabel}
             type="password"
             onChange = {this._handleChange.bind(this, 'password')}
             value = {password}
           /><br/>
           <TextField
-            hintText="please confirm your password."
-            floatingLabelText="Confirm Your Password"
+            hintText={lang.route.signup.comfirmHint}
+            floatingLabelText={lang.route.signup.comfirmLabel}
             type="password"
             errorText = {errorText}
             onChange = {this._handleChange.bind(this, 'confirmPassword')}
             value = {confirmPassword}
           /><br/>
-          <RaisedButton label="注册" secondary={true} onTouchTap = {this._handleSignUp}
+          <RaisedButton label={lang.button.signup} secondary={true} onTouchTap = {this._handleSignUp}
             disabled = {!(password === confirmPassword && userName && password)}/>
-          <FlatButton label="登录" secondary={true} onTouchTap = {() => history.to('/auth/signin')}/>
+          <FlatButton label={lang.button.signin} secondary={true} onTouchTap = {() => history.to('/auth/signin')}/>
         </div>
       </div>
     );

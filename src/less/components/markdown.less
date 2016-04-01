@@ -5,6 +5,7 @@
 .MDEditor{
 	.fullscreen(0);
 
+	z-index: 10;
 	margin: @md-gutter;
 }
 
@@ -28,14 +29,13 @@
 	cursor: pointer;
 	display: inline-block;
 	margin-right: @md-gutter;
-	padding: 10px 0;
+	padding: 5px 0;
 	text-align: center;
 	vertical-align: middle;
 	width: 40px;
 
 	// transitions
-	transition: all 180ms;
-	-webkit-transition: all 180ms;
+	.transition(all 180ms);
 
 	&:hover,
 	&:focus {
@@ -43,8 +43,7 @@
 		border-color: rgba(0, 0, 0, 0.1);
 		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 		outline: none;
-		transition: none;
-		-webkit-transition: none;
+		.transition(none)
 	}
 }
 
@@ -63,12 +62,12 @@
 
 .MDEditor_toolbarButton_icon {
 	display: inline-block;
-	height: 16px;
-	width: 16px;
+	height: @md-icon-height;
+	width: @md-icon-width;
 
 	> svg {
-		height: 16px;
-		width: 16px;
+		height: @md-icon-height;
+		width: @md-icon-width;
 	}
 }
 
@@ -85,10 +84,32 @@
 	font-size: 16px;
 	font-weight: bold;
 	line-height: .9;
-	height: 16px;
+	height: @md-icon-height;
+	line-height: @md-icon-height;
 	text-transform: uppercase;
 }
 
 .CodeMirror{
 	height: 100%;
+}
+
+.preview{
+	position: relative;
+	z-index: 10;
+}
+
+
+blockquote {
+	border-left: 5px solid #eee;
+	margin-left: 20px;
+	padding-left: 15px;
+}
+
+code{
+	// border: 1px solid #ddd;
+	background: #f6f6f6;
+	padding: 3px;
+	border-radius: 3px;
+	font-size: 14px;
+	margin-left: 20px;
 }

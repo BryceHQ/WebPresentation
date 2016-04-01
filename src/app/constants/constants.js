@@ -31,7 +31,12 @@ const constants = {
     PRESENTATION: 'presentation',
     FULLSCREEN: 'fullscreen',
     EDITING: 'editing',
+    UPLOADING: 'uploading',
   },
+
+  //---------------upload------------------
+  SET_BACKGROUND: 'SET_BACKGROUND',
+  SET_DEFAULT_BACKGROUND: 'SET_DEFAULT_BACKGROUND',
 
   //---------------menu------------------
   MENU_SELECT: 'MENU_SELECT',

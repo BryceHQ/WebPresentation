@@ -19,7 +19,7 @@ let _presentation = {
   rightOpen: false,
   leftOpen: false,
   loading: false,
-  mode: MODE.PRESENTATION,// markdown, presentation
+  mode: MODE.PRESENTATION,// markdown, presentation, uploading
   current: 0,
   title: 'readme',
   slideGroup: [{
@@ -41,16 +41,25 @@ let _presentation = {
   }],
 };
 
+let _reset = {
+  rightOpen: false,
+  leftOpen: false,
+  mode: MODE.PRESENTATION,
+  current: 0,
+  loading: false,
+  background: null,
+};
+
 //helper
 function guid() {
   return (+new Date() * 1e6 + Math.floor(Math.random() * 1e6)).toString(36);
 }
 
 function changeMode(mode) {
+  mode = mode || _lastMode;
   _lastMode = _presentation.mode;
   _presentation.mode = mode;
 }
-
 
 function get(fileId, callback){
   var config = Store.getConfig();
@@ -64,12 +73,7 @@ function get(fileId, callback){
           fileId: data.id,
           slideGroup: JSON.parse(data.raw),
           title: data.name,
-          rightOpen: false,
-          leftOpen: false,
-          mode: MODE.PRESENTATION,
-          current: 0,
-          loading: false,
-        });
+        }, _reset);
       }
       callback(data, true);
     }
@@ -209,6 +213,16 @@ var presentationStore = {
       _presentation.current -= 1;
       return true;
     }
+  },
+
+  //upload
+  setBackground(url){
+    _presentation.slideGroup[_presentation.current].background = url;
+  },
+
+  setDefaultBackground(url){
+    _presentation.background = url;
+    Store.setMessage(lang.message.successOperate);
   },
 };
 

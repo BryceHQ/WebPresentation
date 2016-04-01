@@ -76,6 +76,10 @@ const Store = _.assign({}, EventEmitter.prototype, {
     return userStore.data.isAuthenticated;
   },
 
+  setMessage: setMessage,
+
+  setError: setError,
+
   emitChange() {
     this.emit(CHANGE_EVENT);
   },
@@ -178,11 +182,22 @@ Dispatcher.register((action) => {
       }
       break;
 
+
+    //---------------upload------------------
+    case Constants.SET_BACKGROUND:
+      presentationStore.setBackground(action.data);
+      Store.emitChange();
+      break;
+    case Constants.SET_DEFAULT_BACKGROUND:
+      presentationStore.setDefaultBackground(action.data);
+      Store.emitChange();
+      break;
+
+
     //---------------menu------------------
     case Constants.MENU_SELECT:
       menuStore.select(action.data, defaultCallback);
       break;
-
 
     //---------------message------------------
     case Constants.SET_MESSAGE:
@@ -222,7 +237,7 @@ function defaultCallback(data, success, error){
       _data.error = data.message;
     }
   } else if(!success){
-    _data.bottomMessage = '保存成功';
+    _data.bottomMessage = lang.message.successSave;
   }
   Store.emitChange();
 }

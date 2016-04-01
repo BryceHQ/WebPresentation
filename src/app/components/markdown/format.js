@@ -5,8 +5,11 @@ const FORMATS = {
 	bold: { type: 'inline', token: 'strong', before: '**', after: '**', placeholder: 'bold text' },
 	italic: { type: 'inline', token: 'em', before: '_', after: '_', placeholder: 'italic text' },
 	quote: { type: 'block', token: 'quote', re: /^\>\s+/, before: '>', placeholder: 'quote' },
-	oList: { type: 'block', before: '1. ', re: /^\d+\.\s+/, placeholder: 'List' },
-	uList: { type: 'block', before: '* ', re: /^[\*\-]\s+/, placeholder: 'List' },
+	listNumbered: { type: 'block', before: '1. ', re: /^\d+\.\s+/, placeholder: 'List' },
+	listBulleted: { type: 'block', before: '* ', re: /^[\*\-]\s+/, placeholder: 'List' },
+	code: { type: 'inline', before: '`', after: '`', placeholder: 'your code' },
+	strikeThrough: { type: 'inline', before: '~~', after: '~~', placeholder: 'some text' },
+	indent: { type: 'inline', before: '&emsp;', after: '', placeholder: '' },
 };
 
 const FORMAT_TOKENS = {};

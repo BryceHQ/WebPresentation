@@ -76,10 +76,10 @@ const WorkRegion = React.createClass({
     return (
       <div style = {styles.root}>
         <Tabs inkBarStyle = {styles.inkBar} onChange = {this._handleChange}>
-          <Tab label="最近的文件" style={styles.tab} value="recent">
+          <Tab label={lang.route.home.recentFiles} style={styles.tab} value="recent">
             <RecentFiles data = {recent} onError = {this._handleError} {...otherProps.recent}/>
           </Tab>
-          <Tab label="全部文件" style={styles.tab} value="all">
+          <Tab label={lang.route.home.allFiles} style={styles.tab} value="all">
             <AllFiles data = {all} onError = {this._handleError} {...otherProps.all}/>
           </Tab>
         </Tabs>

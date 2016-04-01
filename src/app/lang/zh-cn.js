@@ -8,6 +8,12 @@ const lang = {
     history: '历史版本',
   },
   button: {
+    newOne: '新建',
+    comfirm: '确认',
+    cancel: '取消',
+    close: '关闭',
+    signin: '登录',
+    signup: '注册',
     markdown: '使用markdown编辑',
     expand: '展开',
     collapse: '收起',
@@ -15,20 +21,46 @@ const lang = {
     remove: '删除（当前页）',
     fullscreen: '全屏',
     help: '查看帮助',
-    signin: '登录',
     menu: '菜单',
+    background: '设置为默认背景',
+    moreFiles: '到个人中心中查看更多...',
   },
   message: {
+    successSave: '保存成功',
+    successOperate: '操作成功',
     fullscreen: '按ESC退出全屏',
     loading: '加载中...',
     nothing: '这里什么也没有...',
     upload: '拖拽到这里上传...',
-    background: '设置为默认背景',
+    uploadBG: '上传背景图片',
 
     history(time){
       return `创建于 ${time}`;
     },
     historyHint: '点击还原该历史记录',
+  },
+  error: {
+    passwordUnmatch: '两次输入的密码不一致',
+  },
+  toolbar: {
+    h1: '一级标题',
+    h2: '二级标题',
+    h3: '三级标题',
+    bold: '加粗',
+    italic: '斜体',
+    quote: '引用',
+    listNumbered: '数字列表',
+    listBulleted: '列表',
+    code: '代码',
+    strikeThrough: '删除线',
+    indent: '缩进',
+    photo: '上传背景图片',
+  },
+
+  columns: {
+    name: '名称',
+    lastUpdateTime: '上次更新时间',
+    createTime: '创建时间',
   },
 
   time: {
@@ -45,6 +77,25 @@ const lang = {
     },
     longago: '很久之前',
   },
+
+  route: {
+    signup:{
+      userNameHint: '请输入账号',//please input your account.
+      userNameLabel: '账号', //Your Account
+      passwordHint: '请输入密码', //please input your password.
+      passwordLabel: '密码', //Your Password
+      comfirmHint: '请确认您的密码', //please confirm your password.
+      comfirmLabel: '确认密码', //Confirm Your Password
+      rememberMe: '记住我', //Remember me
+    },
+    home: {
+      nicknameHint: '昵称',
+      descriptionHint: '写点什么...',
+      profile: '编辑个人介绍',
+      allFiles: '全部的文件',
+      recentFiles: '最近的文件',
+    },
+  }
 };
 
 export default lang;

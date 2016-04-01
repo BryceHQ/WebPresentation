@@ -16,6 +16,7 @@ import Alert from '../../../components/common/alert.jsx';
 import AppBar from '../../../components/appbar.jsx';
 
 import ajax from '../../../ajax.js';
+import lang from '../../../lang.js';
 
 const SignIn = React.createClass({
   getInitialState() {
@@ -46,18 +47,18 @@ const SignIn = React.createClass({
         <div className = "login">
           {alert}
           <TextField
-            hintText="please input your account."
-            floatingLabelText="Your Account"
+            hintText={lang.route.signup.userNameHint}
+            floatingLabelText={lang.route.signup.userNameLabel}
             onChange = {this._handleChange.bind(this, 'userName')}
           /><br/>
           <TextField
-            hintText="please input your password."
-            floatingLabelText="Your Password"
+            hintText={lang.route.signup.passwordHint}
+            floatingLabelText={lang.route.signup.passwordLabel}
             type="password"
             onChange = {this._handleChange.bind(this, 'password')}
           /><br/>
           <Checkbox
-            label="Remember me"
+            label={lang.route.signup.rememberMe}
             checked={rememberMe}
             style={{
               marginTop: 16,
@@ -68,10 +69,10 @@ const SignIn = React.createClass({
             }}
             onCheck = {this._handleChange.bind(this, 'rememberMe')}
           /><br/>
-          <RaisedButton label="登录" secondary={true} onTouchTap = {this._handleSignIn}
+          <RaisedButton label={lang.button.signin} secondary={true} onTouchTap = {this._handleSignIn}
             disabled = {!(userName && password)}/>
 
-          <FlatButton label="注册" secondary={true} onTouchTap = {() => history.to('/auth/signup')}/>
+          <FlatButton label={lang.button.signup} secondary={true} onTouchTap = {() => history.to('/auth/signup')}/>
         </div>
       </div>
     );

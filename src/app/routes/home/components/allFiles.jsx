@@ -13,6 +13,7 @@ import SimpleTable from '../../../components/common/table.jsx';
 
 import history from '../../../history.js';
 import ajax from '../../../ajax.js';
+import lang from '../../../lang.js';
 
 const styles = {
   btn:  {
@@ -24,9 +25,9 @@ const AllFiles = React.createClass({
   getDefaultProps() {
     return {
       columns: [
-        {key: 'name', text: '名称'},
-        {key: 'lastUpdateTime', text: '修改时间'},
-        {key: 'createTime', text: '创建时间'},
+        {key: 'name', text: lang.columns.name},
+        {key: 'lastUpdateTime', text: lang.columns.lastUpdateTime},
+        {key: 'createTime', text: lang.columns.createTime},
       ],
     };
   },
@@ -37,7 +38,7 @@ const AllFiles = React.createClass({
     return (
       <div style = {styles.root}>
         <div>
-          <RaisedButton label="新建" secondary={true} style={styles.btn} onTouchTap={this._handleNew}/>
+          <RaisedButton label={lang.button.newOne} secondary={true} style={styles.btn} onTouchTap={this._handleNew}/>
         </div>
         <Divider/>
         <SimpleTable data={data} columns={columns} placeholder={placeholder}

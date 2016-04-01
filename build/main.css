@@ -436,6 +436,7 @@ span.CodeMirror-selectedtext { background: none; }
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 10;
   margin: 4px;
 }
 .MDEditor_editor {
@@ -459,12 +460,15 @@ span.CodeMirror-selectedtext { background: none; }
   cursor: pointer;
   display: inline-block;
   margin-right: 4px;
-  padding: 10px 0;
+  padding: 5px 0;
   text-align: center;
   vertical-align: middle;
   width: 40px;
-  transition: all 180ms;
+  -moz-transition: all 180ms;
+  /* Firefox 4 */
   -webkit-transition: all 180ms;
+  -o-transition: all 180ms;
+  transition: all 180ms;
 }
 .MDEditor_toolbarButton:hover,
 .MDEditor_toolbarButton:focus {
@@ -472,8 +476,11 @@ span.CodeMirror-selectedtext { background: none; }
   border-color: rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   outline: none;
-  transition: none;
+  -moz-transition: none;
+  /* Firefox 4 */
   -webkit-transition: none;
+  -o-transition: none;
+  transition: none;
 }
 .MDEditor_toolbarButton:active,
 .MDEditor_toolbarButton--pressed {
@@ -487,12 +494,12 @@ span.CodeMirror-selectedtext { background: none; }
 }
 .MDEditor_toolbarButton_icon {
   display: inline-block;
-  height: 16px;
-  width: 16px;
+  height: 24px;
+  width: 24px;
 }
 .MDEditor_toolbarButton_icon > svg {
-  height: 16px;
-  width: 16px;
+  height: 24px;
+  width: 24px;
 }
 .MDEditor_toolbarButton_label {
   display: none;
@@ -502,11 +509,28 @@ span.CodeMirror-selectedtext { background: none; }
   font-size: 16px;
   font-weight: bold;
   line-height: .9;
-  height: 16px;
+  height: 24px;
+  line-height: 24px;
   text-transform: uppercase;
 }
 .CodeMirror {
   height: 100%;
+}
+.preview {
+  position: relative;
+  z-index: 10;
+}
+blockquote {
+  border-left: 5px solid #eee;
+  margin-left: 20px;
+  padding-left: 15px;
+}
+code {
+  background: #f6f6f6;
+  padding: 3px;
+  border-radius: 3px;
+  font-size: 14px;
+  margin-left: 20px;
 }
 .draggable-list {
   position: absolute;

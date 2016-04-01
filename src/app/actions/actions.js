@@ -116,6 +116,23 @@ const Action = {
     },
   },
 
+  //---------------upload------------------
+  setBackground(url){
+    if(!url) return;
+    Dispatcher.dispatch({
+      actionType: Constants.SET_BACKGROUND,
+      data: url,
+    });
+  },
+
+  setDefaultBackground(url){
+    if(!url) return;
+    Dispatcher.dispatch({
+      actionType: Constants.SET_DEFAULT_BACKGROUND,
+      data: url,
+    });
+  },
+
   //---------------menu------------------
   menuSelect(index) {
     Dispatcher.dispatch({
@@ -123,6 +140,7 @@ const Action = {
       data: index,
     });
   },
+
 
   //---------------message------------------
   setMessage(message) {

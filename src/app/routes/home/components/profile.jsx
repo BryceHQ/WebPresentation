@@ -9,6 +9,7 @@ import LinkButton from '../../../components/common/linkButton.jsx';
 
 import Actions from '../../../actions/actions.js';
 
+import lang from '../../../lang.js';
 
 const Profile = React.createClass({
   getInitialState() {
@@ -35,20 +36,20 @@ const Profile = React.createClass({
       self = (
         <div>
           <TextField
-            hintText="nick name"
+            hintText={lang.route.home.nicknameHint}
             value = {name}
             onChange = {this._handleChange.bind(this, 'name')}
           />
           <TextField
             value = {description}
-            hintText="say something."
+            hintText={lang.route.home.descriptionHint}
             multiLine={true}
             rowsMax={4}
             onChange = {this._handleChange.bind(this, 'description')}
           />
           <div>
-            <RaisedButton label="确定" secondary={true} onTouchTap = {this._endEdit} />
-            <FlatButton label="取消" secondary={true} onTouchTap = {this._cancelEdit}/>
+            <RaisedButton label={lang.button.comfirm} secondary={true} onTouchTap = {this._endEdit} />
+            <FlatButton label={lang.button.cancel} secondary={true} onTouchTap = {this._cancelEdit}/>
           </div>
         </div>
       );
@@ -57,7 +58,7 @@ const Profile = React.createClass({
         <div>
           <h3>{name}</h3>
           <p>{description}</p>
-          <LinkButton onClick={this._beginEdit}>编辑个人介绍</LinkButton>
+          <LinkButton onClick={this._beginEdit}>{lang.route.home.profile}</LinkButton>
         </div>
       );
     }

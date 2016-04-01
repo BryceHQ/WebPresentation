@@ -4,7 +4,7 @@ import Slide from './slide.jsx';
 import Markdown from './markdown.jsx';
 import Background from './background.jsx';
 
-import Upload from './common/upload.jsx';
+import UploadWindow from './uploadWindow.jsx';
 
 import Actions from '../actions/actions.js';
 
@@ -27,15 +27,26 @@ const SlideGroup = React.createClass({
     let {index, mode, data} = this.props;
     index = index || 0;
     let slide = data[index];
-    let {transition, style, content, key} = slide;
+    let {transition, style, content, key, background} = slide;
+    background = background || this.props.background;
+
+    var backgroundElem = null;
+    if(background !== null && typeof background !== 'undefined'){
+      backgroundElem = (<Background url={background} type="gradient"></Background>);
+    }
+
+    var upload = null;
+    if(mode === Constants.MODE.UPLOADING){
+      upload = <UploadWindow open={true}></UploadWindow>;
+    }
 
     return (
       <div className = "slideGroup" style = {this.props.style}>
         <Slide transition = {transition}>
           <div key = {key} className = "slideItem" style = {style}>
-            {/*<Background url="1.jpg" type="gradient"></Background>*/}
-            <Upload url={Store.getConfig().upload}></Upload>
-            {/*<Markdown mode = {mode} content = {content} index = {index}></Markdown>*/}
+            {backgroundElem}
+            {upload}
+            <Markdown mode = {mode} content = {content} index = {index}></Markdown>
           </div>
         </Slide>
       </div>

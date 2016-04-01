@@ -11,6 +11,8 @@ import SimpleTable from '../../../components/common/table.jsx';
 
 import history from '../../../history.js';
 
+import lang from '../../../lang.js';
+
 const styles = {
   btn:  {
     margin: 12,
@@ -21,9 +23,9 @@ const RecentFiles = React.createClass({
   getDefaultProps() {
     return {
       columns: [
-        {key: 'name', text: '名称'},
-        {key: 'lastUpdateTime', text: '修改时间'},
-        {key: 'createTime', text: '创建时间'},
+        {key: 'name', text: lang.columns.name},
+        {key: 'lastUpdateTime', text: lang.columns.lastUpdateTime},
+        {key: 'createTime', text: lang.columns.createTime},
       ],
     };
   },

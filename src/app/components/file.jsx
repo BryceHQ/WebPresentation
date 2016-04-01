@@ -21,7 +21,7 @@ import SlideGroup from './slideGroup.jsx';
 import ErrorDialog from './error.jsx';
 
 
-const File = React.createClass({
+const SimpleFile = React.createClass({
   getInitialState() {
     return Store.getData(this.props.params.fileId);
   },
@@ -41,7 +41,7 @@ const File = React.createClass({
 
   render() {
     let {presentation, menu, user, bottomMessage, error} = this.state;
-    let {slideGroup, current, mode, leftOpen, rightOpen, title, loading} = presentation;
+    let {slideGroup, current, mode, leftOpen, rightOpen, title, loading, background} = presentation;
     let snackbar = (
       <Snackbar
         open={!!bottomMessage}
@@ -54,7 +54,7 @@ const File = React.createClass({
     if(mode === Constants.MODE.FULLSCREEN){
       return (
         <div>
-          <SlideGroup data = {slideGroup} index = {current} mode = {mode}
+          <SlideGroup data = {slideGroup} index = {current} mode = {mode} background = {background}
             style = {{
               top: '0px',
             }}/>
@@ -78,7 +78,7 @@ const File = React.createClass({
       );
     } else{
       center = (
-        <SlideGroup data = {slideGroup} index = {current} mode = {mode}/>
+        <SlideGroup data = {slideGroup} index = {current} mode = {mode} background = {background}/>
       );
     }
 
@@ -100,4 +100,4 @@ const File = React.createClass({
   },
 });
 
-export default File;
+export default SimpleFile;

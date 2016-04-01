@@ -6,7 +6,7 @@ import Constants from '../constants/constants.js';
 import _ from 'lodash';
 import marked from 'marked';
 
-import Editor from './markdown/MDEditor';
+import Editor from './markdown/MDEditor.jsx';
 
 const Markdown = React.createClass({
 

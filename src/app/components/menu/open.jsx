@@ -2,12 +2,11 @@
 * 菜单-打开
 */
 import React from 'react';
-import lang from '../../lang.js';
 
 import ListItem from 'material-ui/lib/lists/list-item';
 
 import history from '../../history.js';
-
+import lang from '../../lang.js';
 
 import Actions from '../../actions/actions.js';
 
@@ -35,7 +34,7 @@ const Open = React.createClass({
       <div>
         <SimpleList {...this.props} onTouchTap={this._handleTouchTab}/>
         <div className="align-center">
-          <LinkButton onClick={() => history.to('/home')}>到个人中心中查看更多...</LinkButton>
+          <LinkButton onClick={() => history.to('/home')}>{lang.button.moreFiles}</LinkButton>
         </div>
       </div>
     );
