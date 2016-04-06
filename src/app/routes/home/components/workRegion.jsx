@@ -77,10 +77,10 @@ const WorkRegion = React.createClass({
       <div style = {styles.root}>
         <Tabs inkBarStyle = {styles.inkBar} onChange = {this._handleChange}>
           <Tab label={lang.route.home.recentFiles} style={styles.tab} value="recent">
-            <RecentFiles data = {recent} onError = {this._handleError} {...otherProps.recent}/>
+            <RecentFiles data = {recent} {...otherProps.recent}/>
           </Tab>
           <Tab label={lang.route.home.allFiles} style={styles.tab} value="all">
-            <AllFiles data = {all} onError = {this._handleError} {...otherProps.all}/>
+            <AllFiles data = {all} {...otherProps.all}/>
           </Tab>
         </Tabs>
       </div>
@@ -109,12 +109,6 @@ const WorkRegion = React.createClass({
       );
     }
   },
-
-  _handleError(error){
-    if(this.props.onError){
-      this.props.onError(error);
-    }
-  }
 
 });
 

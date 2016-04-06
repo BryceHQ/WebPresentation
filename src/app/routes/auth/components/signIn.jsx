@@ -21,7 +21,7 @@ import lang from '../../../lang.js';
 const SignIn = React.createClass({
   getInitialState() {
     return {
-      userName: '',
+      email: '',
       password: '',
       rememberMe: true,
       message: null,
@@ -32,15 +32,34 @@ const SignIn = React.createClass({
     this.setState({message: null});
   },
 
-  render() {
-    let {userName, password, rememberMe, message} = this.state;
-    let alert = message === null ?
-      null :
-      (
+  //@param  message Array||String
+  renderMessages(message) {
+    if(!message) return null;
+    if(_.isArray(message)){
+      if(message.length === 0)return null;
+      var alerts = [];
+      message.forEach(function(msg, i){
+        alerts.push(
+          <Alert type="danger" key={i}>{typeof msg === 'string' ? msg : msg.description}</Alert>
+        );
+      });
+      return (
+        <div>
+          {alerts}
+        </div>
+      );
+    }
+    return (
       <Alert type="danger">
         {message}
       </Alert>
     );
+  },
+
+  render() {
+    let {email, password, rememberMe, message} = this.state;
+    let alert = this.renderMessages(message);
+
     return (
       <div>
         <AppBar simple = {true} />
@@ -49,7 +68,7 @@ const SignIn = React.createClass({
           <TextField
             hintText={lang.route.signup.userNameHint}
             floatingLabelText={lang.route.signup.userNameLabel}
-            onChange = {this._handleChange.bind(this, 'userName')}
+            onChange = {this._handleChange.bind(this, 'email')}
           /><br/>
           <TextField
             hintText={lang.route.signup.passwordHint}
@@ -70,7 +89,7 @@ const SignIn = React.createClass({
             onCheck = {this._handleChange.bind(this, 'rememberMe')}
           /><br/>
           <RaisedButton label={lang.button.signin} secondary={true} onTouchTap = {this._handleSignIn}
-            disabled = {!(userName && password)}/>
+            disabled = {!(email && password)}/>
 
           <FlatButton label={lang.button.signup} secondary={true} onTouchTap = {() => history.to('/auth/signup')}/>
         </div>
@@ -84,7 +103,7 @@ const SignIn = React.createClass({
       let me = this;
       ajax.post(
         config.signIn,
-        _.pick(this.state, ['userName', 'password', 'rememberMe']),
+        _.pick(this.state, ['email', 'password', 'rememberMe']),
         function(data){
           if(!data) return;
           if(data.success === false){

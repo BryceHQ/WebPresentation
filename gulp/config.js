@@ -38,11 +38,11 @@ module.exports = {
     watch: src + "/www/index.html",
     scripts: {
       src: dest + "/*.js",
-      dest: 'D:/job/2016/presentation/presentation/Scripts'
+      dest: 'D:/job/2016/presentation/web/Scripts'
     },
     css: {
       src: dest + "/*.css",
-      dest: 'D:/job/2016/presentation/presentation/Content'
+      dest: 'D:/job/2016/presentation/web/Content'
     },
   },
 };

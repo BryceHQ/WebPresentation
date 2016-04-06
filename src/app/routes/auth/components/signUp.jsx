@@ -21,7 +21,7 @@ import lang from '../../../lang.js';
 const SignUp = React.createClass({
   getInitialState() {
     return {
-      userName: '',
+      email: '',
       password: '',
       confirmPassword: '',
       message: null,
@@ -32,19 +32,37 @@ const SignUp = React.createClass({
     this.setState({message: null});
   },
 
-  render() {
-    let {userName, password, confirmPassword, message} = this.state;
-    let errorText;
-    if(confirmPassword && password !== confirmPassword){
-      errorText = lang.error.passwordUnmatch;
+  //@param  message Array||String
+  renderMessages(message) {
+    if(!message) return null;
+    if(_.isArray(message)){
+      if(message.length === 0)return null;
+      var alerts = [];
+      message.forEach(function(msg, i){
+        alerts.push(
+          <Alert type="danger" key={i}>{typeof msg === 'string' ? msg : msg.description}</Alert>
+        );
+      });
+      return (
+        <div>
+          {alerts}
+        </div>
+      );
     }
-    let alert = message === null ?
-      null :
-      (
+    return (
       <Alert type="danger">
         {message}
       </Alert>
     );
+  },
+
+  render() {
+    let {email, password, confirmPassword, message} = this.state;
+    let errorText;
+    if(confirmPassword && password !== confirmPassword){
+      errorText = lang.error.passwordUnmatch;
+    }
+    let alert = this.renderMessages(message);
 
     return (
       <div>
@@ -54,8 +72,8 @@ const SignUp = React.createClass({
           <TextField
             hintText={lang.route.signup.userNameHint}
             floatingLabelText={lang.route.signup.userNameLabel}
-            onChange = {this._handleChange.bind(this, 'userName')}
-            value = {userName}
+            onChange = {this._handleChange.bind(this, 'email')}
+            value = {email}
           /><br/>
           <TextField
             hintText={lang.route.signup.passwordHint}
@@ -73,7 +91,7 @@ const SignUp = React.createClass({
             value = {confirmPassword}
           /><br/>
           <RaisedButton label={lang.button.signup} secondary={true} onTouchTap = {this._handleSignUp}
-            disabled = {!(password === confirmPassword && userName && password)}/>
+            disabled = {!(password === confirmPassword && email && password)}/>
           <FlatButton label={lang.button.signin} secondary={true} onTouchTap = {() => history.to('/auth/signin')}/>
         </div>
       </div>
@@ -86,7 +104,7 @@ const SignUp = React.createClass({
       let me = this;
       ajax.post(
         config.signUp,
-        _.pick(this.state, ['userName', 'password', 'confirmPassword']),
+        _.pick(this.state, ['email', 'password', 'confirmPassword']),
         function(data){
           if(!data) return;
           if(data.success === false){

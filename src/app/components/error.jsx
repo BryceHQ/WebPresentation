@@ -1,13 +1,41 @@
 import React from 'react';
+import _ from 'lodash';
 
 import Dialog from 'material-ui/lib/dialog';
 import RaisedButton from 'material-ui/lib/raised-button';
 
 import Alert from './common/alert.jsx';
 
+const styles = {
+  actions: {
+    textAlign: 'center',
+  },
+};
+
 const ErrorDialog = React.createClass({
-  getInitialState() {
-    return {open: true};
+
+  //@param  error Array||String
+  renderErrors(error) {
+    if(!error) return null;
+    if(_.isArray(error)){
+      if(error.length === 0)return null;
+      var alerts = [];
+      error.forEach(function(e, i){
+        alerts.push(
+          <Alert type="danger" key={i}>{typeof e === 'string' ? e : e.description}</Alert>
+        );
+      });
+      return (
+        <div>
+          {alerts}
+        </div>
+      );
+    }
+    return (
+      <Alert type="danger">
+        {error}
+      </Alert>
+    );
   },
 
 	render() {
@@ -17,7 +45,7 @@ const ErrorDialog = React.createClass({
         label="确定"
         secondary={true}
         keyboardFocused={true}
-        onTouchTap={this._handleClose}
+        onTouchTap={this._handleRequestClose}
       />
     );
 		return (
@@ -25,23 +53,18 @@ const ErrorDialog = React.createClass({
         title="Error"
         actions={actions}
         modal={false}
-        open={this.state.open}
+        open={true}
         onRequestClose={this._handleRequestClose}
+        actionsContainerStyle={styles.actions}
       >
-        <Alert type="danger">
-          {error}
-        </Alert>
+        {this.renderErrors(error)}
       </Dialog>
     );
 	},
 
-  _handleClose() {
-    this.setState({open: false});
-  },
-
   _handleRequestClose() {
     if(this.props.onClearError){
-      this.onClearError();
+      this.props.onClearError();
     }
   },
 });

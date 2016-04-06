@@ -37,8 +37,8 @@ const Home = React.createClass({
     return (
       <div className = "home">
         <AppBar simple = {true} />
-        <Info user={user} onError={this._handleError} />
-        <WorkRegion onError={this._handleError} />
+        <Info user={user} />
+        <WorkRegion />
         {errorElem}
       </div>
     );
@@ -46,16 +46,6 @@ const Home = React.createClass({
 
   _onChange() {
     this.setState(Store.getData());
-  },
-
-  _handleError(error) {
-    if(error){
-      this.setState({error: error});
-    }
-  },
-
-  _handleClearError(){
-    this.setState({error: null});
   },
 
 });

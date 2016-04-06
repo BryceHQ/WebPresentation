@@ -52,11 +52,7 @@ const AllFiles = React.createClass({
   _handleNew() {
     var me = this;
     Actions.add(function(data){
-      if(data.success === false){
-        if(me.props.onError){
-          me.props.onError(data.message);
-        }
-      }else{
+      if(data.success !== false){
         history.to(`/file/${data}`);
       }
     });
