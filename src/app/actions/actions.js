@@ -12,6 +12,12 @@ const Action = {
     });
   },
 
+  logout() {
+    Dispatcher.dispatch({
+      actionType: Constants.LOGOUT,
+    });
+  },
+
   updateUser(data) {
     if(!data) return;
     Dispatcher.dispatch({

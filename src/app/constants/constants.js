@@ -3,6 +3,7 @@ const constants = {
   //---------------user------------------
   SIGN_IN: 'SIGN_IN',
   SIGN_UP: 'SIGN_UP',
+  LOGOUT: 'LOGOUT',
   UPDATE_USER: 'UPDATE_USER',
 
   //---------------presentation------------------

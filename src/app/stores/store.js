@@ -62,7 +62,7 @@ const Store = _.assign({}, EventEmitter.prototype, {
   getData(fileId) {
     if(fileId){
       presentationStore.get(fileId, defaultCallback);
-      menuStore.refresh();
+      menuStore.reset();
       Store.emitChange();
     }
     return _data;
@@ -99,6 +99,10 @@ Dispatcher.register((action) => {
     case Constants.SIGN_IN:
       userStore.signIn(action.data);
       Store.emitChange();
+      break;
+
+    case Constants.LOGOUT:
+      userStore.logout(defaultCallback);
       break;
 
     case Constants.UPDATE_USER:
@@ -163,9 +167,11 @@ Dispatcher.register((action) => {
       break;
     case Constants.ADD_SLIDE:
       presentationStore.addSlide(defaultCallback);
+      Store.emitChange();
       break;
     case Constants.REMOVE_SLIDE:
-      presentationStore.moveSlide(defaultCallback);
+      presentationStore.removeSlide(defaultCallback);
+      Store.emitChange();
       break;
 
 
@@ -185,11 +191,11 @@ Dispatcher.register((action) => {
 
     //---------------upload------------------
     case Constants.SET_BACKGROUND:
-      presentationStore.setBackground(action.data);
+      presentationStore.setBackground(action.data, defaultCallback);
       Store.emitChange();
       break;
     case Constants.SET_DEFAULT_BACKGROUND:
-      presentationStore.setDefaultBackground(action.data);
+      presentationStore.setDefaultBackground(action.data, defaultCallback);
       Store.emitChange();
       break;
 

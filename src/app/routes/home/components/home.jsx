@@ -36,7 +36,7 @@ const Home = React.createClass({
     let errorElem = error ? <ErrorDialog error={error} onClearError={() => Actions.clearError()}/> : null;
     return (
       <div className = "home">
-        <AppBar simple = {true} />
+        <AppBar simple = {true} user={user}/>
         <Info user={user} />
         <WorkRegion />
         {errorElem}

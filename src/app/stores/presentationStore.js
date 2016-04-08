@@ -47,7 +47,7 @@ let _reset = {
   mode: MODE.PRESENTATION,
   current: 0,
   loading: false,
-  background: null,
+  // background: null,
 };
 
 //helper
@@ -73,6 +73,7 @@ function get(fileId, callback){
           fileId: data.id,
           slideGroup: JSON.parse(data.raw),
           title: data.name,
+          background: data.background,
         }, _reset);
       }
       callback(data, true);
@@ -99,7 +100,7 @@ function add(callback){
 //更新presetation中任意属性的值
 function save(data, callback){
   var config = Store.getConfig();
-  data = data || {raw: JSON.stringify(_presentation.slideGroup), id: _presentation.fileId};
+  data = data || {raw: JSON.stringify(_presentation.slideGroup), id: _presentation.fileId, background: _presentation.background};
   ajax.post(
     config.save,
     data,
@@ -184,19 +185,25 @@ var presentationStore = {
     _presentation.current = index;
   },
 
-  addSlide(index){
+  addSlide(callback){
     _presentation.slideGroup.splice(++_presentation.current, 0, {
       transition: 'slide',
       content: '# 请输入标题',
       key: guid(),
     });
+
+    autoSave(null, callback);
   },
 
-  removeSlide(index){
+  removeSlide(callback){
+    //There is one slide at least
+    if(_presentation.slideGroup.length === 1) return;
     _presentation.slideGroup.splice(_presentation.current, 1);
     if(_presentation.current > 0){
       _presentation.current--;
     }
+
+    autoSave(null, callback);
   },
 
 
@@ -216,13 +223,17 @@ var presentationStore = {
   },
 
   //upload
-  setBackground(url){
+  setBackground(url, callback){
     _presentation.slideGroup[_presentation.current].background = url;
+
+    autoSave(null, callback);
   },
 
-  setDefaultBackground(url){
+  setDefaultBackground(url, callback){
     _presentation.background = url;
-    Store.setMessage(lang.message.successOperate);
+
+    autoSave(null, callback);
+    // Store.setMessage(lang.message.successOperate);
   },
 };
 

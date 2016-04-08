@@ -86,7 +86,7 @@ const SimpleFile = React.createClass({
       <div>
         <AppBar mode = {mode} user = {user} simple = {false} title={title}>
           <Right open = {rightOpen} data = {slideGroup} current = {current}/>
-          <Left open = {leftOpen} menu = {menu}/>
+          <Left open = {leftOpen} menu = {menu} user = {user}/>
         </AppBar>
         {center}
         {errorElem}

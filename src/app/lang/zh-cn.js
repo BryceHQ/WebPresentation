@@ -14,6 +14,8 @@ const lang = {
     close: '关闭',
     signin: '登录',
     signup: '注册',
+    logout: '退出',
+    personCenter: '个人中心',
     markdown: '使用markdown编辑',
     expand: '展开',
     collapse: '收起',

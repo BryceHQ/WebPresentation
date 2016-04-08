@@ -36,7 +36,7 @@ const Menu = React.createClass({
         return (<Open data = {this.props.recent} placeholder = {this.props.placeholder}/>);
 
       case 3:
-        return (<span>保存到本地...</span>);
+        return (<div style={{padding: '20px'}}>保存到本地...</div>);
 
       case 4:
         return (<History data = {this.props.history} placeholder = {this.props.placeholder}/>);

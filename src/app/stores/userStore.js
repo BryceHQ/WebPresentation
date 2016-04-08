@@ -9,6 +9,7 @@ let _user = {
   id: '',
   name: '',
   description: '',
+  icon: null,
   isAuthenticated: false,
 };
 
@@ -16,7 +17,7 @@ let _user = {
 function save(data, callback){
   var config = Store.getConfig().user;
   if(config){
-    data = data || _user;
+    data = data || _.pick(_user, ['name', 'description']);
     ajax.post(
       config.save,
       data,
@@ -35,11 +36,15 @@ var userStore = {
   data: _user,
 
   init(config) {
-    _.assign(_user, _.pick(config, ['id', 'name', 'description', 'isAuthenticated']));
+    _.assign(_user, _.pick(config, ['id', 'name', 'description', 'icon', 'isAuthenticated']));
   },
 
   signIn(data) {
-    _.assign(_user, _.pick(data, ['id', 'name', 'description']), {isAuthenticated: true});
+    _.assign(_user, _.pick(data, ['id', 'name', 'description', 'icon']), {isAuthenticated: true});
+  },
+
+  logout() {
+    
   },
 
   update(data, callback) {

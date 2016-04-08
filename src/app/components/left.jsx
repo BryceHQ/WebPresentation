@@ -17,7 +17,8 @@ const styles = {
     padding: '10px 0px 10px 20px',
     textAlign: 'center',
   },
-
+  avatar: {borderRadius: '0'},
+  root: {overflow: 'hidden'},
 };
 
 const Left = React.createClass({
@@ -26,11 +27,11 @@ const Left = React.createClass({
   },
 
   render() {
-    let {open, menu} = this.props;
+    let {open, menu, user} = this.props;
 
     return (
       <LeftNav
-        style = {{overflow: 'hidden'}}
+        style = {styles.root}
         width = {500}
         open = {open}
         docked = {false}
@@ -39,7 +40,7 @@ const Left = React.createClass({
       >
         <div style={styles.avatarContainer}
         >
-          <Avatar src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAABmJLR0QA/wD/AP+gvaeTAAAA7UlEQVR4nO3asQ3CQBAAwX9kiVqogP5DV0AtRFDEBCfDTm6/vbrodfv5un/WoPPx3vL89PffJg//BQVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUR7+j7t6ppAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQES7eWv5ft70fqCe3wSiAqICogKiAqICogKiAqICogKiAqICogKiAqICouPf9wP1/5tAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQHToC66+39d94LACogKiAqICogKiAqICogKiAqICogKiAqICogKiL2SGHPJ+jTmVAAAAAElFTkSuQmCC" />
+          <Avatar src={user.icon} style={styles.avatar}/>
         </div>
         <Divider/>
 

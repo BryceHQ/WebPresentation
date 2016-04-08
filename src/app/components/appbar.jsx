@@ -76,6 +76,11 @@ const MyAppBar = React.createClass({
           style={{
             height: '40px'
           }}/>
+
+          <div className="icon-container">
+            <DefaultAvater src={user.icon} tooltip = {user.isAuthenticated ? user.name : lang.button.signin}
+               style={styles.avatar} onTouchTap = {avatarHanler}/>
+          </div>
         </div>
       );
     }else {
@@ -89,10 +94,9 @@ const MyAppBar = React.createClass({
           }}/>
 
           <div className="icon-container">
-            <IconButton tooltip = {user.isAuthenticated ? user.name : lang.button.signin} style={styles.avatar}
-              onTouchTap = {avatarHanler}>
-              <DefaultAvater src={user.isAuthenticated ? "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAABmJLR0QA/wD/AP+gvaeTAAAA7UlEQVR4nO3asQ3CQBAAwX9kiVqogP5DV0AtRFDEBCfDTm6/vbrodfv5un/WoPPx3vL89PffJg//BQVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUR7+j7t6ppAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQES7eWv5ft70fqCe3wSiAqICogKiAqICogKiAqICogKiAqICogKiAqICouPf9wP1/5tAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQFRAVEBUQHToC66+39d94LACogKiAqICogKiAqICogKiAqICogKiAqICogKiL2SGHPJ+jTmVAAAAAElFTkSuQmCC" : null}/>
-            </IconButton>
+            <DefaultAvater src={user.icon} tooltip = {user.isAuthenticated ? user.name : lang.button.signin}
+               style={styles.avatar} onTouchTap = {avatarHanler}/>
+
             <IconButton tooltip = {lang.button.fullscreen} style={styles.btn}
               onTouchTap = {this._handleFullscreen}>
               <IconFullscreen color={Colors.white}/>

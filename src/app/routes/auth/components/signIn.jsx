@@ -112,7 +112,7 @@ const SignIn = React.createClass({
           else{
             //redirect to home
             history.home();
-            Actions.signIn({user: data});
+            Actions.signIn(data);
           }
         }
       );

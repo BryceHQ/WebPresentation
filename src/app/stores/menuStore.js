@@ -53,9 +53,10 @@ var menuStore = {
     _data.current = index;
   },
 
-  refresh(history = true, recent = true){
+  reset(history = true, recent = true){
     _data.historyFlag = true;
     _data.recentFlag = true;
+    _data.current = 2;
   },
 };
 
