@@ -14,14 +14,10 @@ const MODE = Constants.MODE;
 
 let _lastMode = MODE.PRESENTATION;
 
-let _presentation = {
+let _readme = {
   fileId: 'readme',
-  rightOpen: false,
-  leftOpen: false,
-  loading: false,
-  mode: MODE.PRESENTATION,// markdown, presentation, uploading
-  current: 0,
   title: 'readme',
+  background: '',
   slideGroup: [{
     transition: 'slide',
     content: '# 快捷键 \n - Esc: 全屏切换 \n - Space/右/下: 下一页 \n - 左/上: 上一页',
@@ -41,13 +37,20 @@ let _presentation = {
   }],
 };
 
+let _presentation = _.assign({
+  rightOpen: false,
+  leftOpen: false,
+  loading: false,
+  mode: MODE.PRESENTATION,// markdown, presentation, uploading
+  current: 0,
+}, _readme);
+
 let _reset = {
   rightOpen: false,
   leftOpen: false,
   mode: MODE.PRESENTATION,
   current: 0,
   loading: false,
-  // background: null,
 };
 
 //helper
@@ -62,6 +65,11 @@ function changeMode(mode) {
 }
 
 function get(fileId, callback){
+  if(fileId === 'readme'){
+    _.assign(_presentation, _readme, _reset);
+    Store.emitChange();
+    return;
+  }
   var config = Store.getConfig();
   ajax.get(
     config.get,
@@ -124,8 +132,8 @@ var presentationStore = {
 
   get(fileId, callback) {
     if(fileId !== _presentation.fileId){
-      get(fileId, callback);
       _presentation.loading = true;
+      get(fileId, callback);
     }
   },
 

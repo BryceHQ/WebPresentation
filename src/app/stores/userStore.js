@@ -2,6 +2,7 @@ import _ from 'lodash';
 
 import ajax from '../ajax.js';
 import lang from '../lang.js';
+import history from '../history.js';
 
 import Store from './store.js';
 
@@ -32,6 +33,30 @@ function save(data, callback){
   }
 }
 
+function logout(callback){
+  var config = Store.getConfig().user;
+  if(config){
+    ajax.post(
+      config.logout,
+      function(data){
+        if(data === null || typeof data === 'undefined') return;
+        if(data.success !== false){
+          _.assign(_user, {
+            id: '',
+            name: '',
+            description: '',
+            icon: '',
+            isAuthenticated: false,
+          });
+
+          history.to('/');
+        }
+        callback(data, true);
+      }
+    );
+  }
+}
+
 var userStore = {
   data: _user,
 
@@ -43,9 +68,7 @@ var userStore = {
     _.assign(_user, _.pick(data, ['id', 'name', 'description', 'icon']), {isAuthenticated: true});
   },
 
-  logout() {
-    
-  },
+  logout: logout,
 
   update(data, callback) {
     save(_.assign(_user, data), callback);

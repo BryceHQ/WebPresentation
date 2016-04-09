@@ -33,7 +33,7 @@ const DefaultAvatar = React.createClass({
     }
 
     return (
-      <IconMenu closeOnItemTouchTap={false} onItemTouchTap = {this._handleItemTouchTap}
+      <IconMenu onItemTouchTap = {this._handleItemTouchTap}
         iconButtonElement={
           <IconButton style={style} tooltip = {tooltip}>
             <Avatar style={{borderRadius: null}} size={25} src={src} />
