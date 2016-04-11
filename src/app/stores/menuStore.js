@@ -67,18 +67,21 @@ function history(callback){
   var presentation = Store.getData().presentation;
   if(config){
     ajax.get(
-      config.history,
-      {id: presentation.fileId},
-      function(data){
-        if(!data) return;
-        if(data.success !== false){
+      config.history, {
+        data: {id: presentation.fileId},
+        success(data) {
+          if(!data) return;
           _data.history = formatHistory(data);
           _data.historyFlag = false;
-        }
-        _data.placeholder = message.nothing;
-        callback(data, true);
+
+          _data.placeholder = message.nothing;
+        },
+        error(data) {
+          callback.error(data);
+        },
       }
     );
+
     _data.placeholder = message.loading;
   }
 }
@@ -89,16 +92,18 @@ function recent(callback){
   var user = Store.getData().user;
   if(config){
     ajax.get(
-      config.recent,
-      {userId: user.id},
-      function(data){
-        if(!data) return;
-        if(data.success !== false){
+      config.recent, {
+        data: {userId: user.id},
+        success(data) {
+          if(!data) return;
           _data.recent = formatRecent(data);
           _data.recentFlag = false;
-        }
-        _data.placeholder = message.nothing;
-        callback(data, true);
+
+          _data.placeholder = message.nothing;
+        },
+        error(data) {
+          callback.error(data);
+        },
       }
     );
     _data.placeholder = message.loading;

@@ -10,6 +10,7 @@ import Auth from './routes/auth/index.js';
 import Help from './routes/help/index.js';
 import Home from './routes/home/index.js';
 import File from './routes/file/index.js';
+import Errors from './routes/errors/index.js';
 
 //history
 import history from './history.js';
@@ -46,6 +47,7 @@ const rootRoute = {
     Help,
     Home,
     File,
+    Errors,
   ]
 };
 

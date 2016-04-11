@@ -70,11 +70,7 @@ const Menu = React.createClass({
 
   _handleMenuSelect(index) {
     if(index === 1){
-      Actions.add(function(data){
-        if(data.success !== false){
-          history.to(`/file/${data}`);
-        }
-      });
+      Actions.add();
     } else {
       Actions.menuSelect(index);
     }

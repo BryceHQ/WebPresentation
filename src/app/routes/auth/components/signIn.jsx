@@ -102,18 +102,17 @@ const SignIn = React.createClass({
     if(config){
       let me = this;
       ajax.post(
-        config.signIn,
-        _.pick(this.state, ['email', 'password', 'rememberMe']),
-        function(data){
-          if(!data) return;
-          if(data.success === false){
-            me.setState({ message: data.message});
-          }
-          else{
+        config.signIn, {
+          data: _.pick(this.state, ['email', 'password', 'rememberMe']),
+          success(data) {
+            if(!data) return;
             //redirect to home
             history.home();
             Actions.signIn(data);
-          }
+          },
+          error(data) {
+            me.setState({ message: data.message});
+          },
         }
       );
     }

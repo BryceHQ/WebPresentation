@@ -20,14 +20,16 @@ function save(data, callback){
   if(config){
     data = data || _.pick(_user, ['name', 'description']);
     ajax.post(
-      config.save,
-      data,
-      function(data){
-        if(!data) return;
-        if(data.success !== false){
+      config.save, {
+        data: data,
+        success(data) {
+          if(!data) return;
           _.assign(_user, _.pick(data, ['name', 'description']));
-        }
-        callback(data);
+          callback.success(data);
+        },
+        error(data) {
+          callback.error();
+        },
       }
     );
   }
@@ -37,10 +39,9 @@ function logout(callback){
   var config = Store.getConfig().user;
   if(config){
     ajax.post(
-      config.logout,
-      function(data){
-        if(data === null || typeof data === 'undefined') return;
-        if(data.success !== false){
+      config.logout,{
+        success(data) {
+          if(data === null || typeof data === 'undefined') return;
           _.assign(_user, {
             id: '',
             name: '',
@@ -50,8 +51,10 @@ function logout(callback){
           });
 
           history.to('/');
-        }
-        callback(data, true);
+        },
+        error(data) {
+          callback.error(data);
+        },
       }
     );
   }

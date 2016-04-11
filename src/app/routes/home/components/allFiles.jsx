@@ -12,7 +12,6 @@ import Actions from '../../../actions/actions.js';
 import SimpleTable from '../../../components/common/table.jsx';
 
 import history from '../../../history.js';
-import ajax from '../../../ajax.js';
 import lang from '../../../lang.js';
 
 const styles = {
@@ -51,11 +50,7 @@ const AllFiles = React.createClass({
 
   _handleNew() {
     var me = this;
-    Actions.add(function(data){
-      if(data.success !== false){
-        history.to(`/file/${data}`);
-      }
-    });
+    Actions.add();
   },
 
   _handleClickCell(row, col) {

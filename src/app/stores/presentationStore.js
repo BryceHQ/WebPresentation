@@ -72,19 +72,21 @@ function get(fileId, callback){
   }
   var config = Store.getConfig();
   ajax.get(
-    config.get,
-    {id: fileId},
-    function(data){
-      if(!data) return;
-      if(data.success !== false){
+    config.get,{
+      id: fileId,
+      success(data) {
+        if(!data) return;
         _.assign(_presentation, {
           fileId: data.id,
           slideGroup: JSON.parse(data.raw),
           title: data.name,
           background: data.background,
         }, _reset);
-      }
-      callback(data, true);
+      },
+      error(data) {
+        // _presentation.loading = false;
+        callback.error(data);
+      },
     }
   );
 }
@@ -95,11 +97,14 @@ function add(callback){
   if(config){
     var me = this;
     ajax.post(
-      config.add,
-      function(data){
-        if(!data) return;
-
-        callback(data);
+      config.add,{
+        success(data) {
+          if(!data) return;
+          history.to(`/file/${data}`);
+        },
+        error(data) {
+          callback.error(data);
+        },
       }
     );
   }
@@ -110,11 +115,15 @@ function save(data, callback){
   var config = Store.getConfig();
   data = data || {raw: JSON.stringify(_presentation.slideGroup), id: _presentation.fileId, background: _presentation.background};
   ajax.post(
-    config.save,
-    data,
-    function(data){
-      if(data === null || typeof data === 'undefined') return;
-      callback(data);
+    config.save, {
+      data: data,
+      success(data) {
+        if(data === null || typeof data === 'undefined') return;
+        callback.success(data);
+      },
+      error(data){
+        callback.error(data);
+      },
     }
   );
 }

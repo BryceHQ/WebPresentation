@@ -92,19 +92,17 @@ const WorkRegion = React.createClass({
     if(!this._flag[value] && config){
       let me = this;
       ajax.get(
-        config[value],
-        function(data){
-          if(!data) return;
-          me._flag[value] = true;
-
-          if(data.success === false){
-            me._handleError(data.message);
-          }
-          else{
+        config[value], {
+          success(data) {
+            if(!data) return;
+            me._flag[value] = true;
             let newState = {};
             newState[value] = data;
             me.setState(newState);
-          }
+          },
+          error(data) {
+            me._handleError(data.message);
+          },
         }
       );
     }
