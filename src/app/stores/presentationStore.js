@@ -23,15 +23,15 @@ let _readme = {
     content: '# 快捷键 \n - Esc: 全屏切换 \n - Space/右/下: 下一页 \n - 左/上: 上一页',
     key: 1,
   }, {
-    transition: 'zoom',
+    transition: 'fade-right',
     content: '# 幻灯片编辑 \n - 目前仅支持使用markdown进行编辑 \n - 左侧展开后，可以添加，删除某页幻灯片，拖拽可以改变幻灯片的顺序。',
     key: 2,
   }, {
-    transition: 'slide',
+    transition: 'fade-up',
     content: '### Inspired by impress.js',
     key: 3,
   }, {
-    transition: 'zoom',
+    transition: 'roll',
     content: '### powered by React and Meterial UI',
     key: 4,
   }],
@@ -73,7 +73,7 @@ function get(fileId, callback){
   var config = Store.getConfig();
   ajax.get(
     config.get,{
-      id: fileId,
+      data: {id: fileId},
       success(data) {
         if(!data) return;
         _.assign(_presentation, {
@@ -82,6 +82,8 @@ function get(fileId, callback){
           title: data.name,
           background: data.background,
         }, _reset);
+
+        Store.emitChange();
       },
       error(data) {
         // _presentation.loading = false;

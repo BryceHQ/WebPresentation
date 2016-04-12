@@ -1,0 +1,21 @@
+.rotate-enter{
+  .transition(all 1s);
+  transform-origin: center;
+  transform: rotate3d(0, 0, 1, -200deg);
+  opacity: 0;
+  &.rotate-enter-active{
+    transform-origin: center;
+    transform: none;
+    opacity: 1;
+  }
+}
+.rotate-leave{
+  .transition(all 1s);
+  transform-origin: center;
+  opacity: 1;
+  &.rotate-leave-active{
+    transform-origin: center;
+    transform: rotate3d(0, 0, 1, 200deg);
+    opacity: 0;
+  }
+}

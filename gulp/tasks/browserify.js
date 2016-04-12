@@ -37,16 +37,37 @@ gulp.task('browserify', function (callback) {
     };
     //custom scripts
     var bundler = browserify(opts);
-    // //dependencies
+    //dependencies
     // var common = browserify();
     //
-    // config.dependencies.forEach(function (pkg) {
-    //   common.require(pkg);
-		// 	bundle.exclude(pkg);
-    // });
+    // var dependencies = config.dependencies;
+    // var alias = {"js-base64": "base-64"};
+    // for(var key in dependencies){
+    //   if(!dependencies.hasOwnProperty(key))continue;
+    //   key = alias[key] || key;
+    //   common.require(key);
+		// 	bundler.exclude(key);
+    // }
+
 
     var bundle = function () {
       // Log when bundling starts
+      // bundleLogger.start(bundleConfig.lib + '.js');
+
+      // common.bundle()
+      //   .on('error', handleErrors)
+      //   // Use vinyl-source-stream to make the
+      //   // stream gulp compatible. Specifiy the
+      //   // desired output filename here.
+      //   .pipe(source(bundleConfig.lib + '.js'))
+      //   // Specify the output destination
+      //   // .pipe(rename(bundleConfig.lib + '.js'))
+      //   .pipe(gulp.dest(bundleConfig.dest))
+      //   // .pipe(streamify(uglify()))
+      //   // .pipe(rename(bundleConfig.lib + '.min.js'))
+      //   // .pipe(gulp.dest(bundleConfig.dest))
+      //   .on('end', reportFinished.bind(null, bundleConfig.lib));
+
       bundleLogger.start(bundleConfig.outputName + '.js');
 
       return bundler
@@ -62,10 +83,11 @@ gulp.task('browserify', function (callback) {
         // .pipe(rename(bundleConfig.outputName + '.min.js'))
         // .pipe(streamify(uglify()))
         // .pipe(gulp.dest(bundleConfig.dest))
-        .on('end', reportFinished);
+        .on('end', reportFinished.bind(null, bundleConfig.outputName));
     };
 
     bundler.transform(babelify.configure());
+    // common.transform(babelify.configure());
 
     if (global.isWatching) {
       // Wrap with watchify and rebundle on changes
@@ -74,9 +96,9 @@ gulp.task('browserify', function (callback) {
       bundler.on('update', bundle);
     }
 
-    var reportFinished = function () {
+    var reportFinished = function (name) {
       // Log when bundling completes
-      bundleLogger.end(bundleConfig.outputName);
+      bundleLogger.end(name);
 
       if (bundleQueue) {
         bundleQueue--;

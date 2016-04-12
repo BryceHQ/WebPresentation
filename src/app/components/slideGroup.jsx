@@ -42,12 +42,21 @@ const SlideGroup = React.createClass({
 
     return (
       <div className = "slideGroup" style = {this.props.style}>
-        <Slide transition = {transition}>
-          <div key = {key} className = "slideItem" style = {style}>
-            {backgroundElem}
-            {upload}
-            <Markdown mode = {mode} content = {content} index = {index}></Markdown>
-          </div>
+        <Slide transition = {transition} key = {key}>
+          {interpolatedStyles =>
+            <div>
+              {interpolatedStyles.map(config => {
+                return (
+                  <div key = {config.key} className = "slideItem" style = {style}>
+                    {backgroundElem}
+                    {upload}
+                    <Markdown mode = {mode} content = {content} index = {index}></Markdown>
+                  </div>
+                );
+              })}
+            </div>
+          }
+
         </Slide>
       </div>
     );

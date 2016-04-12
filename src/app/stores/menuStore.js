@@ -75,6 +75,8 @@ function history(callback){
           _data.historyFlag = false;
 
           _data.placeholder = message.nothing;
+
+          Store.emitChange();
         },
         error(data) {
           callback.error(data);
@@ -100,6 +102,8 @@ function recent(callback){
           _data.recentFlag = false;
 
           _data.placeholder = message.nothing;
+
+          Store.emitChange();
         },
         error(data) {
           callback.error(data);

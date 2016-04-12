@@ -35,8 +35,8 @@ const Menu = React.createClass({
       case 2:
         return (<Open data = {this.props.recent} placeholder = {this.props.placeholder}/>);
 
-      case 3:
-        return (<div style={{padding: '20px'}}>保存到本地...</div>);
+      // case 3:
+      //   return (<div style={{padding: '20px'}}>保存到本地...</div>);
 
       case 4:
         return (<History data = {this.props.history} placeholder = {this.props.placeholder}/>);
@@ -57,7 +57,7 @@ const Menu = React.createClass({
         >
           <ListItem value={1} primaryText={lang.menu.new} />
           <ListItem value={2} primaryText={lang.menu.open} />
-          <ListItem value={3} primaryText={lang.menu.saveAs} />
+          {/*<ListItem value={3} primaryText={lang.menu.saveAs} />*/}
           <ListItem value={4} primaryText={lang.menu.history} />
         </SelectableList>
 

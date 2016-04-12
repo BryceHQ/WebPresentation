@@ -2,6 +2,8 @@ var dest = './build',
   src = './src',
   mui = './node_modules/material-ui/src';
 
+var package = require('../package.json');
+
 module.exports = {
   browserSync: {
     server: {
@@ -30,8 +32,10 @@ module.exports = {
     bundleConfigs: [{
       entries: src + '/app/app.jsx',
       dest: dest,
-      outputName: 'app'
+      outputName: 'app',
+      // lib: 'common',
     }],
+    // dependencies: package.dependencies
   },
 
   move: {
