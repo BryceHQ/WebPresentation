@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 
 import Slide from './slide.jsx';
 import Markdown from './markdown.jsx';
@@ -40,23 +41,32 @@ const SlideGroup = React.createClass({
       upload = <UploadWindow open={true}></UploadWindow>;
     }
 
+    function renderSlideItem(key, styleResolved){
+      return (
+        <div key = {key} className = "slideItem" style = {_.assign(style, styleResolved)}>
+          {backgroundElem}
+          {upload}
+          <Markdown mode = {mode} content = {content} index = {index}></Markdown>
+        </div>
+      );
+    }
+
     return (
       <div className = "slideGroup" style = {this.props.style}>
-        <Slide transition = {transition} key = {key}>
-          {interpolatedStyles =>
-            <div>
-              {interpolatedStyles.map(config => {
-                return (
-                  <div key = {config.key} className = "slideItem" style = {style}>
-                    {backgroundElem}
-                    {upload}
-                    <Markdown mode = {mode} content = {content} index = {index}></Markdown>
-                  </div>
-                );
-              })}
-            </div>
+        <Slide transition = {transition} uniqueKey = {key}>
+          {
+            (styleResolver, interpolatedStyles) => {
+              return (
+                <span>
+                  {
+                    interpolatedStyles.map(config => {
+                      return renderSlideItem(config.key, styleResolver(config.style));
+                    })
+                  }
+                </span>
+              );
+            }
           }
-
         </Slide>
       </div>
     );
@@ -80,7 +90,7 @@ const SlideGroup = React.createClass({
       return;
     }
     if( (mode === Constants.MODE.PRESENTATION || mode === Constants.MODE.FULLSCREEN) &&
-      (keyCode === 9 || keyCode === 79 || keyCode === 27 ||
+      (keyCode === 9 || keyCode === 79 || keyCode === 27 || keyCode === 122 ||
         ( keyCode >= 32 && keyCode <= 34) ||
         (keyCode >= 37 && keyCode <= 40) ||
         keyCode === 83
@@ -101,6 +111,8 @@ const SlideGroup = React.createClass({
         case 79:
           // overView();
         case 27: //esc
+          break;
+        case 122://F11
           Actions.toggleFullscreen();
           break;
         case 83:

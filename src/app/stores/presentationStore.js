@@ -19,22 +19,42 @@ let _readme = {
   title: 'readme',
   background: '',
   slideGroup: [{
-    transition: 'slide',
-    content: '# 快捷键 \n - Esc: 全屏切换 \n - Space/右/下: 下一页 \n - 左/上: 上一页',
-    key: 1,
+    transition: 'bounce',
+    content: '# 快捷键 \n - F11: 全屏切换 \n - Space/右/下: 下一页 \n - 左/上: 上一页 \n\n## 切换：bounce',
+    key: '1',
   }, {
-    transition: 'fade-right',
-    content: '# 幻灯片编辑 \n - 目前仅支持使用markdown进行编辑 \n - 左侧展开后，可以添加，删除某页幻灯片，拖拽可以改变幻灯片的顺序。',
-    key: 2,
+    transition: 'fade',
+    content: '# 幻灯片编辑 \n - 目前仅支持使用markdown进行编辑 \n - 左侧展开后，可以添加，删除某页幻灯片，拖拽可以改变幻灯片的顺序。\n\n## 切换：fade',
+    key: '2',
   }, {
-    transition: 'fade-up',
-    content: '### Inspired by impress.js',
-    key: 3,
+    transition: 'slideRight',
+    content: '### Inspired by impress.js \n ## 切换：slideRight',
+    key: '3',
+  }, {
+    transition: 'slideUp',
+    content: '### powered by React and Meterial UI \n ## 切换：slideUp',
+    key: '4',
+  }, {
+    transition: 'zoom',
+    content: '### powered by react-motion \n ## 切换：zoom',
+    key: '5',
+  }, {
+    transition: 'flash',
+    content: '## 切换：flash',
+    key: '6',
+  }, {
+    transition: 'flip',
+    content: '## 切换：flip',
+    key: '7',
+  }, {
+    transition: 'rotate',
+    content: '## 切换：rotate',
+    key: '8',
   }, {
     transition: 'roll',
-    content: '### powered by React and Meterial UI',
-    key: 4,
-  }],
+    content: '## 切换：roll',
+    key: '9',
+  }]
 };
 
 let _presentation = _.assign({

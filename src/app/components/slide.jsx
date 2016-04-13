@@ -3,31 +3,25 @@ import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 import ComplexTransition from './common/complexTransition.jsx';
 
-const _complex = ['bounce'];
-
+// 使用TransitionMotion代替CSSTransitionGroup，功能更强大
 const Slide = React.createClass({
   render() {
-    let {transition, key} = this.props;
-    if(!~_complex.indexOf(transition)){
-      return (
-        <CSSTransitionGroup
-          transitionEnterTimeout = {100}
-          transitionLeaveTimeout = {100}
-          className = "slide"
-          transitionName = {transition}>
-          {this.props.children([{key: key}])}
-        </CSSTransitionGroup>
-      );
-    }
+    let {transition, uniqueKey, children} = this.props;
+    // if(!~_complex.indexOf(transition)){
+    //   return (
+    //     <CSSTransitionGroup
+    //       transitionEnterTimeout = {100}
+    //       transitionLeaveTimeout = {100}
+    //       className = "slide"
+    //       transitionName = {transition}>
+    //       {children()}
+    //     </CSSTransitionGroup>
+    //   );
+    // }
     return (
-      <ComplexTransition/>
-      // <CSSTransitionGroup
-      //   transitionEnterTimeout = {100}
-      //   transitionLeaveTimeout = {100}
-      //   className = "slide"
-      //   transitionName = {transition}>
-      //   {this.props.children}
-      // </CSSTransitionGroup>
+      <ComplexTransition transition={transition} uniqueKey={uniqueKey}>
+        {children}
+      </ComplexTransition>
     );
   }
 });

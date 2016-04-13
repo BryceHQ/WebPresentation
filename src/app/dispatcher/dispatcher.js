@@ -1,13 +1,14 @@
 import {Dispatcher} from 'flux';
 
-const dispatcher = new Dispatcher();
+//如果有任务正在派发，则直接忽略当前任务
+class SimpleIgnoreDispatcher extends Dispatcher{
+  dispatch(data) {
+    if(!this._isDispatching){
+      super.dispatch(data);
+    }
+  }
+}
+
+let dispatcher = new SimpleIgnoreDispatcher();
 
 export default dispatcher;
-
-// let dispatcher = new Dispatcher();
-//
-// let dispatch = dispatcher.dispatch;
-// dispatcher.dispatch = (data) => {
-//   console.log(data.actionType);
-//   dispatch.call(dispatcher, data);
-// };

@@ -406,6 +406,7 @@ span.CodeMirror-selectedtext { background: none; }
   -webkit-transition: all 1s;
   -o-transition: all 1s;
   transition: all 1s;
+  animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   transform-origin: center;
   transform: rotate3d(0, 0, 1, -200deg);
   opacity: 0;
@@ -594,11 +595,6 @@ span.CodeMirror-selectedtext { background: none; }
   right: 0;
   background-color: white;
   padding: 10px;
-  -moz-transition: all 0.5s;
-  /* Firefox 4 */
-  -webkit-transition: all 0.5s;
-  -o-transition: all 0.5s;
-  transition: all 0.5s;
 }
 .slideGroup {
   position: absolute;
@@ -606,6 +602,7 @@ span.CodeMirror-selectedtext { background: none; }
   bottom: 0;
   left: 0;
   right: 0;
+  overflow: hidden;
 }
 /**
  * Markdown Editor
