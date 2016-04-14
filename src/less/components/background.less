@@ -5,7 +5,9 @@
 
   .transition(opacity .6s ease-in-out);
 
-  opacity: .5;
+  &.gradient{
+    opacity: .5;
+  }
 }
 
 .bg-gradient{
@@ -14,5 +16,10 @@
   overflow:hidden;
   z-index:2;
 
-  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 50%, rgb(255, 255, 255) 100%);
+  &.left{
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 50%, rgb(255, 255, 255) 100%);
+  }
+  &.right{
+    background: linear-gradient(to left, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 50%, rgb(255, 255, 255) 100%);
+  }
 }

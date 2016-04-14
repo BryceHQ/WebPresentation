@@ -11,11 +11,11 @@ import Editor from './markdown/MDEditor.jsx';
 const Markdown = React.createClass({
 
   render() {
-    let {content, mode, style} = this.props;
+    let {content, mode, style, transition, duang} = this.props;
 
     if(mode === Constants.MODE.MARKDOWN){
       return (
-        <Editor value={this.props.content} onChange={this._updateContent} />
+        <Editor value={this.props.content} transition={transition} duang={duang} onChange={this._updateContent} />
       );
     }
     let preview = '';

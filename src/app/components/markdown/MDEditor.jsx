@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // import Icons from './icons';
 import Icons from './icons.jsx';
+import Toolbar from './toolbar.jsx';
 
 import _ from 'lodash';
 
@@ -50,6 +51,7 @@ var MarkdownEditor = React.createClass({
 			lineNumbers: false,
 			indentWithTabs: true,
 			tabSize: '2',
+			autofocus: true
 		}, this.props.options);
 	},
 
@@ -143,10 +145,13 @@ var MarkdownEditor = React.createClass({
 	},
 
 	render () {
+		let {transition, duang} = this.props;
 		var editorClassName = classNames('MDEditor_editor', { 'MDEditor_editor--focused': this.state.isFocused });
 		return (
 			<div className="MDEditor">
-				{this.renderToolbar()}
+				<Toolbar transition={transition} duang={duang}>
+					{this.renderToolbar()}
+				</Toolbar>
 				<div className={editorClassName}>
 					<textarea ref="codemirror" className="markdown-textarea" name={this.props.path} defaultValue={this.props.value} autoComplete="off" />
 				</div>

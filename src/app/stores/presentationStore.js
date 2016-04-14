@@ -18,22 +18,27 @@ let _readme = {
   fileId: 'readme',
   title: 'readme',
   background: '',
+  duang: 'left',
   slideGroup: [{
     transition: 'bounce',
-    content: '# 快捷键 \n - F11: 全屏切换 \n - Space/右/下: 下一页 \n - 左/上: 上一页 \n\n## 切换：bounce',
+    content: '# 快捷键 \n - F11: 全屏切换 \n - i: 进入编辑 \n - Esc: 退出编辑 \n - Space/右/下: 下一页 \n - 左/上: 上一页 \n - Tab: 切换导航栏 \n\n## 切换：bounce',
     key: '1',
+    duang: 'left',
   }, {
     transition: 'fade',
     content: '# 幻灯片编辑 \n - 目前仅支持使用markdown进行编辑 \n - 左侧展开后，可以添加，删除某页幻灯片，拖拽可以改变幻灯片的顺序。\n\n## 切换：fade',
     key: '2',
+    duang: 'right',
   }, {
     transition: 'slideRight',
     content: '### Inspired by impress.js \n ## 切换：slideRight',
     key: '3',
+    duang: 'vague',
   }, {
     transition: 'slideUp',
     content: '### powered by React and Meterial UI \n ## 切换：slideUp',
     key: '4',
+    duang: 'clear',
   }, {
     transition: 'zoom',
     content: '### powered by react-motion \n ## 切换：zoom',
@@ -170,8 +175,18 @@ var presentationStore = {
 
   changeMode: changeMode,
 
-  contentChange(content, index, callback) {
-    _presentation.slideGroup[index].content = content;
+  contentChange(content, callback) {
+    _presentation.slideGroup[_presentation.current].content = content;
+    autoSave(null, callback);
+  },
+
+  transitionChange(transition, callback) {
+    _presentation.slideGroup[_presentation.current].transition = transition;
+    autoSave(null, callback);
+  },
+
+  duangChange(duang, callback) {
+    _presentation.slideGroup[_presentation.current].duang = duang;
     autoSave(null, callback);
   },
 
@@ -226,8 +241,8 @@ var presentationStore = {
 
   addSlide(callback){
     _presentation.slideGroup.splice(++_presentation.current, 0, {
-      transition: 'slide',
-      content: '# 请输入标题',
+      transition: 'fade',
+      content: lang.default,
       key: guid(),
     });
 

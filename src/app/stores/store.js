@@ -125,10 +125,18 @@ Dispatcher.register((action) => {
       }
       break;
 
-
     case Constants.CONTENT_CHANGE:
-      var {content, index} = action.data;
-      presentationStore.contentChange(content, index, _callback);
+      presentationStore.contentChange(action.data, _callback);
+      break;
+
+    case Constants.TRANSITION_CHANGE:
+      presentationStore.transitionChange(action.data, _callback);
+      Store.emitChange();
+      break;
+
+    case Constants.DUANG_CHANGE:
+      presentationStore.duangChange(action.data, _callback);
+      Store.emitChange();
       break;
 
     case Constants.TITLE_CHANGE:

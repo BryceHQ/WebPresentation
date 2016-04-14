@@ -49,10 +49,24 @@ const Action = {
     });
   },
 
-  contentChange(content, index) {
+  contentChange(content) {
     Dispatcher.dispatch({
       actionType: Constants.CONTENT_CHANGE,
-      data: {content: content, index: index},
+      data: content,
+    });
+  },
+
+  transitionChange(transition) {
+    Dispatcher.dispatch({
+      actionType: Constants.TRANSITION_CHANGE,
+      data: transition,
+    });
+  },
+
+  duangChange(duang) {
+    Dispatcher.dispatch({
+      actionType: Constants.DUANG_CHANGE,
+      data: duang,
     });
   },
 
