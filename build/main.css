@@ -988,6 +988,8 @@ fieldset[disabled] .link-text {
   -webkit-transition: opacity 0.6s ease-in-out;
   -o-transition: opacity 0.6s ease-in-out;
   transition: opacity 0.6s ease-in-out;
+}
+.bg.gradient {
   opacity: .5;
 }
 .bg-gradient {
@@ -998,7 +1000,12 @@ fieldset[disabled] .link-text {
   right: 0;
   overflow: hidden;
   z-index: 2;
+}
+.bg-gradient.left {
   background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #ffffff 50%, #ffffff 100%);
+}
+.bg-gradient.right {
+  background: linear-gradient(to left, rgba(255, 255, 255, 0) 0%, #ffffff 50%, #ffffff 100%);
 }
 .dropzone {
   width: 100%;

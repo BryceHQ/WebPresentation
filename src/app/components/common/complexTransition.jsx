@@ -11,6 +11,49 @@ const _springConfig = {
 };
 
 const _transitionConfig = {
+  fade: {
+    enter: {opacity: 0},
+    style: {opacity: spring(1, _springConfig.slow)},
+    styleResolver(style) {
+      return {
+        opacity: style.opacity,
+      };
+    },
+  },
+
+  slideRight: {
+    enter: {x: 100},
+    style: {x: spring(0, _springConfig.soft)},
+    styleResolver(style) {
+      return {
+        transform: `translate3d(${style.x}%, 0, 0)`,
+      };
+    }
+  },
+
+  slideUp: {
+    enter: {x: 100},
+    style: {x: spring(0, _springConfig.soft)},
+    styleResolver(style) {
+      return {
+        transform: `translate3d(0, ${style.x}%, 0)`,
+      };
+    }
+  },
+
+  flash: {
+    enter: {opacity: 0},
+    style: {opacity: spring(1, _springConfig.fast)},
+    styleResolver(style) {
+      let {opacity} = style;
+      if(!opacity) return;
+      opacity = Math.floor(opacity);
+      return {
+        opacity: opacity % 2 === 0 ? 0 : 1,
+      };
+    },
+  },
+
   bounce: {
     enter: {opacity: 0, scale3d: 0.7},
     style: {opacity: spring(1, _springConfig.fast), scale3d: spring(1, _springConfig.fast)},
@@ -31,46 +74,7 @@ const _transitionConfig = {
       };
     },
   },
-  fade: {
-    enter: {opacity: 0},
-    style: {opacity: spring(1, _springConfig.slow)},
-    styleResolver(style) {
-      return {
-        opacity: style.opacity,
-      };
-    },
-  },
-  flash: {
-    enter: {opacity: 0},
-    style: {opacity: spring(1, _springConfig.fast)},
-    styleResolver(style) {
-      let {opacity} = style;
-      if(!opacity) return;
-      opacity = Math.floor(opacity);
-      return {
-        opacity: opacity % 2 === 0 ? 0 : 1,
-      };
-    },
-  },
 
-  slideUp: {
-    enter: {x: 100},
-    style: {x: spring(0, _springConfig.soft)},
-    styleResolver(style) {
-      return {
-        transform: `translate3d(0, ${style.x}%, 0)`,
-      };
-    }
-  },
-  slideRight: {
-    enter: {x: 100},
-    style: {x: spring(0, _springConfig.soft)},
-    styleResolver(style) {
-      return {
-        transform: `translate3d(${style.x}%, 0, 0)`,
-      };
-    }
-  },
 
   flip: {
     enter: {x: 0},

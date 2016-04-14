@@ -59,6 +59,29 @@ const lang = {
     photo: '上传背景图片',
   },
 
+  transition: {
+    text: '切换效果',
+    fade: '淡入',
+    slideRight: '水平滑入',
+    slideUp: '垂直滑入',
+    flash: '闪烁',
+    bounce: '跳跃',
+    zoom: '放大',
+    flip: '翻转',
+    rotate: '旋转',
+    roll: '滚动',
+  },
+
+  background: {
+    text: '背景显示效果',
+    right: '右侧突出',
+    left: '左侧突出',
+    vague: '模糊',
+    clear: '清晰',
+  },
+
+  default: '# 请输入标题',
+
   columns: {
     name: '名称',
     lastUpdateTime: '上次更新时间',
