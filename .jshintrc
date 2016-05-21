@@ -9,13 +9,14 @@
     "quotmark": false,
     "browser": true,
     "boss": true,
-    "esnext": true,//es6
+    "esnext": true,
     "predef" : [
         "define",
         "require",
         "window",
         "console",
         "module",
-        "global"
+        "global",
+        "__dirname"
     ]
 }
