@@ -55,16 +55,6 @@ const SlideGroup = React.createClass({
       backgroundElem = (<Background url={background} duang={duang || this.props.duang || 'gradient left'}></Background>);
     }
 
-    function renderSlideItem(key, styleResolved){
-      return (
-        <div key={key} className="slideItem" style={_.assign(style, styleResolved)}>
-          {backgroundElem}
-          {upload}
-          <Markdown mode={mode} content={content} index={index} transition={transition}></Markdown>
-        </div>
-      );
-    }
-
     return (
       <div className = "slideGroup" style = {this.props.style}>
         <Slide transition={transition} uniqueKey={key} mode={mode}>
@@ -84,14 +74,17 @@ const SlideGroup = React.createClass({
         </Slide>
       </div>
     );
+
+    function renderSlideItem(key, styleResolved){
+      return (
+        <div key={key} className="slideItem" style={_.assign(style, styleResolved)}>
+          {backgroundElem}
+          {upload}
+          <Markdown mode={mode} content={content} index={index} transition={transition}></Markdown>
+        </div>
+      );
+    }
   },
-
-  updateCode (newCode) {
-		this.setState({
-			code: newCode
-		});
-	},
-
 
   _handleKeyDown(e) {
     var {mode} = this.props;
@@ -155,6 +148,7 @@ const SlideGroup = React.createClass({
         Actions.toggleFullscreen();
     }
   },
+
 });
 
 

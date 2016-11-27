@@ -43,13 +43,7 @@ const styles = {
     width: 'inherit',
     height: 'inherit',
     padding: '0px',
-    margin: '0px 3px'
-  },
-  avatar: {
-    width: 'inherit',
-    height: 'inherit',
-    padding: '0px',
-    margin: '0px 20px',
+    margin: '0px 10px',
   },
   labelStyle: {
     fontSize: 'inherit',
@@ -79,7 +73,7 @@ const MyAppBar = React.createClass({
 
           <div className="icon-container">
             <DefaultAvater src={user.icon} tooltip = {user.isAuthenticated ? user.name : lang.button.signin}
-              style={styles.avatar} onTouchTap = {avatarHanler}/>
+              style={styles.btn} onTouchTap = {avatarHanler}/>
           </div>
         </div>
       );
@@ -87,15 +81,15 @@ const MyAppBar = React.createClass({
       titleElem = (
         <div>
           <RaisedButton label={lang.name} backgroundColor={Colors.redA100} labelColor={Colors.white}
-          onTouchTap = {user.isAuthenticated ? this._handleToggleLeft : (() => history.to('/auth/signin'))}
-          labelStyle={styles.labelStyle}
-          style={{
-            height: '40px'
-          }}/>
+            onTouchTap = {user.isAuthenticated ? this._handleToggleLeft : (() => history.to('/auth/signin'))}
+            labelStyle={styles.labelStyle}
+            style={{
+              height: '40px'
+            }}/>
 
           <div className="icon-container">
             <DefaultAvater src={user.icon} tooltip = {user.isAuthenticated ? user.name : lang.button.signin}
-               style={styles.avatar} onTouchTap = {avatarHanler}/>
+              style={styles.btn} onTouchTap = {avatarHanler}/>
 
             <IconButton tooltip = {lang.button.fullscreen} style={styles.btn}
               onTouchTap = {this._handleFullscreen}>

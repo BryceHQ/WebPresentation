@@ -24,6 +24,7 @@ const Markdown = React.createClass({
     }
     return (
       <div className="preview" style = {style}
+        onDoubleClick = {this._handleDoubleClick}
         dangerouslySetInnerHTML={{__html: preview}}
       />
     );
@@ -33,6 +34,9 @@ const Markdown = React.createClass({
     Actions.contentChange(newContent, this.props.index);
 	},
 
+  _handleDoubleClick(e) {
+    Actions.changeMode(Constants.MODE.MARKDOWN);
+  },
 });
 
 export default Markdown;
